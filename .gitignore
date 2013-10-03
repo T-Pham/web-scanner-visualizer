@@ -2,3 +2,6 @@
 *.xml
 *.cpp
 *.sqlite
+*.o
+makefile
+web_scanner_visualizer
