@@ -8,7 +8,7 @@ int main()
 	// std::cout << "0" << "\n";
 	char asd[] = "vulnerabilities.xml";
 	database_handler* db = new database_handler();
-	
+
 	// std::cout << "1";
 	db->open_database();
 	// std::cout << "2";
@@ -21,6 +21,9 @@ int main()
 	db->insert_error("asdasd", "asdasdSAD", 123123, "asdasdasd", "asdasdasd");
 
 	db-> insert_parameter("asdasd", 12);
+
+	db->select_url("asdasdasd");
+
 	db->close_database();
 
 	delete db;

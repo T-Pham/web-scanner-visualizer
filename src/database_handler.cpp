@@ -1,7 +1,9 @@
-#include <sstream>
 #include "sqlite3.h"
 #include "database_handler.hpp"
+#include "urls.hpp"
 #include <iostream>
+#include <sstream>
+#include <vector>
 
 void database_handler::initialize_database(){
 	char* error_msg;
@@ -28,7 +30,7 @@ int database_handler::insert_url(char* url, char* method) {
 	stmt += "','"; 
 	stmt += method;
 	stmt += "');";
-	
+
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
 	if(error_message){
@@ -46,7 +48,7 @@ int database_handler::insert_url_relationship(int parent_url_id, int child_url_i
 	std::string stmt;
 	ss1 << parent_url_id;
 	ss2 << child_url_id;
-	
+
 	stmt += "INSERT INTO URL_RELATIONSHIPS (PARENT_URL_ID, CHILD_URL_ID) VALUES('";
 	stmt += ss1.str();
 	stmt += "','";
@@ -68,7 +70,7 @@ int database_handler::insert_error(char* error_type, char* injection_value, int 
 	std::stringstream s_url_id;
 	std::string stmt;
 	s_url_id << url_id;
-	
+
 	stmt += "INSERT INTO ERRORS (ERROR_TYPE, INJECTION_VALUE, URL_ID, TOOL_NAME, RESPONSE) VALUES('";
 	stmt += error_type;
 	stmt += "','";
@@ -96,7 +98,7 @@ int database_handler::insert_parameter(char* parameter_name, int url_id) {
 	std::stringstream s_url_id;
 	std::string stmt;
 	s_url_id << url_id;
-	
+
 	stmt += "INSERT INTO PARAMETERS (PARAMETER_NAME, URL_ID) VALUES('";
 	stmt += parameter_name;
 	stmt += "',";
@@ -112,5 +114,26 @@ int database_handler::insert_parameter(char* parameter_name, int url_id) {
 	return 1;
 }
 
+urls* database_handler::select_url(char* url){
+	sqlite3_stmt* sqlite_stmt;
+	std::string stmt;
+	stmt += "SELECT * FROM URLS WHERE URL='";
+	stmt += url;
+	stmt += "';";
+
+	if(sqlite3_prepare(db, stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK){
+		if(sqlite3_step(sqlite_stmt) == SQLITE_ROW){
+			urls* url = new urls();
+			url->url_id = sqlite3_column_int(sqlite_stmt, 0);
+			url->url = (char*) sqlite3_column_text(sqlite_stmt, 1);
+			url->method = (char*) sqlite3_column_text(sqlite_stmt, 2);
+			url->parent_url_id = sqlite3_column_int(sqlite_stmt, 3);
+			std::cout << url->url << "  " << url->url_id << "  " << url->method << "  " << url->parent_url_id << "\n";
+			return url;
+		}
+	}
+
+	return NULL;
+}
 database_handler::~database_handler() {
 }
