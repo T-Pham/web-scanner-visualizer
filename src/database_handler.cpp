@@ -63,6 +63,54 @@ int database_handler::insert_url_relationship(int parent_url_id, int child_url_i
 	return 1;
 }
 
+int database_handler::insert_error(char* error_type, char* injection_value, int url_id, char* tool_name, char* response){
+	char* error_message = NULL;
+	std::stringstream s_url_id;
+	std::string stmt;
+	s_url_id << url_id;
+	
+	stmt += "INSERT INTO ERRORS (ERROR_TYPE, INJECTION_VALUE, URL_ID, TOOL_NAME, RESPONSE) VALUES('";
+	stmt += error_type;
+	stmt += "','";
+	stmt += injection_value;
+	stmt += "',";
+	stmt += s_url_id.str();
+	stmt += ",'";
+	stmt += tool_name;
+	stmt += "','";
+	stmt += response;
+	stmt += "');";
+
+	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
+
+	if(error_message){
+		std::cout << error_message << "\n" ;
+		return -1;
+	}
+
+	return 1;
+}
+
+int database_handler::insert_parameter(char* parameter_name, int url_id) {
+	char* error_message = NULL;
+	std::stringstream s_url_id;
+	std::string stmt;
+	s_url_id << url_id;
+	
+	stmt += "INSERT INTO PARAMETERS (PARAMETER_NAME, URL_ID) VALUES('";
+	stmt += parameter_name;
+	stmt += "',";
+	stmt += s_url_id.str();
+	stmt += ");";
+
+	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
+
+	if(error_message){
+		std::cout << error_message << "\n" ;
+		return -1;
+	}
+	return 1;
+}
+
 database_handler::~database_handler() {
-	delete db;
 }

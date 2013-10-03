@@ -46,6 +46,10 @@ public:
 
 	int insert_url_relationship(int parent_url_id, int child_url_id);
 
+	int insert_error(char* error_type, char* injection_value, int url_id, char* tool_name, char* response);
+
+	int insert_parameter(char* parameter_name, int url_id);
+
 	~database_handler();
 };
 
