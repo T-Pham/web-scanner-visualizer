@@ -1,6 +1,4 @@
-MyProject.cpp
 *.xml
 *.sqlite
 *.o
-makefile
 web_scanner_visualizer
