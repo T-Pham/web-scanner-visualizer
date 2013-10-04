@@ -11,6 +11,8 @@ void database_handler::initialize_database(){
 	sqlite3_exec(db, sql_create_stms_2, NULL, 0, &error_msg);
 	sqlite3_exec(db, sql_create_stms_3, NULL, 0, &error_msg);
 	sqlite3_exec(db, sql_create_stms_4, NULL, 0, &error_msg);
+	if(error_msg != NULL){
+	}
 }
 
 void database_handler::open_database(){

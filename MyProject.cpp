@@ -6,23 +6,17 @@
 int main()
 {
 	// std::cout << "0" << "\n";
-	char asd[] = "vulnerabilities.xml";
+	char asd[] = "testphp.vulnweb.com.xml";
 	database_handler* db = new database_handler();
 
 	// std::cout << "1";
 	db->open_database();
 	// std::cout << "2";
 	db->initialize_database();
-	// std::cout << "3";
-	db->insert_url("asdasdasd", "asdasdasd");
-	// std::cout << "4";
-	db->insert_url_relationship(1, 2);
 
-	db->insert_error("asdasd", "asdasdSAD", 123123, "asdasdasd", "asdasdasd");
-
-	db-> insert_parameter("asdasd", 12);
-
-	db->select_url("asdasdasd");
+	if(wapiti_tree_parse(asd, db) == -1){
+		std::cout << "Error opening xml file \n";
+	}
 
 	db->close_database();
 

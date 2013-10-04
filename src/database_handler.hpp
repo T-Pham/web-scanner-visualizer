@@ -1,6 +1,7 @@
 #ifndef DATABASE_HANDLER_HPP
 #define DATABASE_HANDLER_HPP
 #include "urls.hpp"
+#include "sqlite3.h"
 
 static const char* sql_create_stms_1 = "DROP TABLE IF EXISTS URLS;\
 									   CREATE TABLE URLS (\
