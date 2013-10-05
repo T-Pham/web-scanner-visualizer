@@ -38,7 +38,7 @@ static const char* sql_create_stms_4 = "DROP TABLE IF EXISTS ERRORS;\
 class database_handler {
 	sqlite3* db;
 public:
-	void initialize_database();
+	int initialize_database();
 
 	void open_database();
 

@@ -5,14 +5,19 @@
 #include <sstream>
 #include <vector>
 
-void database_handler::initialize_database(){
-	char* error_msg;
-	sqlite3_exec(db, sql_create_stms_1, NULL, 0, &error_msg);
-	sqlite3_exec(db, sql_create_stms_2, NULL, 0, &error_msg);
-	sqlite3_exec(db, sql_create_stms_3, NULL, 0, &error_msg);
-	sqlite3_exec(db, sql_create_stms_4, NULL, 0, &error_msg);
-	if(error_msg != NULL){
+int database_handler::initialize_database(){
+	char* error_message;
+	sqlite3_exec(db, sql_create_stms_1, NULL, 0, &error_message);
+	sqlite3_exec(db, sql_create_stms_2, NULL, 0, &error_message);
+	sqlite3_exec(db, sql_create_stms_3, NULL, 0, &error_message);
+	sqlite3_exec(db, sql_create_stms_4, NULL, 0, &error_message);
+
+	if(error_message) {
+		sqlite3_free(error_message);
+		return -1;
 	}
+
+	return 1;
 }
 
 void database_handler::open_database(){
@@ -36,7 +41,7 @@ int database_handler::insert_url(const char* url,const char* method) {
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
 	if(error_message){
-		// std::cout << error_message << "\n";
+		sqlite3_free(error_message);
 		return -1;
 	}
 
@@ -60,7 +65,7 @@ int database_handler::insert_url_relationship(int parent_url_id, int child_url_i
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
 	if(error_message){
-		// std::cout << error_message << "\n" ;
+		sqlite3_free(error_message);
 		return -1;
 	}
 
@@ -88,7 +93,7 @@ int database_handler::insert_error(const char* error_type,const char* injection_
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
 	if(error_message){
-		// std::cout << error_message << "\n" ;
+		sqlite3_free(error_message);
 		return -1;
 	}
 
@@ -110,32 +115,33 @@ int database_handler::insert_parameter(const char* parameter_name, int url_id) {
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
 	if(error_message){
-		// std::cout << error_message << "\n" ;
+		sqlite3_free(error_message);
 		return -1;
 	}
 	return 1;
 }
 
-urls* database_handler::select_url(const char* url){
+urls* database_handler::select_url(const char* str_url){
 	sqlite3_stmt* sqlite_stmt;
 	std::string stmt;
 	stmt += "SELECT * FROM URLS WHERE URL='";
-	stmt += url;
+	stmt += str_url;
 	stmt += "';";
+	urls* url = NULL;
 
 	if(sqlite3_prepare(db, stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK){
 		if(sqlite3_step(sqlite_stmt) == SQLITE_ROW){
-			urls* url = new urls();
+			url = new urls();
 			url->url_id = sqlite3_column_int(sqlite_stmt, 0);
 			url->url = (char*) sqlite3_column_text(sqlite_stmt, 1);
 			url->method = (char*) sqlite3_column_text(sqlite_stmt, 2);
 			url->parent_url_id = sqlite3_column_int(sqlite_stmt, 3);
-			return url;
 		}
-		sqlite3_finalize(sqlite_stmt);
 	}
 
-	return NULL;
+	sqlite3_finalize(sqlite_stmt);
+
+	return url;
 }
 database_handler::~database_handler() {
 }
