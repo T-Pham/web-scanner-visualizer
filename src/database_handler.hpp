@@ -8,8 +8,8 @@ static const char* sql_create_stms_1 = "DROP TABLE IF EXISTS URLS;\
 									   URL_ID INTEGER PRIMARY KEY,\
 									   URL TEXT NOT NULL,\
 									   METHOD VARCHAR(255) NOT NULL,\
-									   URL_PARENT_ID INTEGER \
-									   );";
+									   URL_PARENT_ID INTEGER, \
+									   UNIQUE(URL) ON CONFLICT ROLLBACK);";
 
 static const char* sql_create_stms_2 = "DROP TABLE IF EXISTS URL_RELATIONSHIPS;\
 									   CREATE TABLE URL_RELATIONSHIPS (\
@@ -44,15 +44,15 @@ public:
 
 	void close_database();
 
-	int insert_url(char* url, char* method);
+	int insert_url(const char* url, const char* method);
 
 	int insert_url_relationship(int parent_url_id, int child_url_id);
 
-	int insert_error(char* error_type, char* injection_value, int url_id, char* tool_name, char* response);
+	int insert_error(const char* error_type, const char* injection_value, int url_id, const char* tool_name, const char* response);
 
-	int insert_parameter(char* parameter_name, int url_id);
+	int insert_parameter(const char* parameter_name, int url_id);
 
-	urls* select_url(char* url);
+	urls* select_url(const char* url);
 
 	~database_handler();
 };

@@ -5,18 +5,18 @@
 
 int main()
 {
-	// std::cout << "0" << "\n";
-	char asd[] = "testphp.vulnweb.com.xml";
-	database_handler* db = new database_handler();
+	// std::cout << "0\n";
 
-	// std::cout << "1";
+	database_handler* db = new database_handler();
+	
+	// std::cout << "1\n";
 	db->open_database();
-	// std::cout << "2";
+	// std::cout << "2\n";
 	db->initialize_database();
 
-	if(wapiti_tree_parse(asd, db) == -1){
-		std::cout << "Error opening xml file \n";
-	}
+	wapiti_tree_parse("testphp.vulnweb.com.xml", db);
+
+	wapiti_parse("vulnerabilities.xml", db);
 
 	db->close_database();
 
