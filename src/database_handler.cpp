@@ -3,7 +3,6 @@
 #include "urls.hpp"
 #include <iostream>
 #include <sstream>
-#include <vector>
 
 int database_handler::initialize_database(){
 	char* error_message;
