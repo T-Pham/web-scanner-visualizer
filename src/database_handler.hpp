@@ -3,29 +3,26 @@
 #include "urls.hpp"
 #include "sqlite3.h"
 
-static const char* sql_create_stms_1 = "DROP TABLE IF EXISTS URLS;\
+static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									   CREATE TABLE URLS (\
 									   URL_ID INTEGER PRIMARY KEY,\
 									   URL TEXT NOT NULL,\
 									   METHOD VARCHAR(255) NOT NULL,\
 									   URL_PARENT_ID INTEGER, \
-									   UNIQUE(URL) ON CONFLICT ROLLBACK);";
-
-static const char* sql_create_stms_2 = "DROP TABLE IF EXISTS URL_RELATIONSHIPS;\
+									   UNIQUE(URL) ON CONFLICT ROLLBACK);\
+									   DROP TABLE IF EXISTS URL_RELATIONSHIPS;\
 									   CREATE TABLE URL_RELATIONSHIPS (\
 									   URL_RELATIONSHIP_ID INTEGER PRIMARY KEY,\
 									   PARENT_URL_ID INTEGER NOT NULL,\
 									   CHILD_URL_ID INTEGER NOT NULL\
-									   );";
-
-static const char* sql_create_stms_3 = "DROP TABLE IF EXISTS PARAMETERS;\
+									   );\
+									   DROP TABLE IF EXISTS PARAMETERS;\
 									   CREATE TABLE PARAMETERS (\
 									   PARAMETER_ID INTEGER PRIMARY KEY,\
 									   PARAMETER_NAME VARCHAR(255) NOT NULL,\
 									   URL_ID INTEGER NOT NULL\
-									   );";
-
-static const char* sql_create_stms_4 = "DROP TABLE IF EXISTS ERRORS;\
+									   );\
+									   DROP TABLE IF EXISTS ERRORS;\
 									   CREATE TABLE ERRORS (\
 									   ERROR_ID INTEGER PRIMARY KEY,\
 									   ERROR_TYPE VARCHAR(255) NOT NULL,\
@@ -43,6 +40,10 @@ public:
 	void open_database();
 
 	void close_database();
+
+	void begin_transaction();
+
+	void commit_transaction();
 
 	int insert_url(const char* url, const char* method);
 

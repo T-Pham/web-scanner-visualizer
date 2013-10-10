@@ -7,10 +7,7 @@
 
 int database_handler::initialize_database(){
 	char* error_message;
-	sqlite3_exec(db, sql_create_stms_1, NULL, 0, &error_message);
-	sqlite3_exec(db, sql_create_stms_2, NULL, 0, &error_message);
-	sqlite3_exec(db, sql_create_stms_3, NULL, 0, &error_message);
-	sqlite3_exec(db, sql_create_stms_4, NULL, 0, &error_message);
+	sqlite3_exec(db, sql_create_stms, NULL, 0, &error_message);
 
 	if(error_message) {
 		sqlite3_free(error_message);
@@ -26,6 +23,24 @@ void database_handler::open_database(){
 
 void database_handler::close_database(){
 	sqlite3_close(db);
+}
+
+void database_handler::begin_transaction(){
+	char* error_message;
+	sqlite3_exec(db, "BEGIN TRANSACTION;", NULL, 0, &error_message);
+
+	if(error_message) {
+		sqlite3_free(error_message);
+	}
+}
+
+void database_handler::commit_transaction(){
+	char* error_message;
+	sqlite3_exec(db, "COMMIT TRANSACTION;", NULL, 0, &error_message);
+
+	if(error_message) {
+		sqlite3_free(error_message);
+	}
 }
 
 int database_handler::insert_url(const char* url,const char* method) {
