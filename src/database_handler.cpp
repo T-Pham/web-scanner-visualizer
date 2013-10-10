@@ -1,6 +1,5 @@
 #include "sqlite3.h"
 #include "database_handler.hpp"
-#include "urls.hpp"
 #include <iostream>
 #include <sstream>
 
@@ -86,19 +85,17 @@ int database_handler::insert_url_relationship(int parent_url_id, int child_url_i
 	return 1;
 }
 
-int database_handler::insert_error(const char* error_type,const char* injection_value, int url_id,const char* tool_name,const char* response){
+int database_handler::insert_error(const char* error_type, const char* injection_value, const char* url, const char* tool_name, const char* response) {
 	char* error_message = NULL;
-	std::stringstream s_url_id;
 	std::string stmt;
-	s_url_id << url_id;
 
 	stmt += "INSERT INTO ERRORS (ERROR_TYPE, INJECTION_VALUE, URL_ID, TOOL_NAME, RESPONSE) VALUES('";
 	stmt += error_type;
 	stmt += "','";
 	stmt += injection_value;
-	stmt += "',";
-	stmt += s_url_id.str();
-	stmt += ",'";
+	stmt += "', (SELECT URL_ID FROM URLS WHERE URL='";
+	stmt += url;
+	stmt += "'),'";
 	stmt += tool_name;
 	stmt += "','";
 	stmt += response;
@@ -135,27 +132,5 @@ int database_handler::insert_parameter(const char* parameter_name, int url_id) {
 	return 1;
 }
 
-urls* database_handler::select_url(const char* str_url){
-	sqlite3_stmt* sqlite_stmt;
-	std::string stmt;
-	stmt += "SELECT * FROM URLS WHERE URL='";
-	stmt += str_url;
-	stmt += "';";
-	urls* url = NULL;
-
-	if(sqlite3_prepare(db, stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK){
-		if(sqlite3_step(sqlite_stmt) == SQLITE_ROW){
-			url = new urls();
-			url->url_id = sqlite3_column_int(sqlite_stmt, 0);
-			url->url = (char*) sqlite3_column_text(sqlite_stmt, 1);
-			url->method = (char*) sqlite3_column_text(sqlite_stmt, 2);
-			url->parent_url_id = sqlite3_column_int(sqlite_stmt, 3);
-		}
-	}
-
-	sqlite3_finalize(sqlite_stmt);
-
-	return url;
-}
 database_handler::~database_handler() {
 }

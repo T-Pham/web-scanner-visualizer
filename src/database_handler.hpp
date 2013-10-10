@@ -1,6 +1,5 @@
 #ifndef DATABASE_HANDLER_HPP
 #define DATABASE_HANDLER_HPP
-#include "urls.hpp"
 #include "sqlite3.h"
 
 static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
@@ -27,7 +26,7 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									   ERROR_ID INTEGER PRIMARY KEY,\
 									   ERROR_TYPE VARCHAR(255) NOT NULL,\
 									   INJECTION_VALUE TEXT,\
-									   URL_ID INTEGER NOT NULL,\
+									   URL_ID INTEGER,\
 									   TOOL_NAME VARCHAR(255) NOT NULL,\
 									   RESPONSE TEXT\
 									   );";
@@ -49,11 +48,9 @@ public:
 
 	int insert_url_relationship(int parent_url_id, int child_url_id);
 
-	int insert_error(const char* error_type, const char* injection_value, int url_id, const char* tool_name, const char* response);
+	int insert_error(const char* error_type, const char* injection_value, const char* url, const char* tool_name, const char* response);
 
 	int insert_parameter(const char* parameter_name, int url_id);
-
-	urls* select_url(const char* url);
 
 	~database_handler();
 };
