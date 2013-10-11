@@ -68,7 +68,7 @@ int wapiti_tree_parse(char* filename, database_handler* db){
 			str = str.substr(0, str.find("?"));
 		}
 
-		db->insert_url(str.c_str(), "");
+		db->insert_url(str.c_str(), "GET");
 		URL = URL.next_sibling("url_data");
 	}
 
@@ -83,7 +83,7 @@ int wapiti_tree_parse(char* filename, database_handler* db){
 			str = str.substr(0, str.find("?"));
 		}
 
-		db->insert_url(str.c_str(), "");
+		db->insert_url(str.c_str(), "POST");
 		form =  form.next_sibling("form");
 	}
 	db->commit_transaction();
