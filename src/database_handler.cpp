@@ -141,19 +141,24 @@ void database_handler::update_parent_url() {
 		while(sqlite3_step(sqlite_stmt1) == SQLITE_ROW) {
 			char* child_id = (char*)sqlite3_column_text(sqlite_stmt1, 0);
 			std::string url = (char*)sqlite3_column_text(sqlite_stmt1, 1);
-			int n = url.find_last_of("/");
+			url.erase(0, (url.find_first_of("//") + 2));
 
-			if(n == url.length()){
-				url.erase(n,1);
+			int n = url.find_last_of("/");
+			if(n != std::string::npos && n == url.length() - 1){
+				url.erase(n, 1);
 				n = url.find_last_of("/");
 			}
 
-			while(n < url.length() || n == std::string::npos) {
+			while(n != std::string::npos) {
+				bool brk = false;
+
 				url.erase(n, std::string::npos);
 				std::string select_stmt;
-				select_stmt += "SELECT * FROM URLS WHERE URL='";
+				select_stmt += "SELECT * FROM URLS WHERE URL='http://";
 				select_stmt += url;
-				select_stmt += "';";
+				select_stmt += "' OR URL='http://";
+				select_stmt += url;
+				select_stmt += "/';";
 
 				if(sqlite3_prepare(db, select_stmt.c_str(), -1, &sqlite_stmt2, 0) == SQLITE_OK) {
 					if(sqlite3_step(sqlite_stmt2) == SQLITE_ROW){
@@ -171,10 +176,16 @@ void database_handler::update_parent_url() {
 						if(error_message){
 							sqlite3_free(error_message);
 						}
+						brk = true;
 					}
 				}
+
 				sqlite3_finalize(sqlite_stmt2);
 				n = url.find_last_of("/");
+
+				if(brk) {
+					break;
+				}
 			}
 		}
 	}
