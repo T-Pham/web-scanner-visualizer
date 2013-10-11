@@ -2,6 +2,7 @@
 #include "database_handler.hpp"
 #include <iostream>
 #include <sstream>
+#include <string>
 
 int database_handler::initialize_database(){
 	char* error_message;
@@ -130,6 +131,55 @@ int database_handler::insert_parameter(const char* parameter_name, int url_id) {
 		return -1;
 	}
 	return 1;
+}
+
+void database_handler::update_parent_url() {
+	sqlite3_stmt* sqlite_stmt1;
+	sqlite3_stmt* sqlite_stmt2;
+
+	if(sqlite3_prepare(db, "SELECT * FROM URLS", -1, &sqlite_stmt1, 0) == SQLITE_OK) {
+		while(sqlite3_step(sqlite_stmt1) == SQLITE_ROW) {
+			char* child_id = (char*)sqlite3_column_text(sqlite_stmt1, 0);
+			std::string url = (char*)sqlite3_column_text(sqlite_stmt1, 1);
+			int n = url.find_last_of("/");
+
+			if(n == url.length()){
+				url.erase(n,1);
+				n = url.find_last_of("/");
+			}
+
+			while(n < url.length() || n == std::string::npos) {
+				url.erase(n, std::string::npos);
+				std::string select_stmt;
+				select_stmt += "SELECT * FROM URLS WHERE URL='";
+				select_stmt += url;
+				select_stmt += "';";
+
+				if(sqlite3_prepare(db, select_stmt.c_str(), -1, &sqlite_stmt2, 0) == SQLITE_OK) {
+					if(sqlite3_step(sqlite_stmt2) == SQLITE_ROW){
+						char* parent_id = (char*)sqlite3_column_text(sqlite_stmt2, 0);
+						std::string update_stmt;
+						update_stmt += "UPDATE URLS SET URL_PARENT_ID=";
+						update_stmt += parent_id;
+						update_stmt += " WHERE URL_ID=";
+						update_stmt += child_id;
+						update_stmt += ";";
+
+						char* error_message = NULL;
+						sqlite3_exec(db, update_stmt.c_str(), NULL, 0, &error_message);
+
+						if(error_message){
+							sqlite3_free(error_message);
+						}
+					}
+				}
+				sqlite3_finalize(sqlite_stmt2);
+				n = url.find_last_of("/");
+			}
+		}
+	}
+
+	sqlite3_finalize(sqlite_stmt1);
 }
 
 database_handler::~database_handler() {

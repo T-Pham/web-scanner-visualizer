@@ -9,12 +9,6 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									   METHOD VARCHAR(255) NOT NULL,\
 									   URL_PARENT_ID INTEGER, \
 									   UNIQUE(URL) ON CONFLICT ROLLBACK);\
-									   DROP TABLE IF EXISTS URL_RELATIONSHIPS;\
-									   CREATE TABLE URL_RELATIONSHIPS (\
-									   URL_RELATIONSHIP_ID INTEGER PRIMARY KEY,\
-									   PARENT_URL_ID INTEGER NOT NULL,\
-									   CHILD_URL_ID INTEGER NOT NULL\
-									   );\
 									   DROP TABLE IF EXISTS PARAMETERS;\
 									   CREATE TABLE PARAMETERS (\
 									   PARAMETER_ID INTEGER PRIMARY KEY,\
@@ -51,6 +45,8 @@ public:
 	int insert_error(const char* error_type, const char* injection_value, const char* url, const char* tool_name, const char* response);
 
 	int insert_parameter(const char* parameter_name, int url_id);
+
+	void update_parent_url();
 
 	~database_handler();
 };

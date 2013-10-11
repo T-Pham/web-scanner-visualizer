@@ -87,4 +87,6 @@ int wapiti_tree_parse(char* filename, database_handler* db){
 		form =  form.next_sibling("form");
 	}
 	db->commit_transaction();
+
+	db->update_parent_url();
 }
