@@ -22,6 +22,7 @@ int wapiti_parse(char* filename, database_handler* db) {
 		while(bugList) {
 			pugi::xml_node bug = bugList.child("bug");
 			while(bug){
+				const char* bug_level = bug.attribute("level").value();
 				const char* parameter = bug.child("parameter").first_child().value();
 				const char* info = bug.child("info").first_child().value();
 
@@ -33,7 +34,7 @@ int wapiti_parse(char* filename, database_handler* db) {
 					url_without_para = url_without_para.substr(0, n);
 				}
 
-				db->insert_error(str_bugType, parameter, url_without_para.c_str(), "WAPITI", "");
+				db->insert_error(str_bugType, bug_level, parameter, url_without_para.c_str(), "WAPITI", "");
 
 				bug = bug.next_sibling("bug");
 			}

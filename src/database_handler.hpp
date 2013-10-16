@@ -19,6 +19,7 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									   CREATE TABLE ERRORS (\
 									   ERROR_ID INTEGER PRIMARY KEY,\
 									   ERROR_TYPE VARCHAR(255) NOT NULL,\
+									   ERROR_LEVEL INTEGER,\
 									   INJECTION_VALUE TEXT,\
 									   URL_ID INTEGER,\
 									   TOOL_NAME VARCHAR(255) NOT NULL,\
@@ -42,7 +43,7 @@ public:
 
 	int insert_url_relationship(int parent_url_id, int child_url_id);
 
-	int insert_error(const char* error_type, const char* injection_value, const char* url, const char* tool_name, const char* response);
+	int insert_error(const char* error_type, const char* error_level, const char* injection_value, const char* url, const char* tool_name, const char* response);
 
 	int insert_parameter(const char* parameter_name, int url_id);
 
