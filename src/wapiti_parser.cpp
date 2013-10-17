@@ -4,6 +4,8 @@
 #include <string>
 
 int wapiti_parse(char* filename, database_handler* db) {
+const char *APP_NAME = "WAPITI";
+
 	pugi::xml_document doc;
 
 	if(!doc.load_file(filename)) {
@@ -34,7 +36,7 @@ int wapiti_parse(char* filename, database_handler* db) {
 					url_without_para = url_without_para.substr(0, n);
 				}
 
-				db->insert_error(str_bugType, bug_level, parameter, url_without_para.c_str(), "WAPITI", "");
+				db->insert_error(str_bugType, bug_level, parameter, url_without_para.c_str(), APP_NAME, "");
 
 				bug = bug.next_sibling("bug");
 			}
