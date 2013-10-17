@@ -86,13 +86,15 @@ int database_handler::insert_url_relationship(int parent_url_id, int child_url_i
 	return 1;
 }
 
-int database_handler::insert_error(const char* error_type, const char* injection_value, const char* url, const char* tool_name, const char* response) {
+int database_handler::insert_error(const char* error_type, const char* error_level, const char* injection_value, const char* url, const char* tool_name, const char* response) {
 	char* error_message = NULL;
 	std::string stmt;
 
-	stmt += "INSERT INTO ERRORS (ERROR_TYPE, INJECTION_VALUE, URL_ID, TOOL_NAME, RESPONSE) VALUES('";
+	stmt += "INSERT INTO ERRORS (ERROR_TYPE, ERROR_LEVEL, INJECTION_VALUE, URL_ID, TOOL_NAME, RESPONSE) VALUES('";
 	stmt += error_type;
-	stmt += "','";
+	stmt += "',";
+	stmt += error_level;
+	stmt += ",'";
 	stmt += injection_value;
 	stmt += "', (SELECT URL_ID FROM URLS WHERE URL='";
 	stmt += url;
