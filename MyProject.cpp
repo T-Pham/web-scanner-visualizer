@@ -3,6 +3,10 @@
 #include "./src/database_handler.hpp"
 #include <iostream>
 
+// Constants
+const char *FILE_FOR_WAPITI_TREE_PARSE = "testphp.vulnweb.com.xml";
+const char *FILE_FOR_WAPITI_PARSE = "vulnerabilities.xml";
+
 // Functions
 void start_database();
 void finalize_database();
@@ -35,6 +39,6 @@ void finalize_database() {
 
 // Parsers
 void parse_wapiti() {
-  wapiti_tree_parse("testphp.vulnweb.com.xml", db);
-	wapiti_parse("vulnerabilities.xml", db);
+  wapiti_tree_parse(FILE_FOR_WAPITI_TREE_PARSE, db);
+	wapiti_parse(FILE_FOR_WAPITI_PARSE, db);
 }

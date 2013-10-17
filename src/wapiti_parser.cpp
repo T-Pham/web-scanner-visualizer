@@ -3,9 +3,9 @@
 #include <iostream>
 #include <string>
 
-int wapiti_parse(char* filename, database_handler* db) {
 const char *APP_NAME = "WAPITI";
 
+int wapiti_parse(const char* filename, database_handler* db) {
 	pugi::xml_document doc;
 
 	if(!doc.load_file(filename)) {
@@ -50,7 +50,7 @@ const char *APP_NAME = "WAPITI";
 	return 1;
 }
 
-int wapiti_tree_parse(char* filename, database_handler* db){
+int wapiti_tree_parse(const char* filename, database_handler* db){
 	pugi::xml_document doc;
 
 	if(!doc.load_file(filename)) {
