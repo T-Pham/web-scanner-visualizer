@@ -1,5 +1,6 @@
 #include "pugixml.hpp"
 #include "database_handler.hpp"
+#include "wapiti_parser.h"
 #include <iostream>
 #include <string>
 
@@ -25,7 +26,7 @@ int wapiti_parse(const char* filename, database_handler* db) {
 			pugi::xml_node bug = bugList.child("bug");
 			while(bug){
 				const char* bug_level = bug.attribute("level").value();
-				const char* parameter = bug.child("parameter").first_child().value();
+				const char* injection_value = bug.child("parameter").first_child().value();
 				const char* info = bug.child("info").first_child().value();
 
 				std::string url_without_para;
@@ -36,8 +37,17 @@ int wapiti_parse(const char* filename, database_handler* db) {
 					url_without_para = url_without_para.substr(0, n);
 				}
 
-				db->insert_error(str_bugType, bug_level, parameter, url_without_para.c_str(), APP_NAME, "");
+				int error_id = db->insert_error(str_bugType, bug_level, injection_value, url_without_para.c_str(), APP_NAME, "");
 
+				if(error_id > -1) {
+					std::string* parameters = new std::string(injection_value);
+					while(!parameters->empty()) {
+						char* parameter = get_parameter(parameters);
+						if(parameter){
+							db->insert_parameter(parameter, error_id);
+						}
+					}
+				}
 				bug = bug.next_sibling("bug");
 			}
 			bugList = bugList.next_sibling("bugList");
@@ -80,7 +90,7 @@ int wapiti_tree_parse(const char* filename, database_handler* db){
 	while(form) {
 		std::string str;
 		str += form.attribute("url").value();
-		
+
 		int n = str.find("?");
 		if(n >= 0) {
 			str = str.substr(0, str.find("?"));
@@ -92,4 +102,23 @@ int wapiti_tree_parse(const char* filename, database_handler* db){
 	db->commit_transaction();
 
 	db->update_parent_url();
+}
+
+char* get_parameter(std::string* parameters) {
+	if(!parameters || parameters->empty()) {
+		return NULL;
+	}
+	else {
+		std::string parameter = parameters->substr(0, parameters->find_first_of("="));
+		
+		int n = parameters->find_first_of("&");
+		if(n == std::string::npos){
+			parameters->clear();
+		}
+		else{
+			parameters->erase(0, n+1);
+		}
+
+		return (char*) parameter.c_str();
+	}
 }

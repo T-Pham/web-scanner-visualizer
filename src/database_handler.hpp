@@ -3,28 +3,28 @@
 #include "sqlite3.h"
 
 static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
-									   CREATE TABLE URLS (\
-									   URL_ID INTEGER PRIMARY KEY,\
-									   URL TEXT NOT NULL,\
-									   METHOD VARCHAR(255) NOT NULL,\
-									   URL_PARENT_ID INTEGER, \
-									   UNIQUE(URL) ON CONFLICT ROLLBACK);\
-									   DROP TABLE IF EXISTS PARAMETERS;\
-									   CREATE TABLE PARAMETERS (\
-									   PARAMETER_ID INTEGER PRIMARY KEY,\
-									   PARAMETER_NAME VARCHAR(255) NOT NULL,\
-									   URL_ID INTEGER NOT NULL\
-									   );\
-									   DROP TABLE IF EXISTS ERRORS;\
-									   CREATE TABLE ERRORS (\
-									   ERROR_ID INTEGER PRIMARY KEY,\
-									   ERROR_TYPE VARCHAR(255) NOT NULL,\
-									   ERROR_LEVEL INTEGER,\
-									   INJECTION_VALUE TEXT,\
-									   URL_ID INTEGER,\
-									   TOOL_NAME VARCHAR(255) NOT NULL,\
-									   RESPONSE TEXT\
-									   );";
+									 CREATE TABLE URLS (\
+									 URL_ID INTEGER PRIMARY KEY,\
+									 URL TEXT NOT NULL,\
+									 METHOD VARCHAR(255) NOT NULL,\
+									 URL_PARENT_ID INTEGER, \
+									 UNIQUE(URL) ON CONFLICT ROLLBACK);\
+									 DROP TABLE IF EXISTS PARAMETERS;\
+									 CREATE TABLE PARAMETERS (\
+									 PARAMETER_ID INTEGER PRIMARY KEY,\
+									 PARAMETER_NAME VARCHAR(255) NOT NULL,\
+									 ERROR_ID INTEGER NOT NULL\
+									 );\
+									 DROP TABLE IF EXISTS ERRORS;\
+									 CREATE TABLE ERRORS (\
+									 ERROR_ID INTEGER PRIMARY KEY,\
+									 ERROR_TYPE VARCHAR(255) NOT NULL,\
+									 ERROR_LEVEL INTEGER,\
+									 INJECTION_VALUE TEXT,\
+									 URL_ID INTEGER,\
+									 TOOL_NAME VARCHAR(255) NOT NULL,\
+									 RESPONSE TEXT\
+									 );";
 
 class database_handler {
 	sqlite3* db;
