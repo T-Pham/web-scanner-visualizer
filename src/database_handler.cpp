@@ -42,6 +42,7 @@ void database_handler::commit_transaction(){
 	}
 }
 
+// insert and return url's id
 int database_handler::insert_url(const char* url,const char* method) {
 	char* error_message = NULL;
 	std::string stmt;
@@ -91,6 +92,7 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 	return sqlite3_last_insert_rowid(db);
 }
 
+// insert and return parameter's id
 int database_handler::insert_parameter(const char* parameter_name, int error_id) {
 	char* error_message = NULL;
 	std::stringstream s_url_id;
@@ -170,7 +172,4 @@ void database_handler::update_parent_url() {
 	}
 
 	sqlite3_finalize(sqlite_stmt1);
-}
-
-database_handler::~database_handler() {
 }

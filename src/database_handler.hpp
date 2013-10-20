@@ -49,8 +49,6 @@ public:
 	int insert_parameter(const char* parameter_name, int url_id);
 
 	void update_parent_url();
-
-	~database_handler();
 };
 
 #endif
