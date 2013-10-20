@@ -1,10 +1,8 @@
-all: web_scanner_visualizer
+all: web_scanner_visualizer.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o
+	g++ web_scanner_visualizer.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o -o web_scanner_visualizer -pthread -ldl -w
 
-web_scanner_visualizer: MyProject.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o
-	g++ MyProject.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o -o web_scanner_visualizer -pthread -ldl -w
-
-MyProject.o: MyProject.cpp
-	g++ -c MyProject.cpp -w
+web_scanner_visualizer.o: web_scanner_visualizer.cpp
+	g++ -c web_scanner_visualizer.cpp -w
 
 wapiti_parser.o: ./src/wapiti_parser.cpp
 	g++ -c ./src/wapiti_parser.cpp -w
