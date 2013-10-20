@@ -9,7 +9,7 @@ void create_json() {
 	std::ofstream file;
 	database_handler db_handler;
 
-	file.open("output.json");
+	file.open("output.js");
 	db_handler.open_database();
 
 	std::string str1;
@@ -48,7 +48,7 @@ void create_json() {
 	}
 	sqlite3_finalize(sqlite_stmt);
 
-	file << "{\"nodes\": [" << str1 << "], \"edges\": [" << str2 << "]}";
+	file << "var dataset = {\"nodes\": [" << str1 << "], \"edges\": [" << str2 << "]};";
 
 	db_handler.close_database();
 	file.close();

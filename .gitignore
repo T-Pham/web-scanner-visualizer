@@ -3,5 +3,5 @@
 *.sqlite
 *.o
 *.exe
-*.json
+*.js
 web_scanner_visualizer
