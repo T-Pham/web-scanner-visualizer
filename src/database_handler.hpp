@@ -27,8 +27,9 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									 );";
 
 class database_handler {
-	sqlite3* db;
 public:
+	sqlite3* db;
+
 	int initialize_database();
 
 	void open_database();

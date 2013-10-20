@@ -19,7 +19,7 @@ sqlite3.o: ./src/sqlite3.c
 	gcc -c ./src/sqlite3.c -w
 
 json_creator.o: ./src/json_creator.cpp
-	gcc -c ./src/json_creator.cpp -w
+	g++ -c ./src/json_creator.cpp -w
 
 clean:
 	-rm *.o

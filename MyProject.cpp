@@ -1,6 +1,7 @@
 #include "./src/wapiti_parser.h"
 #include "./src/sqlite3.h"
 #include "./src/database_handler.hpp"
+#include "./src/json_creator.hpp"
 #include <iostream>
 
 // Constants
@@ -22,6 +23,7 @@ int main()
   start_database();
 	parse_wapiti();
   finalize_database();
+  create_json();
 	return 1;
 }
 
