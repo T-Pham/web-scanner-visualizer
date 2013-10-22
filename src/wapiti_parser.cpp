@@ -42,11 +42,13 @@ int wapiti_parse(const char* filename, database_handler* db) {
 				if(error_id > -1) {
 					std::string* parameters = new std::string(injection_value);
 					while(!parameters->empty()) {
-						char* parameter = get_parameter(parameters);
-						if(parameter){
-							db->insert_parameter(parameter, error_id);
+						std::string* parameter = get_parameter(parameters);
+						if(parameter) {
+							db->insert_parameter(parameter->c_str(), error_id);
 						}
+						delete(parameter);
 					}
+					delete(parameters);
 				}
 				bug = bug.next_sibling("bug");
 			}
@@ -104,12 +106,12 @@ int wapiti_tree_parse(const char* filename, database_handler* db){
 	db->update_parent_url();
 }
 
-char* get_parameter(std::string* parameters) {
+std::string* get_parameter(std::string* parameters) {
 	if(!parameters || parameters->empty()) {
 		return NULL;
 	}
 	else {
-		std::string parameter = parameters->substr(0, parameters->find_first_of("="));
+		std::string* parameter = new std::string(parameters->substr(0, parameters->find_first_of("=")));
 		
 		int n = parameters->find_first_of("&");
 		if(n == std::string::npos){
@@ -119,6 +121,6 @@ char* get_parameter(std::string* parameters) {
 			parameters->erase(0, n+1);
 		}
 
-		return (char*) parameter.c_str();
+		return parameter;
 	}
 }

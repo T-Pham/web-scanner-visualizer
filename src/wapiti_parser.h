@@ -5,6 +5,6 @@
 
 int wapiti_parse(const char* filename, database_handler* db);
 int wapiti_tree_parse(const char* filename, database_handler* db);
-char* get_parameter(std::string* parameters);
+std::string* get_parameter(std::string* parameters);
 
 #endif
