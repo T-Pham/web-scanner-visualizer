@@ -1,0 +1,9 @@
+body {
+	text-align: center;
+}
+#visualization {
+	display: inline-block;
+	width: auto;
+	height: auto;
+	border: solid 2px;
+}

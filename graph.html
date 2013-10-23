@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <title>Web Visualizer</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script
         src="http://d3js.org/d3.v3.min.js"
         charset="utf-8">
@@ -10,7 +11,6 @@
         charset="utf-8">
     </script>
     <script>
-
         function neighbor(i) {
             var edges = dataset['edges'];
             var result = [];
@@ -38,7 +38,7 @@
             var outerRadius = 13;
             var innerRadius = 0;
 
-            var svg = d3.select("body")
+            var svg = d3.select("#visualization")
                     .append("svg")
                     .attr("height", h)
                     .attr("width", w);
@@ -47,7 +47,7 @@
                     .nodes(dataset.nodes)
                     .links(dataset.edges)
                     .size([w, h])
-                    .linkDistance([100])
+                    .linkDistance([70])
                     .charge(-900)
                     .start();
 
@@ -58,91 +58,46 @@
                     .style("stroke", "#ccc")
                     .style("stroke-width", 1);
 
-            var nodes = svg.selectAll("g.nodes")
+            var nodes = svg.selectAll("g")
                     .data(dataset.nodes)
                     .enter()
-                    .append("g")
-                    .attr("class", "nodes")
+                    .append("svg:g")
                     .call(force.drag);
 
-            var outlines = svg.selectAll("g.nodes")
-                    .append("svg:circle")
-                    .attr("class", "outline")
-                    .attr('r', outerRadius + 0.5)
-                    .style('stroke', 'none')
-                    .style('stroke-width', 3)
-                    .style('fill-opacity', 0);
-
-            nodes.on("mouseover", function (d, i) {
-
-                nodes.each(function (d2, i2) {
-                    var neighbors = neighbor(i);
-                    for (var k = 0; k < neighbors.length; k++) {
-                        if (i2 === neighbors[k] || i2 === i) {
-                            d3.select(this.firstElementChild).style('stroke', 'crimson');
-                            return null;
-                        }
-                    }
-                    d3.select(nodes[0][i2]).style('fill-opacity', 0.75);
-                });
-            });
-
-            nodes.on("mouseout", function (d, i) {
-                nodes.style('fill-opacity', 1);
-                outlines.style('stroke', 'none');
-            });
-
-            var arc = d3.svg.arc()
-                    .innerRadius(innerRadius)
-                    .outerRadius(outerRadius);
-
-            var arcs = nodes.selectAll("g.arc")
-                    .data(pie(dataset1))
-                    .enter()
-                    .append("g")
-                    .attr("class", "arc");
-
-            arcs.append("path")
-                    .attr("fill", function (d, i) {
+            nodes.append("circle")
+                    .attr("r", 10)
+                    .style("fill", function (d, i) {
                         return colors(i);
-                    })
-                    .attr("d", arc);
+                    });
+
+            nodes.append("svg:title")
+                    .text(function (d) { return d.node.valueOf(); });
+
 
             force.on("tick", function () {
                 edges.attr("x1", function (d) {
                     return d.source.x;
                 })
-                        .attr("y1", function (d) {
-                            return d.source.y;
-                        })
-                        .attr("x2", function (d) {
-                            return d.target.x;
-                        })
-                        .attr("y2", function (d) {
-                            return d.target.y;
-                        });
-                nodes.attr("cx", function (d) {
-                    return d.x;
+                .attr("y1", function (d) {
+                    return d.source.y;
                 })
-                        .attr("cy", function (d) {
-                            return d.y;
-                        });
+                .attr("x2", function (d) {
+                    return d.target.x;
+                })
+                .attr("y2", function (d) {
+                    return d.target.y;
+                });
 
-                nodes.selectAll("g.arc")
-                        .attr("transform", function (d) {
-                            var current_node = d3.select(this.parentNode);
-                            return "translate(" + current_node.attr("cx") + "," + current_node.attr("cy") + ")";
-                        });
 
-                nodes.selectAll("circle")
-                        .attr("transform", function (d) {
-                            var current_node = d3.select(this.parentNode);
-                            return "translate(" + current_node.attr("cx") + "," + current_node.attr("cy") + ")";
-                        });
+                nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
             });
         }
         ;
         window.onload = loader;
     </script>
 </head>
-<body></body>
+<body>
+    <div id="visualization">
+    </div>
+</body>
