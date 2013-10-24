@@ -1,5 +1,6 @@
 #include "helper.hpp"
 #include "database_handler.hpp"
+#include <sstream>
 #include <string>
 
 // Helper Functions
@@ -44,4 +45,22 @@ std::string* get_parameter(std::string* parameters) {
 
 		return parameter;
 	}
+}
+
+int frequency_of_error(int url_id, database_handler* db_handler) {
+	sqlite3_stmt* sqlite_stmt;
+	std::string sql_stmt;
+	std::stringstream ss;
+	ss << url_id;
+	sql_stmt += "SELECT COUNT(DISTINCT TOOL_NAME) FROM ERRORS WHERE URL_ID=";
+	sql_stmt += ss.str();
+	sql_stmt += ";";
+	if(sqlite3_prepare(db_handler->db, sql_stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
+		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
+			return (int) sqlite3_column_int(sqlite_stmt, 0);
+		}
+	}
+	sqlite3_finalize(sqlite_stmt);
+
+	return -1;
 }

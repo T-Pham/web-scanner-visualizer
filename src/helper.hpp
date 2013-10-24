@@ -8,4 +8,6 @@ void insert_error_with_url(const char * url_with_para, const char* bug_type, con
 
 std::string* get_parameter(std::string* parameters);
 
+int frequency_of_error(int url_id, database_handler* db_handler);
+
 #endif

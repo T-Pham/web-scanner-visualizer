@@ -67,7 +67,19 @@
             nodes.append("circle")
                     .attr("r", 10)
                     .style("fill", function (d, i) {
-                        return colors(i);
+                        switch (d.number_errors.valueOf()) {
+                            case 1:
+                                return "yellow"
+                                break;
+                            case 2:
+                                return "Orange";
+                                break;
+                            case 3:
+                                return "#FF4500";
+                                break;
+                            default:
+                                return "SteelBlue";
+                        }
                     });
 
             nodes.append("svg:title")
