@@ -23,7 +23,8 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									 INJECTION_VALUE TEXT,\
 									 URL_ID INTEGER,\
 									 TOOL_NAME VARCHAR(255) NOT NULL,\
-									 RESPONSE TEXT\
+									 RESPONSE TEXT,\
+									 CONSTRAINT UNIQUE_ERROR UNIQUE(URL_ID, INJECTION_VALUE, TOOL_NAME)\
 									 );";
 
 class database_handler {

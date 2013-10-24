@@ -1,6 +1,7 @@
 #include "./src/wapiti_parser.h"
 #include "./src/sqlite3.h"
 #include "./src/database_handler.hpp"
+#include "./src/skipfish_parser.hpp"
 #include "./src/json_creator.hpp"
 
 // Constants
@@ -19,9 +20,10 @@ database_handler* db;
 // main
 int main()
 {
-  start_database();
+	start_database();
 	parse_wapiti();
-  finalize_database();
+	skipfish_parse("samples.js", db);
+	finalize_database();
 	create_json();
 	return 1;
 }

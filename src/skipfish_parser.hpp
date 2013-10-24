@@ -1,0 +1,1 @@
+int skipfish_parse(const char* filename, database_handler* db);
