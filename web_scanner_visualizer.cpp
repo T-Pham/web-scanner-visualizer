@@ -7,12 +7,14 @@
 // Constants
 const char *FILE_FOR_WAPITI_TREE_PARSE = "testphp.vulnweb.com.xml";
 const char *FILE_FOR_WAPITI_PARSE = "vulnerabilities.xml";
+const char *FILE_FOR_SKIPFISH_PARSE = "samples.js";
 
 // Functions
 void start_database();
 void finalize_database();
 
 void parse_wapiti();
+void parse_skipfish();
 
 // Variables
 database_handler* db;
@@ -22,7 +24,7 @@ int main()
 {
 	start_database();
 	parse_wapiti();
-	skipfish_parse("samples.js", db);
+	parse_skipfish();
 	finalize_database();
 	create_json();
 	return 1;
@@ -36,12 +38,16 @@ void start_database() {
 }
 
 void finalize_database() {
-  db->close_database();
+	db->close_database();
 	delete db;
 }
 
 // Parsers
 void parse_wapiti() {
-  wapiti_tree_parse(FILE_FOR_WAPITI_TREE_PARSE, db);
+	wapiti_tree_parse(FILE_FOR_WAPITI_TREE_PARSE, db);
 	wapiti_parse(FILE_FOR_WAPITI_PARSE, db);
+}
+
+void parse_skipfish() {
+	skipfish_parse(FILE_FOR_SKIPFISH_PARSE, db);
 }

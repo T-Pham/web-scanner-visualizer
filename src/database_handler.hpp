@@ -1,5 +1,6 @@
 #ifndef DATABASE_HANDLER_HPP
 #define DATABASE_HANDLER_HPP
+
 #include "sqlite3.h"
 
 static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
@@ -8,7 +9,7 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									 URL TEXT NOT NULL,\
 									 METHOD VARCHAR(255) NOT NULL,\
 									 URL_PARENT_ID INTEGER, \
-									 UNIQUE(URL) ON CONFLICT ROLLBACK);\
+									 UNIQUE(URL));\
 									 DROP TABLE IF EXISTS PARAMETERS;\
 									 CREATE TABLE PARAMETERS (\
 									 PARAMETER_ID INTEGER PRIMARY KEY,\

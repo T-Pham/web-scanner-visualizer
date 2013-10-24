@@ -1,5 +1,5 @@
-all: web_scanner_visualizer.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o skipfish_parser.o
-	g++ web_scanner_visualizer.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o skipfish_parser.o -o web_scanner_visualizer -pthread -ldl -w
+all: web_scanner_visualizer.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o skipfish_parser.o helper.o
+	g++ web_scanner_visualizer.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o skipfish_parser.o helper.o -o web_scanner_visualizer -pthread -ldl -w
 
 web_scanner_visualizer.o: web_scanner_visualizer.cpp
 	g++ -c web_scanner_visualizer.cpp -w
@@ -21,6 +21,9 @@ json_creator.o: ./src/json_creator.cpp
 
 skipfish_parser.o: ./src/skipfish_parser.cpp
 	g++ -c ./src/skipfish_parser.cpp
+
+helper.o: ./src/helper.cpp
+	g++ -c ./src/helper.cpp
 
 clean:
 	-rm *.o
