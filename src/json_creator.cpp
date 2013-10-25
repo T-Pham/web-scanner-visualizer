@@ -54,7 +54,8 @@ void create_json() {
 	sqlite3_finalize(sqlite_stmt);
 
 	file << "var dataset = {\"nodes\": [" << str1 << "], \"edges\": [" << str2 << "]};";
-
-	db_handler->close_database();
 	file.close();
+	
+	db_handler->close_database();
+	delete db_handler;
 }

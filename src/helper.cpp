@@ -55,12 +55,14 @@ int frequency_of_error(int url_id, database_handler* db_handler) {
 	sql_stmt += "SELECT COUNT(DISTINCT TOOL_NAME) FROM ERRORS WHERE URL_ID=";
 	sql_stmt += ss.str();
 	sql_stmt += ";";
+
+	int result = -1;
 	if(sqlite3_prepare(db_handler->db, sql_stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
 		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
-			return (int) sqlite3_column_int(sqlite_stmt, 0);
+			result = (int) sqlite3_column_int(sqlite_stmt, 0);
 		}
 	}
 	sqlite3_finalize(sqlite_stmt);
 
-	return -1;
+	return result;
 }

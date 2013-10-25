@@ -3,7 +3,6 @@
 #include "helper.hpp"
 #include <fstream>
 #include <string.h>
-#include <sstream>
 
 const char * SKIPFISH_APP_NAME = "SKIPFISH";
 const char * XSS_ERROR1 = "40101";
@@ -12,12 +11,11 @@ const char * XSS_ERROR3 = "40105";
 const char * SQLI_ERROR1 = "50103";
 const char * SQLI_ERROR2 = "50201";
 
-int skipfish_parse(const char* filename, database_handler* db) {
+int skipfish_parse(const char* filename, database_handler* db_handler) {
 	std::string line;
 	std::ifstream file;
 
-	db->open_database();
-	db->begin_transaction();
+	db_handler->begin_transaction();
 
 	file.open(filename);
 	getline(file, line);
@@ -55,7 +53,7 @@ int skipfish_parse(const char* filename, database_handler* db) {
 				line.erase(0, 14);
 				int n = line.find_first_of("'");
 
-				insert_error_with_url(line.substr(0, n).c_str(), type.c_str(), severity_level.c_str(), "", SKIPFISH_APP_NAME, "", db);
+				insert_error_with_url(line.substr(0, n).c_str(), type.c_str(), severity_level.c_str(), "", SKIPFISH_APP_NAME, "", db_handler);
 			}
 			getline(file, line);
 		}
@@ -66,7 +64,7 @@ int skipfish_parse(const char* filename, database_handler* db) {
 	}
 
 	file.close();
-	db->commit_transaction();
-	db->close_database();
+	db_handler->commit_transaction();
+	
 	return 1;
 }

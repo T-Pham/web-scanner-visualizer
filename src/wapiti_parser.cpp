@@ -6,7 +6,7 @@
 
 const char *WAPITI_APP_NAME = "WAPITI";
 
-int wapiti_parse(const char* filename, database_handler* db) {
+int wapiti_parse(const char* filename, database_handler* db_handler) {
 	pugi::xml_document doc;
 
 	if(!doc.load_file(filename)) {
@@ -17,7 +17,7 @@ int wapiti_parse(const char* filename, database_handler* db) {
 
 	pugi::xml_node bugType = bugTypeList.child("bugType");
 
-	db->begin_transaction();
+	db_handler->begin_transaction();
 
 	while(bugType) {
 		const char* bug_type = bugType.first_attribute().value();
@@ -29,7 +29,7 @@ int wapiti_parse(const char* filename, database_handler* db) {
 				const char* injection_value = bug.child("parameter").first_child().value();
 				const char* info = bug.child("info").first_child().value();
 
-				insert_error_with_url(bug.child("url").first_child().value(), bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db);
+				insert_error_with_url(bug.child("url").first_child().value(), bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
 
 				bug = bug.next_sibling("bug");
 			}
@@ -38,12 +38,12 @@ int wapiti_parse(const char* filename, database_handler* db) {
 		bugType = bugType.next_sibling("bugType");
 	}
 
-	db-> commit_transaction();
+	db_handler-> commit_transaction();
 
 	return 1;
 }
 
-int wapiti_tree_parse(const char* filename, database_handler* db){
+int wapiti_tree_parse(const char* filename, database_handler* db_handler){
 	pugi::xml_document doc;
 
 	if(!doc.load_file(filename)) {
@@ -54,7 +54,7 @@ int wapiti_tree_parse(const char* filename, database_handler* db){
 
 	pugi::xml_node URL = browedURLS.child("url_data");
 
-	db->begin_transaction();
+	db_handler->begin_transaction();
 	while(URL) {
 		std::string str;
 		str += URL.first_attribute().value();
@@ -64,7 +64,7 @@ int wapiti_tree_parse(const char* filename, database_handler* db){
 			str = str.substr(0, str.find("?"));
 		}
 
-		db->insert_url(str.c_str(), "GET");
+		db_handler->insert_url(str.c_str(), "GET");
 		URL = URL.next_sibling("url_data");
 	}
 
@@ -79,12 +79,12 @@ int wapiti_tree_parse(const char* filename, database_handler* db){
 			str = str.substr(0, str.find("?"));
 		}
 
-		db->insert_url(str.c_str(), "POST");
+		db_handler->insert_url(str.c_str(), "POST");
 		form =  form.next_sibling("form");
 	}
-	db->commit_transaction();
+	db_handler->commit_transaction();
 
-	db->update_parent_url();
+	db_handler->update_parent_url();
 
 	return 1;
 }
