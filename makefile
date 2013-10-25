@@ -1,29 +1,23 @@
-all: web_scanner_visualizer.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o skipfish_parser.o helper.o
-	g++ web_scanner_visualizer.o wapiti_parser.o pugixml.o database_handler.o sqlite3.o json_creator.o skipfish_parser.o helper.o -o web_scanner_visualizer -pthread -ldl -w
+GCC=gcc
+GPP=g++
+CFLAGS=-c -w
+LDFLAGS=-pthread -ldl -w
+SOURCES_CPP=web_scanner_visualizer.cpp ./src/wapiti_parser.cpp ./src/pugixml.cpp ./src/database_handler.cpp ./src/json_creator.cpp ./src/skipfish_parser.cpp ./src/helper.cpp
+SOURCES_C=./src/sqlite3.c
+OBJECTS_CPP=$(SOURCES_CPP:.cpp=.o)
+OBJECTS_C=$(SOURCES_C:.c=.o)
+EXECUTABLE=web_scanner_visualizer
 
-web_scanner_visualizer.o: web_scanner_visualizer.cpp
-	g++ -c web_scanner_visualizer.cpp -w
+all: $(SOURCES_CPP) $(SOURCES_C) $(EXECUTABLE)
 
-wapiti_parser.o: ./src/wapiti_parser.cpp
-	g++ -c ./src/wapiti_parser.cpp -w
+$(EXECUTABLE): $(OBJECTS_CPP) $(OBJECTS_C)
+	$(GPP) $(LDFLAGS) $^ -o $@
 
-pugixml.o: ./src/pugixml.cpp
-	g++ -c ./src/pugixml.cpp -w
+.cpp.o:
+	$(GPP) $(CFLAGS) $< -o $@
 
-database_handler.o: ./src/database_handler.cpp
-	g++ -c ./src/database_handler.cpp -w
-
-sqlite3.o: ./src/sqlite3.c
-	gcc -c ./src/sqlite3.c -w
-
-json_creator.o: ./src/json_creator.cpp
-	g++ -c ./src/json_creator.cpp -w
-
-skipfish_parser.o: ./src/skipfish_parser.cpp
-	g++ -c ./src/skipfish_parser.cpp
-
-helper.o: ./src/helper.cpp
-	g++ -c ./src/helper.cpp
+.c.o:
+	$(GCC) $(CFLAGS) $< -o $@
 
 clean:
-	-rm *.o
+	-rm -f $(OBJECTS_CPP) $(OBJECTS_C) $(EXECUTABLE)
