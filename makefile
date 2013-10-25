@@ -2,7 +2,7 @@ GCC=gcc
 GPP=g++
 CFLAGS=-c -w
 LDFLAGS=-pthread -ldl -w
-SOURCES_CPP=web_scanner_visualizer.cpp ./src/wapiti_parser.cpp ./src/pugixml.cpp ./src/database_handler.cpp ./src/json_creator.cpp ./src/skipfish_parser.cpp ./src/helper.cpp
+SOURCES_CPP=main.cpp ./src/wapiti_parser.cpp ./src/pugixml.cpp ./src/database_handler.cpp ./src/json_creator.cpp ./src/skipfish_parser.cpp ./src/helper.cpp
 SOURCES_C=./src/sqlite3.c
 OBJECTS_CPP=$(SOURCES_CPP:.cpp=.o)
 OBJECTS_C=$(SOURCES_C:.c=.o)
