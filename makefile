@@ -1,16 +1,14 @@
-GCC=gcc
 GPP=g++
+GCC=gcc
 CFLAGS=-c -w
 LDFLAGS=-pthread -ldl -w
-SOURCES_CPP=main.cpp ./src/wapiti_parser.cpp ./src/pugixml.cpp ./src/database_handler.cpp ./src/json_creator.cpp ./src/skipfish_parser.cpp ./src/helper.cpp
-SOURCES_C=./src/sqlite3.c
-OBJECTS_CPP=$(SOURCES_CPP:.cpp=.o)
-OBJECTS_C=$(SOURCES_C:.c=.o)
+SOURCES=main.cpp $(wildcard ./src/*.c*)
+OBJECTS=$(addsuffix .o,$(basename $(SOURCES)))
 EXECUTABLE=web_scanner_visualizer
 
-all: $(SOURCES_CPP) $(SOURCES_C) $(EXECUTABLE)
+all: $(SOURCES) $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS_CPP) $(OBJECTS_C)
+$(EXECUTABLE): $(OBJECTS)
 	$(GPP) $(LDFLAGS) $^ -o $@
 
 .cpp.o:
@@ -20,4 +18,4 @@ $(EXECUTABLE): $(OBJECTS_CPP) $(OBJECTS_C)
 	$(GCC) $(CFLAGS) $< -o $@
 
 clean:
-	-rm -f $(OBJECTS_CPP) $(OBJECTS_C) $(EXECUTABLE)
+	rm -f $(OBJECTS) $(EXECUTABLE)
