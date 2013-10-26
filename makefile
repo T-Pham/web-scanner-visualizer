@@ -9,7 +9,7 @@ EXECUTABLE=web_scanner_visualizer
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(GPP) $(LDFLAGS) $^ -o $@
+	$(GPP) $^ -o $@ $(LDFLAGS)
 
 .cpp.o:
 	$(GPP) $(CFLAGS) $< -o $@
