@@ -28,6 +28,23 @@ void insert_error_with_url(const char * url_with_para, const char* bug_type, con
 	}
 }
 
+// Override
+void insert_error_with_url(const char* url_with_para, const char* param, const char* bug_type, const char* bug_level, const char* injection_value, const char* tool_name, const char* info, database_handler* db) {
+	std::string url_without_para;
+	url_without_para += url_with_para;
+	int n = url_without_para.find("?");
+
+	if(n >= 0) {
+		url_without_para = url_without_para.substr(0, n);
+	}
+
+	int error_id = db->insert_error(bug_type, bug_level, injection_value, url_without_para.c_str(), tool_name, info);
+
+	if(error_id > -1) {
+		db->insert_parameter(param, error_id);
+	}
+}
+
 std::string* get_parameter(std::string* parameters) {
 	if(!parameters || parameters->empty()) {
 		return NULL;

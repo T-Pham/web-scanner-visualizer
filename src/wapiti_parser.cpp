@@ -1,6 +1,6 @@
 #include "pugixml.hpp"
 #include "database_handler.hpp"
-#include "wapiti_parser.h"
+#include "wapiti_parser.hpp"
 #include <iostream>
 #include <string>
 
@@ -26,10 +26,10 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 			pugi::xml_node bug = bugList.child("bug");
 			while(bug){
 				const char* bug_level = bug.attribute("level").value();
-				const char* injection_value = bug.child("parameter").first_child().value();
-				const char* info = bug.child("info").first_child().value();
+				const char* injection_value = bug.child("parameter").child_value();
+				const char* info = bug.child("info").child_value();
 
-				insert_error_with_url(bug.child("url").first_child().value(), bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
+				insert_error_with_url(bug.child("url").child_value(), bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
 
 				bug = bug.next_sibling("bug");
 			}

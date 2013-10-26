@@ -122,7 +122,7 @@ void database_handler::update_parent_url() {
 		while(sqlite3_step(sqlite_stmt1) == SQLITE_ROW) {
 			char* child_id = (char*)sqlite3_column_text(sqlite_stmt1, 0);
 			std::string url = (char*)sqlite3_column_text(sqlite_stmt1, 1);
-			url.erase(0, (url.find_first_of("//") + 2));
+			url.erase(0, (url.find("//") + 2));
 
 			int n = url.find_last_of("/");
 			if(n != std::string::npos && n == url.length() - 1){
