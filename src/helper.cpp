@@ -64,14 +64,16 @@ std::string* get_parameter(std::string* parameters) {
 	}
 }
 
-int frequency_of_error(int url_id, database_handler* db_handler) {
+int frequency_of_error_by_type(int url_id, char* type, database_handler* db_handler) {
 	sqlite3_stmt* sqlite_stmt;
 	std::string sql_stmt;
 	std::stringstream ss;
 	ss << url_id;
 	sql_stmt += "SELECT COUNT(DISTINCT TOOL_NAME) FROM ERRORS WHERE URL_ID=";
 	sql_stmt += ss.str();
-	sql_stmt += ";";
+	sql_stmt += " AND ERROR_TYPE='";
+	sql_stmt += type;
+	sql_stmt += "';";
 
 	int result = -1;
 	if(sqlite3_prepare(db_handler->db, sql_stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {

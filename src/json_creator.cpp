@@ -29,8 +29,12 @@ void create_json() {
 			}
 			str1 += "{\"node\": \"";
 			str1 += url;
-			str1 += "\", \"number_errors\":";
-			ss << frequency_of_error(current_id + 1, db_handler);
+			str1 += "\", \"sqli_errors\":";
+			ss << frequency_of_error_by_type(current_id + 1, "SQL Injection", db_handler);
+			str1 += ss.str();
+			ss.str("");
+			str1 += ", \"xss_errors\":";
+			ss << frequency_of_error_by_type(current_id + 1, "Cross Site Scripting", db_handler);
 			str1 += ss.str();
 			ss.str("");
 			str1 += "}";

@@ -11,6 +11,8 @@
         charset="utf-8">
     </script>
     <script>
+        var toggle = 1;
+
         function neighbor(i) {
             var edges = dataset['edges'];
             var result = [];
@@ -47,8 +49,8 @@
                     .nodes(dataset.nodes)
                     .links(dataset.edges)
                     .size([w, h])
-                    .linkDistance([70])
-                    .charge(-900)
+                    .linkDistance([50])
+                    .charge(-500)
                     .start();
 
             var edges = svg.selectAll("line")
@@ -67,7 +69,7 @@
             nodes.append("circle")
                     .attr("r", 10)
                     .style("fill", function (d, i) {
-                        switch (d.number_errors.valueOf()) {
+                        switch (d.sqli_errors.valueOf()) {
                             case 1:
                                 return "yellow"
                                 break;
@@ -100,16 +102,54 @@
                     return d.target.y;
                 });
 
-
-                nodes.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+                nodes.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
 
             });
+
+            d3.select('#toggle').on("click", function (d, i) {
+                console.log(toggle);
+                nodes.selectAll("circle")
+                   .transition().duration(500)
+                   .style("fill", function (d, i) {
+                       var n;
+                       if (toggle == 1) {
+                           n = d.xss_errors.valueOf();
+                           d3.select("#toggle").text("XSS");
+                       }
+                       else {
+                           n = d.sqli_errors.valueOf();
+                           d3.select("#toggle").text("SQLI");
+                       }
+                       switch (n) {
+                           case 1:
+                               return "yellow"
+                               break;
+                           case 2:
+                               return "Orange";
+                               break;
+                           case 3:
+                               return "#FF4500";
+                               break;
+                           default:
+                               return "SteelBlue";
+                       }
+                   })
+                ;
+                if (toggle == 1) {
+                    toggle = 0
+                }
+                else {
+                    toggle = 1;
+                }
+            });
         }
-        ;
+
         window.onload = loader;
     </script>
 </head>
 <body>
     <div id="visualization">
     </div>
+    <br />
+    <a id="toggle" href="#">SQLI</a>
 </body>
