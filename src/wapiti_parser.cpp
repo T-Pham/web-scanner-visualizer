@@ -5,6 +5,8 @@
 #include <string>
 
 const char *WAPITI_APP_NAME = "WAPITI";
+const char *WAPITI_XSS_PATTERN = "Cross Site Scripting";
+const char *WAPITI_SQLI_PATTERN = "SQL Injection";
 
 int wapiti_parse(const char* filename, database_handler* db_handler) {
 	pugi::xml_document doc;
@@ -29,7 +31,25 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 				const char* injection_value = bug.child("parameter").child_value();
 				const char* info = bug.child("info").child_value();
 
-				insert_error_with_url(bug.child("url").child_value(), bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
+				bool skip = false;
+				std::string str;
+				str += bug_type;
+
+				if(str.find(WAPITI_XSS_PATTERN) != std::string::npos) {
+					bug_type = "Cross Site Scripting";
+				}
+				else {
+					if(str.find(WAPITI_SQLI_PATTERN) != std::string::npos) {
+						bug_type = "SQL Injection";
+					}
+					else {
+						skip = true;
+					}
+				}
+
+				if(!skip) {
+					insert_error_with_url(bug.child("url").child_value(), bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
+				}
 
 				bug = bug.next_sibling("bug");
 			}

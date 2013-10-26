@@ -18,6 +18,8 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 	pugi::xml_node issues = doc.child("arachni_report").child("issues");
 	pugi::xml_node issue = issues.child("issue");
 
+	db_handler->begin_transaction();
+	
 	while(issue) {
 		const char* url = issue.child("url").child_value();
 		const char* error_type = issue.child("name").child_value();
@@ -47,4 +49,6 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 
 		issue = issue.next_sibling("issue");
 	}
+
+	db_handler->commit_transaction();
 }
