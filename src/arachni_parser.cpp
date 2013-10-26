@@ -5,6 +5,8 @@
 #include <string>
 
 const char *ARACHNI_APP_NAME = "ARACHNI";
+const char *ARACHNI_XSS_PATTERN = "Cross-Site Scripting";
+const char *ARACHNI_SQLI_PATTERN = "SQL Injection";
 
 int arachni_parse (const char* filename, database_handler* db_handler) {
 	pugi::xml_document doc;
@@ -27,11 +29,11 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 		std::string str;
 		str += error_type;
 
-		if(str.find("Cross-Site Scripting") != std::string::npos) {
+		if(str.find(ARACHNI_XSS_PATTERN) != std::string::npos) {
 			error_type = "Cross Site Scripting";
 		}
 		else {
-			if(str.find("SQL Injection") != std::string::npos) {
+			if(str.find(ARACHNI_SQLI_PATTERN) != std::string::npos) {
 				error_type = "SQL Injection";
 			}
 			else {
