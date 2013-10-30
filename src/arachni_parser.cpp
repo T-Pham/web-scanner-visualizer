@@ -4,10 +4,6 @@
 #include "pugixml.hpp"
 #include <string>
 
-const char *ARACHNI_APP_NAME = "ARACHNI";
-const char *ARACHNI_XSS_PATTERN = "Cross-Site Scripting";
-const char *ARACHNI_SQLI_PATTERN = "SQL Injection";
-
 int arachni_parse (const char* filename, database_handler* db_handler) {
 	pugi::xml_document doc;
 

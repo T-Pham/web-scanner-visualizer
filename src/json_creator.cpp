@@ -2,6 +2,9 @@
 #include "json_creator.hpp"
 #include "helper.hpp"
 #include "database_handler.hpp"
+#include "wapiti_parser.hpp"
+#include "skipfish_parser.hpp"
+#include "arachni_parser.hpp"
 #include <fstream>
 #include <sstream>
 
@@ -29,15 +32,53 @@ void create_json() {
 			}
 			str1 += "{\"node\": \"";
 			str1 += url;
-			str1 += "\", \"sqli_errors\":";
-			ss << frequency_of_error(current_id + 1, "SQL Injection", db_handler);
+
+			// open sql
+			str1 += "\", \"sql\": {\"total\":";
+			ss << number_of_error(current_id + 1, "SQL Injection", db_handler);
 			str1 += ss.str();
 			ss.str("");
-			str1 += ", \"xss_errors\":";
-			ss << frequency_of_error(current_id + 1, "Cross Site Scripting", db_handler);
+
+			str1 += ", \"wapiti\":";
+			ss << number_of_error_by_tool(current_id + 1, WAPITI_APP_NAME, "SQL Injection", db_handler);
 			str1 += ss.str();
 			ss.str("");
-			str1 += "}";
+
+			str1 += ", \"skipfish\":";
+			ss << number_of_error_by_tool(current_id + 1, SKIPFISH_APP_NAME, "SQL Injection", db_handler);
+			str1 += ss.str();
+			ss.str("");
+
+			
+			str1 += ", \"arachni\":";
+			ss << number_of_error_by_tool(current_id + 1, ARACHNI_APP_NAME, "SQL Injection", db_handler);
+			str1 += ss.str();
+			ss.str("");
+
+			// close sql, open xss
+			str1 += "},  \"xss\": {\"total\": ";
+			ss << number_of_error(current_id + 1, "SQL Injection", db_handler);
+			str1 += ss.str();
+			ss.str("");
+
+			str1 += ", \"wapiti\":";
+			ss << number_of_error_by_tool(current_id + 1, WAPITI_APP_NAME, "SQL Injection", db_handler);
+			str1 += ss.str();
+			ss.str("");
+
+			str1 += ", \"skipfish\":";
+			ss << number_of_error_by_tool(current_id + 1, SKIPFISH_APP_NAME, "SQL Injection", db_handler);
+			str1 += ss.str();
+			ss.str("");
+
+			
+			str1 += ", \"arachni\":";
+			ss << number_of_error_by_tool(current_id + 1, ARACHNI_APP_NAME, "SQL Injection", db_handler);
+			str1 += ss.str();
+			ss.str("");
+			
+			// close xss
+			str1 += "}}";
 
 			if(parent_id > -1) {
 				if(!str2.empty()) {

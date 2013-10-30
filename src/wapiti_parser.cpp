@@ -4,10 +4,6 @@
 #include <iostream>
 #include <string>
 
-const char *WAPITI_APP_NAME = "WAPITI";
-const char *WAPITI_XSS_PATTERN = "Cross Site Scripting";
-const char *WAPITI_SQLI_PATTERN = "SQL Injection";
-
 int wapiti_parse(const char* filename, database_handler* db_handler) {
 	pugi::xml_document doc;
 

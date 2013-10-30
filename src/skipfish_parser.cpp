@@ -4,13 +4,6 @@
 #include <fstream>
 #include <string.h>
 
-const char * SKIPFISH_APP_NAME = "SKIPFISH";
-const char * XSS_ERROR1 = "40101";
-const char * XSS_ERROR2 = "40102";
-const char * XSS_ERROR3 = "40105";
-const char * SQLI_ERROR1 = "50103";
-const char * SQLI_ERROR2 = "50201";
-
 int skipfish_parse(const char* filename, database_handler* db_handler) {
 	std::string line;
 	std::ifstream file;
