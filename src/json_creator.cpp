@@ -8,6 +8,60 @@
 #include <fstream>
 #include <sstream>
 
+std::string* get_node_info(int current_id, const char* error_type, database_handler* db_handler) {
+	std::string* str = new std::string();
+	std::stringstream ss;
+	// open
+	*str += "\"total\":";
+	int total = number_of_error(current_id + 1, error_type, db_handler);
+	ss << total;
+	*str += ss.str();
+	ss.str("");
+
+	*str += ", \"wapiti\":";
+	int wapiti = number_of_error_by_tool(current_id + 1, WAPITI_APP_NAME, error_type, db_handler);
+	ss << wapiti;
+	*str += ss.str();
+	ss.str("");
+
+	*str += ", \"skipfish\":";
+	int skipfish = number_of_error_by_tool(current_id + 1, SKIPFISH_APP_NAME, error_type, db_handler);
+	ss << skipfish;
+	*str += ss.str();
+	ss.str("");
+
+
+	*str += ", \"arachni\":";
+	int arachni = number_of_error_by_tool(current_id + 1, ARACHNI_APP_NAME, error_type, db_handler);
+	ss << arachni;
+	*str += ss.str();
+	ss.str("");
+
+	*str += ", \"pie\": [";
+
+	if(total) {
+		ss << wapiti*100/total;
+		*str += ss.str();
+		ss.str("");
+		*str += ", ";
+		ss << skipfish*100/total;
+		*str += ss.str();
+		ss.str("");
+		*str += ", ";
+		ss << skipfish*100/total;
+		*str += ss.str();
+		*str += ", 0";
+	}
+	else {
+		*str += "0, 0, 0, 100";
+	}
+
+	// close
+	*str += "]";
+
+	return str;
+}
+
 // load data from sqlite and create json
 void create_json() {
 	std::ofstream file;
@@ -33,51 +87,14 @@ void create_json() {
 			str1 += "{\"node\": \"";
 			str1 += url;
 
-			// open sql
-			str1 += "\", \"sql\": {\"total\":";
-			ss << number_of_error(current_id + 1, "SQL Injection", db_handler);
-			str1 += ss.str();
-			ss.str("");
-
-			str1 += ", \"wapiti\":";
-			ss << number_of_error_by_tool(current_id + 1, WAPITI_APP_NAME, "SQL Injection", db_handler);
-			str1 += ss.str();
-			ss.str("");
-
-			str1 += ", \"skipfish\":";
-			ss << number_of_error_by_tool(current_id + 1, SKIPFISH_APP_NAME, "SQL Injection", db_handler);
-			str1 += ss.str();
-			ss.str("");
-
-			
-			str1 += ", \"arachni\":";
-			ss << number_of_error_by_tool(current_id + 1, ARACHNI_APP_NAME, "SQL Injection", db_handler);
-			str1 += ss.str();
-			ss.str("");
-
-			// close sql, open xss
-			str1 += "},  \"xss\": {\"total\": ";
-			ss << number_of_error(current_id + 1, "SQL Injection", db_handler);
-			str1 += ss.str();
-			ss.str("");
-
-			str1 += ", \"wapiti\":";
-			ss << number_of_error_by_tool(current_id + 1, WAPITI_APP_NAME, "SQL Injection", db_handler);
-			str1 += ss.str();
-			ss.str("");
-
-			str1 += ", \"skipfish\":";
-			ss << number_of_error_by_tool(current_id + 1, SKIPFISH_APP_NAME, "SQL Injection", db_handler);
-			str1 += ss.str();
-			ss.str("");
-
-			
-			str1 += ", \"arachni\":";
-			ss << number_of_error_by_tool(current_id + 1, ARACHNI_APP_NAME, "SQL Injection", db_handler);
-			str1 += ss.str();
-			ss.str("");
-			
-			// close xss
+			str1 += "\", \"sql\": {";
+			std::string* p_str = get_node_info(current_id, "SQL Injection", db_handler);
+			str1 += p_str->c_str();
+			delete p_str;
+			str1 += "}, \"xss\": {";
+			p_str = get_node_info(current_id, "Cross Site Scripting", db_handler);
+			str1 += p_str->c_str();
+			delete p_str;
 			str1 += "}}";
 
 			if(parent_id > -1) {
@@ -100,7 +117,7 @@ void create_json() {
 
 	file << "var dataset = {\"nodes\": [" << str1 << "], \"edges\": [" << str2 << "]};";
 	file.close();
-	
+
 	db_handler->close_database();
 	delete db_handler;
 }

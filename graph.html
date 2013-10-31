@@ -13,6 +13,19 @@
     <script>
         var toggle = 1;
 
+        function colors(i) {
+            switch (i) {
+                case 0:
+                    return "yellow";
+                case 1:
+                    return "orange";
+                case 2:
+                    return "red";
+                default:
+                    return "lightgray";
+            }
+        }
+
         function neighbor(i) {
             var edges = dataset['edges'];
             var result = [];
@@ -30,15 +43,10 @@
         }
 
         function loader() {
-            var colors = d3.scale.category20();
-
-            var dataset1 = [30, 30, 40];
             var pie = d3.layout.pie();
 
             var w = 1000;
             var h = 600;
-            var outerRadius = 13;
-            var innerRadius = 0;
 
             var svg = d3.select("#visualization")
                     .append("svg")
@@ -66,23 +74,25 @@
                     .append("svg:g")
                     .call(force.drag);
 
-            nodes.append("circle")
-                    .attr("r", 10)
-                    .style("fill", function (d, i) {
-                        switch (d.sqli_errors.valueOf()) {
-                            case 1:
-                                return "yellow"
-                                break;
-                            case 2:
-                                return "Orange";
-                                break;
-                            case 3:
-                                return "#FF4500";
-                                break;
-                            default:
-                                return "SteelBlue";
-                        }
-                    });
+            //nodes.append("circle")
+            //        .attr("r", 10);
+
+            nodes.each(function (d, i) {
+                console.log(d3.select(this));
+                d3.select(this).selectAll("g.arc").data(pie(d.sql.pie)).enter().append("g").attr("class", "arc");
+            });
+
+            var arc = d3.svg.arc()
+            .innerRadius(0)
+            .outerRadius(15);
+
+            var arcs = nodes.selectAll("g.arc");
+
+            arcs.append("path")
+                    .attr("fill", function (d, i) {
+                        return colors(i);
+                    })
+                    .attr("d", arc);
 
             nodes.append("svg:title")
                     .text(function (d) { return d.node.valueOf(); });
@@ -110,31 +120,8 @@
                 console.log(toggle);
                 nodes.selectAll("circle")
                    .transition().duration(500)
-                   .style("fill", function (d, i) {
-                       var n;
-                       if (toggle == 1) {
-                           n = d.xss_errors.valueOf();
-                           d3.select("#toggle").text("XSS");
-                       }
-                       else {
-                           n = d.sqli_errors.valueOf();
-                           d3.select("#toggle").text("SQLI");
-                       }
-                       switch (n) {
-                           case 1:
-                               return "yellow"
-                               break;
-                           case 2:
-                               return "Orange";
-                               break;
-                           case 3:
-                               return "#FF4500";
-                               break;
-                           default:
-                               return "SteelBlue";
-                       }
-                   })
                 ;
+
                 if (toggle == 1) {
                     toggle = 0
                 }
