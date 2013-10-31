@@ -48,7 +48,7 @@ std::string* get_node_info(int current_id, const char* error_type, database_hand
 		*str += ss.str();
 		ss.str("");
 		*str += ", ";
-		ss << skipfish*100/total;
+		ss << arachni*100/total;
 		*str += ss.str();
 		*str += ", 0";
 	}

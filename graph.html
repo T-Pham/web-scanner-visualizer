@@ -16,13 +16,13 @@
         function colors(i) {
             switch (i) {
                 case 0:
-                    return "yellow";
+                    return "#E15E6E";
                 case 1:
-                    return "orange";
+                    return "#E1918E";
                 case 2:
-                    return "red";
+                    return "#E0C4AE";
                 default:
-                    return "lightgray";
+                    return "#B4DEBB"
             }
         }
 
@@ -48,7 +48,7 @@
             var w = 1000;
             var h = 600;
             var link_distance = 75;
-            var charge = -500;
+            var charge = -900;
 
             var svg = d3.select("#visualization")
                     .append("svg")
@@ -83,12 +83,28 @@
                 if (d.sql.total == 0) {
                     arc = d3.svg.arc()
                             .innerRadius(0)
-                            .outerRadius(7);
+                            .outerRadius(9);
                 }
                 else {
+                    var outerRadius = d.sql.total * 15 / sql_average;
+                    
+                    console.log(outerRadius);
+
+
+                    if(outerRadius > 25) {
+                        outerRadius = 25;
+                    }
+                    else {
+                        if(outerRadius < 10) {
+                            outerRadius = 10;
+                        }
+                    }
+
+                    console.log(outerRadius);
+                    
                     arc = d3.svg.arc()
                             .innerRadius(0)
-                            .outerRadius(d.sql.total * 15 / sql_average);
+                            .outerRadius(outerRadius);
                 }
 
                 d3.select(this)
