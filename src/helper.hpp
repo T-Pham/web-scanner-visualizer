@@ -14,4 +14,6 @@ int number_of_error(int url_id, const char * type, database_handler* db_handler)
 
 int number_of_error_by_tool(int url_id, const char* tool, const char* type, database_handler* db_handler);
 
+int get_average(const char* error_type, database_handler* db_handler);
+
 #endif

@@ -47,6 +47,8 @@
 
             var w = 1000;
             var h = 600;
+            var link_distance = 75;
+            var charge = -500;
 
             var svg = d3.select("#visualization")
                     .append("svg")
@@ -57,8 +59,8 @@
                     .nodes(dataset.nodes)
                     .links(dataset.edges)
                     .size([w, h])
-                    .linkDistance([50])
-                    .charge(-500)
+                    .linkDistance([link_distance])
+                    .charge(charge)
                     .start();
 
             var edges = svg.selectAll("line")
@@ -74,25 +76,35 @@
                     .append("svg:g")
                     .call(force.drag);
 
-            //nodes.append("circle")
-            //        .attr("r", 10);
-
+            /////////////////////////////////////////////
             nodes.each(function (d, i) {
-                console.log(d3.select(this));
-                d3.select(this).selectAll("g.arc").data(pie(d.sql.pie)).enter().append("g").attr("class", "arc");
+                var arc;
+
+                if (d.sql.total == 0) {
+                    arc = d3.svg.arc()
+                            .innerRadius(0)
+                            .outerRadius(7);
+                }
+                else {
+                    arc = d3.svg.arc()
+                            .innerRadius(0)
+                            .outerRadius(d.sql.total * 15 / sql_average);
+                }
+
+                d3.select(this)
+                .selectAll("g.arc")
+                .data(pie(d.sql.pie))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+                .append("path")
+                .attr("fill", function (d, i) {
+                    return colors(i);
+                })
+                .attr("d", arc);
             });
 
-            var arc = d3.svg.arc()
-            .innerRadius(0)
-            .outerRadius(15);
-
-            var arcs = nodes.selectAll("g.arc");
-
-            arcs.append("path")
-                    .attr("fill", function (d, i) {
-                        return colors(i);
-                    })
-                    .attr("d", arc);
+            /////////////////////////////////////////////
 
             nodes.append("svg:title")
                     .text(function (d) { return d.node.valueOf(); });
@@ -117,7 +129,6 @@
             });
 
             d3.select('#toggle').on("click", function (d, i) {
-                console.log(toggle);
                 nodes.selectAll("circle")
                    .transition().duration(500)
                 ;

@@ -88,11 +88,11 @@ void create_json() {
 			str1 += url;
 
 			str1 += "\", \"sql\": {";
-			std::string* p_str = get_node_info(current_id, "SQL Injection", db_handler);
+			std::string* p_str = get_node_info(current_id + 1, "SQL Injection", db_handler);
 			str1 += p_str->c_str();
 			delete p_str;
 			str1 += "}, \"xss\": {";
-			p_str = get_node_info(current_id, "Cross Site Scripting", db_handler);
+			p_str = get_node_info(current_id + 1, "Cross Site Scripting", db_handler);
 			str1 += p_str->c_str();
 			delete p_str;
 			str1 += "}}";
@@ -115,7 +115,9 @@ void create_json() {
 	}
 	sqlite3_finalize(sqlite_stmt);
 
-	file << "var dataset = {\"nodes\": [" << str1 << "], \"edges\": [" << str2 << "]};";
+	file << "var dataset = {\"nodes\": [" << str1 << "], \"edges\": [" << str2 << "]};" << std::endl;
+	file << "var sql_average = " << get_average("SQL Injection", db_handler) << ";" << std::endl;
+	file << "var xss_average = " << get_average("Cross Site Scripting", db_handler) << ";" << std::endl;
 	file.close();
 
 	db_handler->close_database();

@@ -110,3 +110,21 @@ int number_of_error_by_tool(int url_id, const char* tool, const char* type, data
 
 	return result;
 }
+
+int get_average(const char* error_type, database_handler* db_handler) {
+	sqlite3_stmt* sqlite_stmt;
+	std::string str; 
+	str += "SELECT AVG(COUNT) FROM (SELECT URL_ID, COUNT(*) AS COUNT FROM ERRORS WHERE URL_ID<>'NULL' AND ERROR_TYPE=='";
+	str += error_type;
+	str += "' GROUP BY URL_ID);";
+	int result = -1;
+
+	if(sqlite3_prepare(db_handler->db, str.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
+		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
+			result = (int) sqlite3_column_int(sqlite_stmt, 0);
+		}
+	}
+	sqlite3_finalize(sqlite_stmt);
+
+	return result;
+}
