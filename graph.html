@@ -43,10 +43,8 @@
         }
 
         function loader() {
-            var pie = d3.layout.pie();
-
-            var w = 1000;
-            var h = 600;
+            var w = 1200;
+            var h = 750;
             var link_distance = 75;
             var charge = -900;
 
@@ -77,6 +75,9 @@
                     .call(force.drag);
 
             /////////////////////////////////////////////
+            var pie = d3.layout.pie();
+            pie.sort(null);
+
             nodes.each(function (d, i) {
                 var arc;
 
