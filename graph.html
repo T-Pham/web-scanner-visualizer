@@ -42,6 +42,66 @@
             return result;
         }
 
+        function create_pie(nodes, error_type) {
+            var pie = d3.layout.pie();
+            pie.sort(null);
+
+            nodes.each(function (d, i) {
+                var arc;
+                var total;
+                var dataset;
+
+                if (error_type == "sql") {
+                    total = d.sql.total;
+                    dataset = d.sql.pie;
+                }
+                else {
+                    if (error_type == "xss") {
+                        total = d.xss.total;
+                        dataset = d.xss.pie;
+                    }
+                }
+
+                if (total == 0) {
+                    arc = d3.svg.arc()
+                            .innerRadius(0)
+                            .outerRadius(9);
+                }
+                else {
+                    var outerRadius = total * 15 / sql_average;
+
+                    if (outerRadius > 25) {
+                        outerRadius = 25;
+                    }
+                    else {
+                        if (outerRadius < 12) {
+                            outerRadius = 12;
+                        }
+                    }
+
+                    arc = d3.svg.arc()
+                            .innerRadius(0)
+                            .outerRadius(outerRadius);
+                }
+
+                d3.select(this)
+                .selectAll("g.arc")
+                .remove();
+
+                d3.select(this)
+                .selectAll("g.arc")
+                .data(pie(dataset))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+                .append("path")
+                .attr("fill", function (d, i) {
+                    return colors(i);
+                })
+                .attr("d", arc);
+            });
+        }
+
         function loader() {
             var w = 1200;
             var h = 750;
@@ -75,51 +135,8 @@
                     .call(force.drag);
 
             /////////////////////////////////////////////
-            var pie = d3.layout.pie();
-            pie.sort(null);
 
-            nodes.each(function (d, i) {
-                var arc;
-
-                if (d.sql.total == 0) {
-                    arc = d3.svg.arc()
-                            .innerRadius(0)
-                            .outerRadius(9);
-                }
-                else {
-                    var outerRadius = d.sql.total * 15 / sql_average;
-                    
-                    console.log(outerRadius);
-
-
-                    if(outerRadius > 25) {
-                        outerRadius = 25;
-                    }
-                    else {
-                        if(outerRadius < 10) {
-                            outerRadius = 10;
-                        }
-                    }
-
-                    console.log(outerRadius);
-                    
-                    arc = d3.svg.arc()
-                            .innerRadius(0)
-                            .outerRadius(outerRadius);
-                }
-
-                d3.select(this)
-                .selectAll("g.arc")
-                .data(pie(d.sql.pie))
-                .enter()
-                .append("g")
-                .attr("class", "arc")
-                .append("path")
-                .attr("fill", function (d, i) {
-                    return colors(i);
-                })
-                .attr("d", arc);
-            });
+            create_pie(nodes, "sql");
 
             /////////////////////////////////////////////
 
@@ -146,16 +163,18 @@
             });
 
             d3.select('#toggle').on("click", function (d, i) {
-                nodes.selectAll("circle")
-                   .transition().duration(500)
-                ;
-
                 if (toggle == 1) {
-                    toggle = 0
+                    create_pie(nodes, "xss");
+                    d3.select('#toggle').text("XSS");
+                    toggle = 0;
                 }
                 else {
+                    create_pie(nodes, "sql");
+                    d3.select('#toggle').text("SQLI");
                     toggle = 1;
                 }
+
+                return false;
             });
         }
 
