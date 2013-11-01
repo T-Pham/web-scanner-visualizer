@@ -104,14 +104,30 @@
 
         function loader() {
             var w = 1200;
-            var h = 750;
-            var link_distance = 75;
+            var h = 600;
+            var link_distance = 55;
             var charge = -900;
 
             var svg = d3.select("#visualization")
                     .append("svg")
                     .attr("height", h)
                     .attr("width", w);
+
+            svg.append("svg:text")
+            .attr("id", "overlay-title")
+            .attr("x", 10)
+            .attr("y", 50)
+            .style("font-size", "50")
+            .style("fill", "#E15E6E")
+            .text("SQL");
+
+            var rect = svg.append("svg:rect")
+            .attr("id", "overlay-rect")
+            .attr("height", 60)
+            .attr("width", 200)
+            .attr("x", 0)
+            .attr("y", 0)
+            .style("fill-opacity", "0");
 
             var force = d3.layout.force()
                     .nodes(dataset.nodes)
@@ -162,15 +178,15 @@
 
             });
 
-            d3.select('#toggle').on("click", function (d, i) {
+            d3.select('#overlay-rect').on("click", function (d, i) {
                 if (toggle == 1) {
                     create_pie(nodes, "xss");
-                    d3.select('#toggle').text("XSS");
+                    d3.select('#overlay-title').text("XSS");
                     toggle = 0;
                 }
                 else {
                     create_pie(nodes, "sql");
-                    d3.select('#toggle').text("SQLI");
+                    d3.select('#overlay-title').text("SQLI");
                     toggle = 1;
                 }
 
@@ -185,5 +201,4 @@
     <div id="visualization">
     </div>
     <br />
-    <a id="toggle" href="#">SQLI</a>
 </body>
