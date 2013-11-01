@@ -1,9 +1,50 @@
-body {
-	text-align: center;
-}
 #visualization {
+	margin: 10px 0px 0px 20px;
 	display: inline-block;
 	width: auto;
 	height: auto;
 	border: solid 2px;
+}
+
+#svg-container {
+	width: 1000px;
+	height: 600px;
+}
+
+#overlay-title {
+	font-size: 50px;
+	font-family: Helvetica Neue, Helvetica, sans-serif;
+	fill: #E15E6E;
+}
+
+#overlay-rect {
+	fill-opacity: 0;
+}
+
+.legend-rect {
+	stroke: #ccc;
+	stroke-width:  2;
+}
+
+#error-free-rect {
+	fill: #B4DEBB;
+}
+
+#wapiti-rect {
+	fill: #E15E6E;
+}
+
+#skipfish-rect {
+	fill: #E1918E;
+}
+
+#arachni-rect {
+	fill: #E0C4AE;
+}
+
+.legend-text {
+	font-size: 15px;
+	font-family: Helvetica Neue, Helvetica, sans-serif;
+	font-weight: bold;
+	fill: dimgrey;
 }

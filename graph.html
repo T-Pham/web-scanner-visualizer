@@ -11,7 +11,7 @@
         charset="utf-8">
     </script>
     <script>
-        var toggle = 1;
+        var mode_count = 0;
 
         function colors(i) {
             switch (i) {
@@ -51,7 +51,7 @@
                 var total;
                 var dataset;
 
-                if (error_type == "sql") {
+                if (error_type == "sqli") {
                     total = d.sql.total;
                     dataset = d.sql.pie;
                 }
@@ -59,6 +59,9 @@
                     if (error_type == "xss") {
                         total = d.xss.total;
                         dataset = d.xss.pie;
+                    }
+                    else {
+                        return false;
                     }
                 }
 
@@ -103,31 +106,12 @@
         }
 
         function loader() {
-            var w = 1200;
+            var w = 1000;
             var h = 600;
             var link_distance = 55;
             var charge = -900;
 
-            var svg = d3.select("#visualization")
-                    .append("svg")
-                    .attr("height", h)
-                    .attr("width", w);
-
-            svg.append("svg:text")
-            .attr("id", "overlay-title")
-            .attr("x", 10)
-            .attr("y", 50)
-            .style("font-size", "50")
-            .style("fill", "#E15E6E")
-            .text("SQL");
-
-            var rect = svg.append("svg:rect")
-            .attr("id", "overlay-rect")
-            .attr("height", 60)
-            .attr("width", 200)
-            .attr("x", 0)
-            .attr("y", 0)
-            .style("fill-opacity", "0");
+            var graph = d3.select("svg").select("#graph");
 
             var force = d3.layout.force()
                     .nodes(dataset.nodes)
@@ -137,14 +121,14 @@
                     .charge(charge)
                     .start();
 
-            var edges = svg.selectAll("line")
+            var edges = graph.selectAll("line")
                     .data(dataset.edges)
                     .enter()
                     .append("line")
                     .style("stroke", "#ccc")
                     .style("stroke-width", 1);
 
-            var nodes = svg.selectAll("g")
+            var nodes = graph.selectAll("g")
                     .data(dataset.nodes)
                     .enter()
                     .append("svg:g")
@@ -152,7 +136,7 @@
 
             /////////////////////////////////////////////
 
-            create_pie(nodes, "sql");
+            create_pie(nodes, "sqli");
 
             /////////////////////////////////////////////
 
@@ -179,18 +163,22 @@
             });
 
             d3.select('#overlay-rect').on("click", function (d, i) {
-                if (toggle == 1) {
-                    create_pie(nodes, "xss");
-                    d3.select('#overlay-title').text("XSS");
-                    toggle = 0;
+                switch(mode_count) {
+                    case 0:
+                        create_pie(nodes, "xss");
+                        d3.select('#overlay-title').text("XSS");
+                        break;
+                    case 1:
+                        d3.select('#overlay-title').text("TOTAL");
+                        break;
+                    case 2:
+                        create_pie(nodes, "sqli");
+                        d3.select('#overlay-title').text("SQLI");
+                        break;
+                    default:
+                        break;
                 }
-                else {
-                    create_pie(nodes, "sql");
-                    d3.select('#overlay-title').text("SQLI");
-                    toggle = 1;
-                }
-
-                return false;
+                mode_count = (mode_count + 1) % 3;
             });
         }
 
@@ -199,6 +187,22 @@
 </head>
 <body>
     <div id="visualization">
+        <svg id="svg-container">
+            <text id="overlay-title" x="10" y="50"> SQLI </text>
+            <rect id="overlay-rect" width="180" height="80" x="0" y="0"></rect>
+            
+            <rect id="error-free-rect" class="legend-rect" width="50" height="20" x="15" y="480"></rect>
+            <rect id="arachni-rect" class="legend-rect" width="50" height="20" x="15" y="510"></rect>
+            <rect id="skipfish-rect" class="legend-rect" width="50" height="20" x="15" y="540"></rect>
+            <rect id="wapiti-rect" class="legend-rect" width="50" height="20" x="15" y="570"></rect>
+
+            <text class="legend-text" x="75" y="495"> NO ERROR </text>
+            <text class="legend-text" x="75" y="525"> ARACHNI </text>
+            <text class="legend-text" x="75" y="555"> SKIPFISH </text>
+            <text class="legend-text" x="75" y="585"> WAPITY </text>
+            
+            <g id="graph"></g>
+        </svg>
     </div>
     <br />
 </body>
