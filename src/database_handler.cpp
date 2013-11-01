@@ -55,7 +55,7 @@ int database_handler::insert_url(const char* url,const char* method) {
 
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
-	if(error_message){
+	if(error_message){ 
 		sqlite3_free(error_message);
 		return -1;
 	}
@@ -68,12 +68,25 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 	char* error_message = NULL;
 	std::string stmt;
 
+	std::string injection;
+	injection += injection_value;
+	std::string escape_injection;
+	for(int i = 0; i < injection.length(); i++)
+	{
+		if(injection[i] == '\'') {
+			escape_injection += "\'\'";
+		}
+		else {
+			escape_injection += injection[i];
+		}
+	}
+
 	stmt += "INSERT INTO ERRORS (ERROR_TYPE, ERROR_LEVEL, INJECTION_VALUE, URL_ID, TOOL_NAME, RESPONSE) VALUES('";
 	stmt += error_type;
 	stmt += "',";
 	stmt += error_level;
 	stmt += ",'";
-	stmt += injection_value;
+	stmt += escape_injection.c_str();
 	stmt += "', (SELECT URL_ID FROM URLS WHERE URL='";
 	stmt += url;
 	stmt += "'),'";

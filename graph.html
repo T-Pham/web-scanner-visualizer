@@ -49,36 +49,43 @@
             nodes.each(function (d, i) {
                 var arc;
                 var total;
+                var average;
                 var dataset;
 
-                if (error_type == "sqli") {
-                    total = d.sql.total;
-                    dataset = d.sql.pie;
-                }
-                else {
-                    if (error_type == "xss") {
+                switch (error_type) {
+                    case "sqli":
+                        total = d.sqli.total;
+                        average = sqli_average;
+                        dataset = d.sqli.pie;
+                        break;
+                    case "xss":
                         total = d.xss.total;
+                        average = xss_average;
                         dataset = d.xss.pie;
-                    }
-                    else {
+                        break;
+                    case "both":
+                        total = d.both.total;
+                        average = both_average;
+                        dataset = d.both.pie;
+                        break;
+                    default:
                         return false;
-                    }
                 }
 
                 if (total == 0) {
                     arc = d3.svg.arc()
                             .innerRadius(0)
-                            .outerRadius(9);
+                            .outerRadius(8);
                 }
                 else {
-                    var outerRadius = total * 15 / sql_average;
+                    var outerRadius = total * 15 / average;
 
-                    if (outerRadius > 25) {
-                        outerRadius = 25;
+                    if (outerRadius > 30) {
+                        outerRadius = 30;
                     }
                     else {
-                        if (outerRadius < 12) {
-                            outerRadius = 12;
+                        if (outerRadius < 10) {
+                            outerRadius = 10;
                         }
                     }
 
@@ -166,6 +173,7 @@
                         d3.select('#overlay-title').text("XSS");
                         break;
                     case 1:
+                        create_pie(nodes, "both");
                         d3.select('#overlay-title').text("BOTH");
                         break;
                     case 2:

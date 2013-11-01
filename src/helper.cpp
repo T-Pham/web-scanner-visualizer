@@ -1,7 +1,7 @@
 #include "helper.hpp"
 #include "database_handler.hpp"
 #include <sstream>
-#include <string>
+#include <string.h>
 
 // Helper Functions
 void insert_error_with_url(const char * url_with_para, const char* bug_type, const char* bug_level, const char* injection_value, const char* tool_name, const char* info, database_handler* db) {
@@ -72,9 +72,13 @@ int number_of_error(int url_id, const char * type, database_handler* db_handler)
 
 	sql_stmt += "SELECT COUNT(*) FROM ERRORS WHERE URL_ID=";
 	sql_stmt += ss.str();
-	sql_stmt += " AND ERROR_TYPE='";
-	sql_stmt += type;
-	sql_stmt += "';";
+	
+	if(strcmp(type, "BOTH") != 0) {
+		sql_stmt += " AND ERROR_TYPE='";
+		sql_stmt += type;
+		sql_stmt += "'";
+	}
+	sql_stmt += ";";
 
 	int result = -1;
 	if(sqlite3_prepare(db_handler->db, sql_stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
@@ -92,12 +96,17 @@ int number_of_error_by_tool(int url_id, const char* tool, const char* type, data
 	std::string sql_stmt;
 	std::stringstream ss;
 	ss << url_id;
+
 	sql_stmt += "SELECT COUNT(*) FROM ERRORS WHERE URL_ID=";
 	sql_stmt += ss.str();
 	sql_stmt += " AND TOOL_NAME='";
 	sql_stmt += tool;
-	sql_stmt += "' AND ERROR_TYPE='";
-	sql_stmt += type;
+
+	if(strcmp(type, "BOTH") != 0) {
+		sql_stmt += "' AND ERROR_TYPE='";
+		sql_stmt += type;
+		
+	}
 	sql_stmt += "';";
 
 	int result = -1;
@@ -114,9 +123,13 @@ int number_of_error_by_tool(int url_id, const char* tool, const char* type, data
 int get_average(const char* error_type, database_handler* db_handler) {
 	sqlite3_stmt* sqlite_stmt;
 	std::string str; 
-	str += "SELECT AVG(COUNT) FROM (SELECT URL_ID, COUNT(*) AS COUNT FROM ERRORS WHERE URL_ID<>'NULL' AND ERROR_TYPE=='";
-	str += error_type;
-	str += "' GROUP BY URL_ID);";
+	str += "SELECT AVG(COUNT) FROM (SELECT URL_ID, COUNT(*) AS COUNT FROM ERRORS WHERE URL_ID<>'NULL'";
+	if(strcmp(error_type, "BOTH") != 0) {
+		str += " AND ERROR_TYPE=='";
+		str += error_type;
+		str += "'";
+	}
+	str += " GROUP BY URL_ID);";
 	int result = -1;
 
 	if(sqlite3_prepare(db_handler->db, str.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
