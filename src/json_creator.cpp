@@ -13,26 +13,26 @@ std::string* get_node_info(int current_id, const char* error_type, database_hand
 	std::stringstream ss;
 	// open
 	*str += "\"total\":";
-	int total = number_of_error(current_id + 1, error_type, db_handler);
+	int total = number_of_error(current_id , error_type, db_handler);
 	ss << total;
 	*str += ss.str();
 	ss.str("");
 
 	*str += ", \"wapiti\":";
-	int wapiti = number_of_error_by_tool(current_id + 1, WAPITI_APP_NAME, error_type, db_handler);
+	int wapiti = number_of_error_by_tool(current_id, WAPITI_APP_NAME, error_type, db_handler);
 	ss << wapiti;
 	*str += ss.str();
 	ss.str("");
 
 	*str += ", \"skipfish\":";
-	int skipfish = number_of_error_by_tool(current_id + 1, SKIPFISH_APP_NAME, error_type, db_handler);
+	int skipfish = number_of_error_by_tool(current_id, SKIPFISH_APP_NAME, error_type, db_handler);
 	ss << skipfish;
 	*str += ss.str();
 	ss.str("");
 
 
 	*str += ", \"arachni\":";
-	int arachni = number_of_error_by_tool(current_id + 1, ARACHNI_APP_NAME, error_type, db_handler);
+	int arachni = number_of_error_by_tool(current_id, ARACHNI_APP_NAME, error_type, db_handler);
 	ss << arachni;
 	*str += ss.str();
 	ss.str("");
@@ -77,9 +77,9 @@ void create_json() {
 	if(sqlite3_prepare(db_handler->db, "SELECT * FROM URLS", -1, &sqlite_stmt, 0) == SQLITE_OK) {
 		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
 			std::stringstream ss;
-			int current_id = (int)sqlite3_column_int(sqlite_stmt, 0) - 1;
+			int current_id = (int)sqlite3_column_int(sqlite_stmt, 0);
 			char* url = (char*)sqlite3_column_text(sqlite_stmt, 1);
-			int parent_id = (int)sqlite3_column_int(sqlite_stmt, 3) - 1;
+			int parent_id = (int)sqlite3_column_int(sqlite_stmt, 3);
 
 			if(!str1.empty()) {
 				str1 += ",";
@@ -88,29 +88,29 @@ void create_json() {
 			str1 += url;
 
 			str1 += "\", \"sqli\": {";
-			std::string* p_str = get_node_info(current_id + 1, "SQL Injection", db_handler);
+			std::string* p_str = get_node_info(current_id, "SQL Injection", db_handler);
 			str1 += p_str->c_str();
 			delete p_str;
 			str1 += "}, \"xss\": {";
-			p_str = get_node_info(current_id + 1, "Cross Site Scripting", db_handler);
+			p_str = get_node_info(current_id, "Cross Site Scripting", db_handler);
 			str1 += p_str->c_str();
 			delete p_str;
 
 			str1 += "}, \"both\":{";
-			p_str = get_node_info(current_id + 1, "BOTH", db_handler);
+			p_str = get_node_info(current_id, "BOTH", db_handler);
 			str1 += p_str->c_str();
 			str1 += "}}";
 
-			if(parent_id > -1) {
+			if(parent_id > 0) {
 				if(!str2.empty()) {
 					str2 += ",";
 				}
 				str2 += "{\"source\": ";
-				ss << parent_id;
+				ss << (parent_id - 1);
 				str2 += ss.str();
 				str2 +=  ",\"target\": ";
 				ss.str("");
-				ss << current_id;
+				ss << (current_id - 1);
 				str2 += ss.str();
 				ss.str("");
 				str2 += "}";
