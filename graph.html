@@ -118,8 +118,7 @@
                     .links(dataset.edges)
                     .size([w, h])
                     .linkDistance([link_distance])
-                    .charge(charge)
-                    .start();
+                    .charge(charge);
 
             var edges = graph.selectAll("line")
                     .data(dataset.edges)
@@ -134,11 +133,7 @@
                     .append("svg:g")
                     .call(force.drag);
 
-            /////////////////////////////////////////////
-
             create_pie(nodes, "sqli");
-
-            /////////////////////////////////////////////
 
             nodes.append("svg:title")
                     .text(function (d) { return d.node.valueOf(); });
@@ -162,8 +157,10 @@
 
             });
 
+            force.start();
+
             d3.select('#overlay-rect').on("click", function (d, i) {
-                switch(mode_count) {
+                switch (mode_count) {
                     case 0:
                         create_pie(nodes, "xss");
                         d3.select('#overlay-title').text("XSS");
@@ -190,7 +187,7 @@
         <svg id="svg-container">
             <text id="overlay-title" x="10" y="50"> SQLI </text>
             <rect id="overlay-rect" width="180" height="80" x="0" y="0"></rect>
-            
+
             <rect id="error-free-rect" class="legend-rect" width="50" height="20" x="15" y="480"></rect>
             <rect id="arachni-rect" class="legend-rect" width="50" height="20" x="15" y="510"></rect>
             <rect id="skipfish-rect" class="legend-rect" width="50" height="20" x="15" y="540"></rect>
@@ -200,7 +197,7 @@
             <text class="legend-text" x="75" y="525"> ARACHNI </text>
             <text class="legend-text" x="75" y="555"> SKIPFISH </text>
             <text class="legend-text" x="75" y="585"> WAPITY </text>
-            
+
             <g id="graph"></g>
         </svg>
     </div>
