@@ -91,6 +91,7 @@ void create_json() {
 			std::string* p_str = get_node_info(current_id, "SQL Injection", db_handler);
 			str1 += p_str->c_str();
 			delete p_str;
+
 			str1 += "}, \"xss\": {";
 			p_str = get_node_info(current_id, "Cross Site Scripting", db_handler);
 			str1 += p_str->c_str();
@@ -99,6 +100,8 @@ void create_json() {
 			str1 += "}, \"both\":{";
 			p_str = get_node_info(current_id, "BOTH", db_handler);
 			str1 += p_str->c_str();
+			delete p_str;
+
 			str1 += "}}";
 
 			if(parent_id > 0) {
