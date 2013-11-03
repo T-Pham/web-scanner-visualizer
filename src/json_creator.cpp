@@ -154,8 +154,9 @@ std::string* get_params(const char* error_id, database_handler* db_handler) {
 			if(!params->empty()) {
 				*params += ", ";
 			}
-
+			*params += "\"";
 			*params += param;
+			*params += "\"";
 		}
 	}
 	sqlite3_finalize(sqlite_stmt);
