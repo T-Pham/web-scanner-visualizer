@@ -140,69 +140,92 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 	*file << "var both_average = " << get_average("BOTH", db_handler) << ";" << std::endl;
 }
 
+std::string* get_params(const char* error_id, database_handler* db_handler) {
+	sqlite3_stmt* sqlite_stmt;
+	std::string select_param_stmt("SELECT PARAMETER_NAME FROM PARAMETERS WHERE ERROR_ID==");
+	select_param_stmt += error_id;
+	select_param_stmt += ";";
+	std::string* params = new std::string();
+
+	if(sqlite3_prepare(db_handler->db, select_param_stmt.c_str() , -1, &sqlite_stmt, 0) == SQLITE_OK) {
+		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
+			const char* param = (const char*) sqlite3_column_text(sqlite_stmt, 0);
+
+			if(!params->empty()) {
+				*params += ", ";
+			}
+
+			*params += param;
+		}
+	}
+	sqlite3_finalize(sqlite_stmt);
+
+	return params;
+}
+
 string_set* get_url_info(const int current_id, const char* tool_name, database_handler* db_handler) {
-	sqlite3_stmt* inner_sqlite_stmt;
-	std::string inner_sql_stmt;
+	sqlite3_stmt* sqlite_stmt;
+	std::string select_error_stmt;
 	std::stringstream ss;
 	ss << current_id;
 
-	inner_sql_stmt += "SELECT ERRORS.ERROR_TYPE, ERRORS.INJECTION_VALUE, PARAMETERS.PARAMETER_NAME FROM (PARAMETERS JOIN ERRORS ON PARAMETERS.ERROR_ID==ERRORS.ERROR_ID) WHERE URL_ID==";
-	inner_sql_stmt += ss.str();
-	inner_sql_stmt += " AND TOOL_NAME='";
-	inner_sql_stmt += tool_name;
-	inner_sql_stmt += "';";
+	select_error_stmt += "SELECT ERROR_ID, ERROR_TYPE, INJECTION_VALUE FROM ERRORS WHERE URL_ID==";
+	select_error_stmt += ss.str();
+	select_error_stmt += " AND TOOL_NAME='";
+	select_error_stmt += tool_name;
+	select_error_stmt += "' AND INJECTION_VALUE<>'NULL' AND INJECTION_VALUE<>'';";
 
 	std::string* sqli_injection_value = new std::string();
-	std::string* sqli_params = new std::string();
 	std::string* xss_injection_value = new std::string();
-	std::string* xss_params = new std::string();
 
-	if(sqlite3_prepare(db_handler->db, inner_sql_stmt.c_str(), -1, &inner_sqlite_stmt, 0) == SQLITE_OK) {
-		while(sqlite3_step(inner_sqlite_stmt) == SQLITE_ROW) {
-			const char* error_type = (const char*) sqlite3_column_text(inner_sqlite_stmt, 0);
-			const char* injection_value = (const char*) sqlite3_column_text(inner_sqlite_stmt, 1);
-			const char* params = (const char*) sqlite3_column_text(inner_sqlite_stmt, 2);
+
+	if(sqlite3_prepare(db_handler->db, select_error_stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
+		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
+			const char* error_id = (const char*) sqlite3_column_text(sqlite_stmt, 0);
+			const char* error_type = (const char*) sqlite3_column_text(sqlite_stmt, 1);
+			const char* injection_value = (const char*) sqlite3_column_text(sqlite_stmt, 2);
 
 			if(strcmp(error_type, "SQL Injection") == 0) {
 				if(!sqli_injection_value->empty()){
 					*sqli_injection_value += ", ";
 				}
-				if(!sqli_params->empty()){
-					*sqli_params += ", ";
-				}
-				*sqli_injection_value += "\"";
+				*sqli_injection_value += "{value: \"";
 				*sqli_injection_value += injection_value;
-				*sqli_injection_value += "\"";
-				*sqli_params += "\"";
-				*sqli_params += params;
-				*sqli_params += "\"";
+				*sqli_injection_value += "\", params: [";
+
+				std::string* params = get_params(error_id, db_handler);
+				*sqli_injection_value += params->c_str();
+				delete params;
+
+				*sqli_injection_value += "]}";
 			}
 			else {
 				if(strcmp(error_type, "Cross Site Scripting") == 0) {
 					if(!xss_injection_value->empty()){
 						*xss_injection_value += ", ";
 					}
-					if(!xss_params->empty()){
-						*xss_params += ", ";
+					if(!xss_injection_value->empty()){
+						*xss_injection_value += ", ";
 					}
-					*xss_injection_value += "\"";
+					*xss_injection_value += "{value: \"";
 					*xss_injection_value += injection_value;
-					*xss_injection_value += "\"";
-					*xss_params += "\"";
-					*xss_params += params;
-					*xss_params += "\"";
+					*xss_injection_value += "\", params: [";
+
+					std::string* params = get_params(error_id, db_handler);
+					*xss_injection_value += params->c_str();
+					delete params;
+
+					*xss_injection_value += "]}";
 				}
 			}
 		}
 	}
-	sqlite3_finalize(inner_sqlite_stmt);
+	sqlite3_finalize(sqlite_stmt);
 
 	// need memcheck here
 	string_set* set = new string_set();
 	set->sqli_injection_value = sqli_injection_value;
-	set->sqli_params = sqli_params;
 	set->xss_injection_value = xss_injection_value;
-	set->xss_params = xss_params;
 
 	return set;
 }
@@ -210,26 +233,16 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 std::string* join_strings(string_set* set) {
 	std::string* result = new std::string();
 	std::string* sqli_injection_value = set->sqli_injection_value;
-	std::string* sqli_params = set->sqli_params;
 	std::string* xss_injection_value = set->xss_injection_value;
-	std::string* xss_params = set->xss_params;
 
-	*result += "{sqli: {";
-	*result += "value: [";
+	*result += "{sqli: [";
 	*result += sqli_injection_value->c_str();
-	*result += "], params: [";
-	*result += sqli_params->c_str();
-	*result += "]}, xss: {";
-	*result += "value: [";
+	*result += "], xss: [";
 	*result += xss_injection_value->c_str();
-	*result += "], params: [";
-	*result += xss_params->c_str();
-	*result += "]}}";
+	*result += "]}";
 
 	delete sqli_injection_value;
-	delete sqli_params;
 	delete xss_injection_value;
-	delete xss_params;
 
 	return result;
 }

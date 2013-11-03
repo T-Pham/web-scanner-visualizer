@@ -7,9 +7,7 @@
 class string_set {
 public:
 	std::string* sqli_injection_value;
-	std::string* sqli_params;
 	std::string* xss_injection_value;
-	std::string* xss_params;
 };
 
 void create_json();
