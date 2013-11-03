@@ -96,20 +96,20 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 			if(!str1.empty()) {
 				str1 += ",";
 			}
-			str1 += "{\"node\": \"";
+			str1 += "{node: \"";
 			str1 += url;
 
-			str1 += "\", \"sqli\": {";
+			str1 += "\", sqli: {";
 			std::string* p_str = get_node_info(current_id, "SQL Injection", db_handler);
 			str1 += p_str->c_str();
 			delete p_str;
 
-			str1 += "}, \"xss\": {";
+			str1 += "}, xss: {";
 			p_str = get_node_info(current_id, "Cross Site Scripting", db_handler);
 			str1 += p_str->c_str();
 			delete p_str;
 
-			str1 += "}, \"both\":{";
+			str1 += "}, both:{";
 			p_str = get_node_info(current_id, "BOTH", db_handler);
 			str1 += p_str->c_str();
 			delete p_str;
@@ -120,10 +120,10 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 				if(!str2.empty()) {
 					str2 += ",";
 				}
-				str2 += "{\"source\": ";
+				str2 += "{source: ";
 				ss << (parent_id - 1);
 				str2 += ss.str();
-				str2 +=  ",\"target\": ";
+				str2 +=  ", target: ";
 				ss.str("");
 				ss << (current_id - 1);
 				str2 += ss.str();
@@ -134,7 +134,7 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 	}
 	sqlite3_finalize(sqlite_stmt);
 
-	*file << "var dataset = {\"nodes\": [" << str1 << "], \"edges\": [" << str2 << "]};" << std::endl;
+	*file << "var dataset = {nodes: [" << str1 << "], edges: [" << str2 << "]};" << std::endl;
 	*file << "var sqli_average = " << get_average("SQL Injection", db_handler) << ";" << std::endl;
 	*file << "var xss_average = " << get_average("Cross Site Scripting", db_handler) << ";" << std::endl;
 	*file << "var both_average = " << get_average("BOTH", db_handler) << ";" << std::endl;
