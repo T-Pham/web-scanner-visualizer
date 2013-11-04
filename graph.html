@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <head>
     <title>Vulnerabilities Visualizer</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="css\styles.css">
+    <link rel="stylesheet" type="text/css" href="css\jquery.custom-scrollbar.css">
     <script
-        src="d3.v3.min.js"
+        src="js\d3.v3.min.js"
         charset="utf-8">
     </script>
     <script
@@ -15,7 +16,11 @@
         charset="utf-8">
     </script>
     <script
-        src="jquery-2.0.3.min.js"
+        src="js\jquery-2.0.3.min.js"
+        charset="utf-8">
+    </script>
+    <script
+        src="js\jquery.custom-scrollbar.min.js"
         charset="utf-8">
     </script>
     <script>
@@ -46,24 +51,25 @@
             <div id="url-container">
                 Example.com
             </div>
-            <ul>
-                <li id="wapiti-list">WAPITI
+            <div id="list-container">
+                <ul>
+                    <li id="wapiti-list">WAPITI
                     <ul>
                     </ul>
-                </li>
+                    </li>
 
-                <li id="skipfish-list">SKIPFISH
+                    <li id="skipfish-list">SKIPFISH
                     <ul>
                     </ul>
-                </li>
+                    </li>
 
-                <li id="arachni-list">ARACHNI
+                    <li id="arachni-list">ARACHNI
                     <ul>
                     </ul>
-                </li>
+                    </li>
 
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
-    <br />
 </body>

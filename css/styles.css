@@ -4,7 +4,7 @@ body {
 
 #visualization {
 	margin: 10px 0px 0px 10px;
-	display: inline-block;
+	float: left;
 	vertical-align: top;
 	width: 1000px;
 	height: 600px;
@@ -13,7 +13,7 @@ body {
 
 #info-board {
 	margin: 10px 0px 0px 10px;
-	display: inline-block;
+	float: left;
 	vertical-align: top;
 	width: 300px;
 	height: 600px;
@@ -27,14 +27,21 @@ body {
 
 
 #url-container {
-	background-color: #ccc;
-	padding-top: 10px;
 	width: auto;
 	height: 45px;
+	padding: 10px 5px 0px 5px;
+	background-color: #ccc;
 	text-align: center;
 	font-size: 15px;
 	font-weight: bold;
 	word-wrap: break-word;
+}
+
+#list-container {
+	display: block;
+	width: 291px;
+	height: 545px;
+	position: relative;
 }
 
 #overlay-title {

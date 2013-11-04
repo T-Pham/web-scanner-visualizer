@@ -104,6 +104,10 @@ function set_info(index) {
 
     header = params.urls[index].url;
 
+    if (header.length > 70) {
+        header = header.substr(0, 70) + "...";
+    }
+
     $("#url-container").text(header);
     var wapiti;
     var skipfish;
@@ -129,22 +133,32 @@ function set_info(index) {
         default:
             break;
     };
-    console.log(wapiti);
+
+    $("#list-container").customScrollbar();
+
+
     for (var k = 0; k < wapiti.length; k++) {
-        $('#wapiti-list ul').append("<li class='inner-list'>" + wapiti[k].injection_value + "</li>");
+        $('#wapiti-list ul').append("<li class='inner-list'>\"" + wapiti[k].injection_value.trim() + "\"</li>");
     }
     for (var k = 0; k < skipfish.length; k++) {
-        $('#skipfish-list ul').append("<li class='inner-list'>" + skipfish[k].injection_value + "</li>");
+        $('#skipfish-list ul').append("<li class='inner-list'>\"" + skipfish[k].injection_value.trim() + "\"</li>");
     }
     for (var k = 0; k < arachni.length; k++) {
-        $('#arachni-list ul').append("<li class='inner-list'>" + arachni[k].injection_value + "</li>");
+        $('#arachni-list ul').append("<li class='inner-list'>\"" + arachni[k].injection_value.trim() + "\"</li>");
     }
+
+    $("#list-container").customScrollbar({
+        skin: "default-skin",
+        hScroll: false,
+        updateOnWindowResize: true
+    })
 }
 
 function clear_info() {
     $('#wapiti-list ul').empty();
     $('#skipfish-list ul').empty();
     $('#arachni-list ul').empty();
+    $(".list").customScrollbar("remove")
 }
 
 function loader() {
