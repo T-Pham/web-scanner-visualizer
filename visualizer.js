@@ -99,6 +99,54 @@ function create_pie(nodes, error_type) {
     });
 }
 
+function set_info(index) {
+    clear_info();
+
+    header = params.urls[index].url;
+
+    $("#url-container").text(header);
+    var wapiti;
+    var skipfish;
+    var arachni;
+
+
+    switch (mode_count) {
+        case 0:
+            wapiti = params.urls[index].wapiti.sqli;
+            skipfish = params.urls[index].skipfish.sqli;
+            arachni = params.urls[index].arachni.sqli;
+            break;
+        case 1:
+            wapiti = params.urls[index].wapiti.xss;
+            skipfish = params.urls[index].skipfish.xss;
+            arachni = params.urls[index].arachni.xss;
+            break;
+        case 2:
+            wapiti = params.urls[index].wapiti.sqli.concat(params.urls[index].wapiti.xss);
+            skipfish = params.urls[index].skipfish.sqli.concat(params.urls[index].skipfish.xss);
+            arachni = params.urls[index].arachni.sqli.concat(params.urls[index].arachni.xss);
+            break;
+        default:
+            break;
+    };
+    console.log(wapiti);
+    for (var k = 0; k < wapiti.length; k++) {
+        $('#wapiti-list ul').append("<li class='inner-list'>" + wapiti[k].injection_value + "</li>");
+    }
+    for (var k = 0; k < skipfish.length; k++) {
+        $('#skipfish-list ul').append("<li class='inner-list'>" + skipfish[k].injection_value + "</li>");
+    }
+    for (var k = 0; k < arachni.length; k++) {
+        $('#arachni-list ul').append("<li class='inner-list'>" + arachni[k].injection_value + "</li>");
+    }
+}
+
+function clear_info() {
+    $('#wapiti-list ul').empty();
+    $('#skipfish-list ul').empty();
+    $('#arachni-list ul').empty();
+}
+
 function loader() {
     var w = 1000;
     var h = 600;
@@ -132,6 +180,8 @@ function loader() {
     nodes.append("svg:title")
             .text(function (d) { return d.node.valueOf(); });
 
+    nodes.on("mouseover", function (d, i) { set_info(i) });
+    //nodes.on("mouseout", function (d, i) { clear_info() });
 
     force.on("tick", function () {
         edges.attr("x1", function (d) {

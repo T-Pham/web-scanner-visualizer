@@ -190,7 +190,7 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 				if(!sqli_injection_value->empty()){
 					*sqli_injection_value += ", ";
 				}
-				*sqli_injection_value += "{value: \"";
+				*sqli_injection_value += "{injection_value: \"";
 				*sqli_injection_value += injection_value;
 				*sqli_injection_value += "\", params: [";
 
@@ -205,10 +205,7 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 					if(!xss_injection_value->empty()){
 						*xss_injection_value += ", ";
 					}
-					if(!xss_injection_value->empty()){
-						*xss_injection_value += ", ";
-					}
-					*xss_injection_value += "{value: \"";
+					*xss_injection_value += "{injection_value: \"";
 					*xss_injection_value += injection_value;
 					*xss_injection_value += "\", params: [";
 

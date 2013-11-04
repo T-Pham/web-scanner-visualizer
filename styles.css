@@ -1,19 +1,44 @@
-#visualization {
-	margin: 10px 0px 0px 20px;
-	display: inline-block;
-	width: auto;
-	height: auto;
-	border: solid 2px;
+body {
+	font-family: Helvetica Neue, Helvetica, sans-serif;
 }
 
-#svg-container {
+#visualization {
+	margin: 10px 0px 0px 10px;
+	display: inline-block;
+	vertical-align: top;
 	width: 1000px;
 	height: 600px;
+	border: solid 2px #ccc;
+}
+
+#info-board {
+	margin: 10px 0px 0px 10px;
+	display: inline-block;
+	vertical-align: top;
+	width: 300px;
+	height: 600px;
+	border: solid 2px #ccc;
+}
+
+.inner-list {
+	width: 200px;
+	word-wrap: break-word;
+}
+
+
+#url-container {
+	background-color: #ccc;
+	padding-top: 10px;
+	width: auto;
+	height: 45px;
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+	word-wrap: break-word;
 }
 
 #overlay-title {
 	font-size: 50px;
-	font-family: Helvetica Neue, Helvetica, sans-serif;
 	fill: #E15E6E;
 }
 
@@ -44,7 +69,6 @@
 
 .legend-text {
 	font-size: 15px;
-	font-family: Helvetica Neue, Helvetica, sans-serif;
 	font-weight: bold;
 	fill: dimgrey;
 }

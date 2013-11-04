@@ -14,28 +14,56 @@
         src="visualizer.js"
         charset="utf-8">
     </script>
+    <script
+        src="jquery-2.0.3.min.js"
+        charset="utf-8">
+    </script>
     <script>
         window.onload = loader;
     </script>
 </head>
 <body>
-    <div id="visualization">
-        <svg id="svg-container">
-            <text id="overlay-title" x="10" y="50"> SQLI </text>
-            <rect id="overlay-rect" width="180" height="80" x="0" y="0"></rect>
+    <div>
+        <div id="visualization">
+            <svg id="svg-container">
+                <text id="overlay-title" x="10" y="50"> SQLI </text>
+                <rect id="overlay-rect" width="180" height="80" x="0" y="0"></rect>
 
-            <rect id="error-free-rect" class="legend-rect" width="50" height="20" x="15" y="480"></rect>
-            <rect id="arachni-rect" class="legend-rect" width="50" height="20" x="15" y="510"></rect>
-            <rect id="skipfish-rect" class="legend-rect" width="50" height="20" x="15" y="540"></rect>
-            <rect id="wapiti-rect" class="legend-rect" width="50" height="20" x="15" y="570"></rect>
+                <rect id="error-free-rect" class="legend-rect" width="50" height="20" x="15" y="480"></rect>
+                <rect id="arachni-rect" class="legend-rect" width="50" height="20" x="15" y="510"></rect>
+                <rect id="skipfish-rect" class="legend-rect" width="50" height="20" x="15" y="540"></rect>
+                <rect id="wapiti-rect" class="legend-rect" width="50" height="20" x="15" y="570"></rect>
 
-            <text class="legend-text" x="75" y="495"> NO ERROR </text>
-            <text class="legend-text" x="75" y="525"> ARACHNI </text>
-            <text class="legend-text" x="75" y="555"> SKIPFISH </text>
-            <text class="legend-text" x="75" y="585"> WAPITI </text>
+                <text class="legend-text" x="75" y="495"> NO ERROR </text>
+                <text class="legend-text" x="75" y="525"> ARACHNI </text>
+                <text class="legend-text" x="75" y="555"> SKIPFISH </text>
+                <text class="legend-text" x="75" y="585"> WAPITI </text>
 
-            <g id="graph"></g>
-        </svg>
+                <g id="graph"></g>
+            </svg>
+        </div>
+        <div id="info-board">
+            <div id="url-container">
+                Example.com
+            </div>
+            <ul>
+                <li id="wapiti-list">WAPITI
+                    <ul>
+                    </ul>
+                </li>
+
+                <li id="skipfish-list">SKIPFISH
+                    <ul>
+                    </ul>
+                </li>
+
+                <li id="arachni-list">ARACHNI
+                    <ul>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
     </div>
     <br />
 </body>
