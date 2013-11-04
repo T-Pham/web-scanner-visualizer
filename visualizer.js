@@ -4,6 +4,7 @@ var link_distance = 70;
 var charge = -1000;
 
 var current_index;
+var info_clicked = false;
 
 function colors(i) {
     switch (i) {
@@ -109,6 +110,7 @@ function set_info(index) {
 
     if($("#url-container").text().trim() == "CLICK A NODE") {
         $("#list-container").append("\<ul><li id=\"wapiti-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH <ul> </ul> </li> <hr> <li id=\"arachni-list\" class=\"arachni-text-color\">ARACHNI <ul> </ul> </li> </ul>");
+        info_clicked = true;
     }
 
     header = params.urls[index].url;
@@ -185,7 +187,7 @@ function clear_info() {
     $('#wapiti-list ul').empty();
     $('#skipfish-list ul').empty();
     $('#arachni-list ul').empty();
-    $(".list").customScrollbar("remove")
+    $("#list-container").customScrollbar("remove");
 }
 
 function loader() {
@@ -260,6 +262,8 @@ function loader() {
                 break;
         }
         mode_count = (mode_count + 1) % 3;
-        set_info(current_index);
+        if(info_clicked) {
+            set_info(current_index);
+        }
     });
 }
