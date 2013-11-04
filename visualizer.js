@@ -1,5 +1,8 @@
 var mode_count = 0;
 
+var link_distance = 70;
+var charge = -1000;
+
 function colors(i) {
     switch (i) {
         case 0:
@@ -102,6 +105,10 @@ function create_pie(nodes, error_type) {
 function set_info(index) {
     clear_info();
 
+    if($("#url-container").text().trim() == "CLICK A NODE") {
+        $("#list-container").append("\<ul><li id=\"wapiti-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH <ul> </ul> </li> <hr> <li id=\"arachni-list\" class=\"arachni-text-color\">ARACHNI <ul> </ul> </li> </ul>");
+    }
+
     header = params.urls[index].url;
 
     if (header.length > 70) {
@@ -180,9 +187,7 @@ function clear_info() {
 function loader() {
     var w = 1000;
     var h = 600;
-    var link_distance = 55;
-    var charge = -900;
-
+    
     var graph = d3.select("svg").select("#graph");
 
     var force = d3.layout.force()

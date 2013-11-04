@@ -25,15 +25,16 @@ body {
 }
 
 #url-container {
-	width: auto;
-	height: 45px;
-	padding: 10px 5px 0px 5px;
-	background-color: #ccc;
+	height: 42px;
+	padding: 13px 5px 0px 5px;
 	text-align: center;
-	font-size: 15px;
+	background-color: #FCFEF5;
+	font-size: 17px;
 	font-weight: bold;
+	color: #E15E6E;
 	white-space: normal;
 	word-wrap: break-word;
+	border-bottom: solid 2px #ccc;
 }
 
 #list-container {
