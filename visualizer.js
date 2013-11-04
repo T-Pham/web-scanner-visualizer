@@ -3,6 +3,8 @@ var mode_count = 0;
 var link_distance = 70;
 var charge = -1000;
 
+var current_index;
+
 function colors(i) {
     switch (i) {
         case 0:
@@ -175,6 +177,8 @@ function set_info(index) {
         hScroll: false,
         updateOnWindowResize: true
     })
+
+    current_index = index;
 }
 
 function clear_info() {
@@ -187,7 +191,7 @@ function clear_info() {
 function loader() {
     var w = 1000;
     var h = 600;
-    
+
     var graph = d3.select("svg").select("#graph");
 
     var force = d3.layout.force()
@@ -272,5 +276,6 @@ function loader() {
                 break;
         }
         mode_count = (mode_count + 1) % 3;
+        set_info(current_index);
     });
 }
