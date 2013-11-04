@@ -113,28 +113,44 @@ function set_info(index) {
     var skipfish;
     var arachni;
 
+    var wapiti_count;
+    var skipfish_count;
+    var arachni_count;
 
     switch (mode_count) {
         case 0:
             wapiti = params.urls[index].wapiti.sqli;
             skipfish = params.urls[index].skipfish.sqli;
             arachni = params.urls[index].arachni.sqli;
+            wapiti_count = dataset.nodes[index].sqli.wapiti;
+            skipfish_count = dataset.nodes[index].sqli.skipfish;
+            arachni_count = dataset.nodes[index].sqli.arachni;
             break;
         case 1:
             wapiti = params.urls[index].wapiti.xss;
             skipfish = params.urls[index].skipfish.xss;
             arachni = params.urls[index].arachni.xss;
+            wapiti_count = dataset.nodes[index].xss.wapiti;
+            skipfish_count = dataset.nodes[index].xss.skipfish;
+            arachni_count = dataset.nodes[index].xss.arachni;
             break;
         case 2:
             wapiti = params.urls[index].wapiti.sqli.concat(params.urls[index].wapiti.xss);
             skipfish = params.urls[index].skipfish.sqli.concat(params.urls[index].skipfish.xss);
             arachni = params.urls[index].arachni.sqli.concat(params.urls[index].arachni.xss);
+            wapiti_count = dataset.nodes[index].both.wapiti;
+            skipfish_count = dataset.nodes[index].both.skipfish;
+            arachni_count = dataset.nodes[index].both.arachni;
             break;
         default:
             break;
     };
 
     $("#list-container").customScrollbar();
+
+    $('#wapiti-list ul').append("<li class='inner-list'>ERRORS: " + wapiti_count + "</li>");
+    $('#skipfish-list ul').append("<li class='inner-list'>ERRORS: " + skipfish_count + "</li>");
+    $('#arachni-list ul').append("<li class='inner-list'>ERRORS: " + arachni_count + "</li>");
 
 
     for (var k = 0; k < wapiti.length; k++) {

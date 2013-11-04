@@ -70,7 +70,7 @@
 }
 
 .scrollable.default-skin .scroll-bar .thumb {
-  background-color: black;
+  background-color: dimgrey;
   opacity: 0.4;
   border-radius: 3px;
   -moz-border-radius: 4px;
