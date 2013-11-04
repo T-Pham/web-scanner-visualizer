@@ -115,8 +115,8 @@ function set_info(index) {
 
     header = params.urls[index].url;
 
-    if (header.length > 70) {
-        header = header.substr(0, 70) + "...";
+    if (header.length > 55) {
+        header = header.substr(0, 55) + "...";
     }
 
     $("#url-container").text(header);
