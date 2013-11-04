@@ -225,7 +225,7 @@ function loader() {
 		div.transition()
 			.duration(200)
 			.style("opacity", .9);
-		div.html(d.node.valueOf())
+		div.html(d.node)
 			.style("left", (d3.event.pageX) + "px")
 			.style("top", (d3.event.pageY - 28) + "px");
 	})
@@ -233,10 +233,8 @@ function loader() {
 		div.transition()
 			.duration(500)
 			.style("opacity", 0);
-	});
-
-    nodes.on("click", function (d, i) { set_info(i) });
-    //nodes.on("mouseout", function (d, i) { clear_info() });
+	})
+	.on("click", function (d, i) { set_info(i) });
 
     force.on("tick", function () {
         edges.attr("x1", function (d) {
