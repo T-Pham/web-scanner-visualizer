@@ -2,29 +2,27 @@ body {
 	font-family: Helvetica Neue, Helvetica, sans-serif;
 }
 
+#page-body {
+	white-space: nowrap;
+}
+
 #visualization {
 	margin: 10px 0px 0px 10px;
-	float: left;
-	vertical-align: top;
+	display: inline-block;
 	width: 1000px;
 	height: 600px;
+	vertical-align: top;
 	border: solid 2px #ccc;
 }
 
 #info-board {
 	margin: 10px 0px 0px 10px;
-	float: left;
-	vertical-align: top;
+	display: inline-block;
 	width: 300px;
 	height: 600px;
+	vertical-align: top;
 	border: solid 2px #ccc;
 }
-
-.inner-list {
-	width: 200px;
-	word-wrap: break-word;
-}
-
 
 #url-container {
 	width: auto;
@@ -34,14 +32,36 @@ body {
 	text-align: center;
 	font-size: 15px;
 	font-weight: bold;
+	white-space: normal;
 	word-wrap: break-word;
 }
 
 #list-container {
-	display: block;
 	width: 291px;
 	height: 545px;
-	position: relative;
+}
+
+.inner-list {
+	width: 263px;
+	white-space: normal;
+	word-wrap: break-word;
+	font-size: 13px;
+	font-weight: bold;
+	color: dimgrey;
+	margin: 5px 0px 0px 15px;
+	list-style-type: square ;
+}
+
+ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+#wapiti-list, #skipfish-list, #arachni-list {
+	list-style-type: none;
+	margin: 5px 0px 0px 5px;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 #overlay-title {
@@ -58,19 +78,35 @@ body {
 	stroke-width:  2;
 }
 
-#error-free-rect {
+.error-free-text-color  {
+	color: #B4DEBB;
+}
+
+.wapiti-text-color {
+	color: #E15E6E;
+}
+
+.skipfish-text-color {
+	color: #E1918E;
+}
+
+.arachni-text-color {
+	color: #E0C4AE;
+}
+
+.error-free-color  {
 	fill: #B4DEBB;
 }
 
-#wapiti-rect {
+.wapiti-color {
 	fill: #E15E6E;
 }
 
-#skipfish-rect {
+.skipfish-color {
 	fill: #E1918E;
 }
 
-#arachni-rect {
+.arachni-color {
 	fill: #E0C4AE;
 }
 
@@ -78,4 +114,8 @@ body {
 	font-size: 15px;
 	font-weight: bold;
 	fill: dimgrey;
+}
+
+hr {
+	margin: 10px 0px 7px 5px;
 }

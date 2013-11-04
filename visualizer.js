@@ -194,7 +194,7 @@ function loader() {
     nodes.append("svg:title")
             .text(function (d) { return d.node.valueOf(); });
 
-    nodes.on("mouseover", function (d, i) { set_info(i) });
+    nodes.on("click", function (d, i) { set_info(i) });
     //nodes.on("mouseout", function (d, i) { clear_info() });
 
     force.on("tick", function () {

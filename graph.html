@@ -28,16 +28,16 @@
     </script>
 </head>
 <body>
-    <div>
+    <div id="page-body">
         <div id="visualization">
             <svg id="svg-container">
                 <text id="overlay-title" x="10" y="50"> SQLI </text>
                 <rect id="overlay-rect" width="180" height="80" x="0" y="0"></rect>
 
-                <rect id="error-free-rect" class="legend-rect" width="50" height="20" x="15" y="480"></rect>
-                <rect id="arachni-rect" class="legend-rect" width="50" height="20" x="15" y="510"></rect>
-                <rect id="skipfish-rect" class="legend-rect" width="50" height="20" x="15" y="540"></rect>
-                <rect id="wapiti-rect" class="legend-rect" width="50" height="20" x="15" y="570"></rect>
+                <rect id="error-free-rect" class="legend-rect error-free-color" width="50" height="20" x="15" y="480"></rect>
+                <rect id="arachni-rect" class="legend-rect arachni-color" width="50" height="20" x="15" y="510"></rect>
+                <rect id="skipfish-rect" class="legend-rect skipfish-color" width="50" height="20" x="15" y="540"></rect>
+                <rect id="wapiti-rect" class="legend-rect wapiti-color" width="50" height="20" x="15" y="570"></rect>
 
                 <text class="legend-text" x="75" y="495"> NO ERROR </text>
                 <text class="legend-text" x="75" y="525"> ARACHNI </text>
@@ -53,17 +53,17 @@
             </div>
             <div id="list-container">
                 <ul>
-                    <li id="wapiti-list">WAPITI
+                    <li id="wapiti-list" class="wapiti-text-color">WAPITI
                     <ul>
                     </ul>
                     </li>
-
-                    <li id="skipfish-list">SKIPFISH
+                    <hr>
+                    <li id="skipfish-list" class="skipfish-text-color">SKIPFISH
                     <ul>
                     </ul>
                     </li>
-
-                    <li id="arachni-list">ARACHNI
+                    <hr>
+                    <li id="arachni-list" class="arachni-text-color">ARACHNI
                     <ul>
                     </ul>
                     </li>
