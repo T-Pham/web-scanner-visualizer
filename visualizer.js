@@ -19,22 +19,6 @@ function colors(i) {
     }
 }
 
-function neighbor(i) {
-    var edges = dataset['edges'];
-    var result = [];
-    for (k = 0; k < edges.length; k++) {
-        if (edges[k]['source'].index === i) {
-            result.push(edges[k]['target'].index);
-        }
-        else {
-            if (edges[k]['target'].index === i) {
-                result.push(edges[k]['source'].index);
-            }
-        }
-    }
-    return result;
-}
-
 function create_pie(nodes, error_type) {
     var pie = d3.layout.pie();
     pie.sort(null);
@@ -66,9 +50,7 @@ function create_pie(nodes, error_type) {
         }
 
         if (total == 0) {
-            arc = d3.svg.arc()
-                    .innerRadius(0)
-                    .outerRadius(8);
+            outerRadius = 8;
         }
         else {
             var outerRadius = total * 15 / average;
@@ -81,11 +63,18 @@ function create_pie(nodes, error_type) {
                     outerRadius = 10;
                 }
             }
-
-            arc = d3.svg.arc()
-                    .innerRadius(0)
-                    .outerRadius(outerRadius);
         }
+
+        arc = d3.svg.arc()
+            .innerRadius(0)
+            .outerRadius(outerRadius);
+
+        d3.select(this)
+        .append("circle")
+        .attr('r', outerRadius + 1)
+        .style('stroke', 'none')
+        .style('stroke-width', 3)
+        .style('fill-opacity', 0);
 
         d3.select(this)
         .selectAll("g.arc")
@@ -102,6 +91,24 @@ function create_pie(nodes, error_type) {
             return colors(i);
         })
         .attr("d", arc);
+    });
+}
+
+function clear_selected(node) {
+    d3.selectAll(".node").each(function (d, i){
+        if(i == current_index) {
+            d3.select(this.firstElementChild).style('stroke', 'none');
+            return null;
+        }
+    });
+}
+
+function add_selected(node) {
+    d3.selectAll(".node").each(function (d, i){
+        if(i == current_index) {
+            d3.select(this.firstElementChild).style('stroke', 'grey');
+            return null;
+        }
     });
 }
 
@@ -214,6 +221,7 @@ function loader() {
             .data(dataset.nodes)
             .enter()
             .append("svg:g")
+            .attr("class", "node")
             .call(force.drag);
 
 	var div = d3.select("body")
@@ -237,8 +245,11 @@ function loader() {
 			.style("opacity", 0);
 	});
 
-    nodes.on("click", function (d, i) { set_info(i) });
-    //nodes.on("mouseout", function (d, i) { clear_info() });
+    nodes.on("click", function (d, i) { 
+        clear_selected();
+        set_info(i);
+        add_selected();
+    });
 
     force.on("tick", function () {
         edges.attr("x1", function (d) {
