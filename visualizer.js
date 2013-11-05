@@ -19,7 +19,7 @@ function colors(i) {
     }
 }
 
-function create_pie(nodes, error_type) {
+function create_pie(nodes) {
     var pie = d3.layout.pie();
     pie.sort(null);
 
@@ -29,18 +29,18 @@ function create_pie(nodes, error_type) {
         var average;
         var dataset;
 
-        switch (error_type) {
-            case "sqli":
+        switch (mode_count) {
+            case 0:
                 total = d.sqli.total;
                 average = sqli_average;
                 dataset = d.sqli.pie;
                 break;
-            case "xss":
+            case 1:
                 total = d.xss.total;
                 average = xss_average;
                 dataset = d.xss.pie;
                 break;
-            case "both":
+            case 2:
                 total = d.both.total;
                 average = both_average;
                 dataset = d.both.pie;
@@ -68,6 +68,10 @@ function create_pie(nodes, error_type) {
         arc = d3.svg.arc()
             .innerRadius(0)
             .outerRadius(outerRadius);
+
+        d3.select(this)
+        .selectAll("circle")
+        .remove();
 
         d3.select(this)
         .append("circle")
@@ -274,23 +278,22 @@ function loader() {
     d3.select('#overlay-rect').on("click", function (d, i) {
         switch (mode_count) {
             case 0:
-                create_pie(nodes, "xss");
                 d3.select('#overlay-title').text("XSS");
                 break;
             case 1:
-                create_pie(nodes, "both");
                 d3.select('#overlay-title').text("BOTH");
                 break;
             case 2:
-                create_pie(nodes, "sqli");
                 d3.select('#overlay-title').text("SQLI");
                 break;
             default:
                 break;
         }
         mode_count = (mode_count + 1) % 3;
+        create_pie(nodes);
         if(info_clicked) {
             set_info(current_index);
+            add_selected();
         }
     });
 }
