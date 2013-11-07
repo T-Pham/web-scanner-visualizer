@@ -79,6 +79,19 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 		else {
 			escape_injection += injection[i];
 		}
+	}	
+	
+	std::string str_response;
+	str_response += response;
+	std::string escape_str_response;
+	for(int i = 0; i < str_response.length(); i++)
+	{
+		if(str_response[i] == '\'') {
+			escape_str_response += "\'\'";
+		}
+		else {
+			escape_str_response += str_response[i];
+		}
 	}
 
 	stmt += "INSERT INTO ERRORS (ERROR_TYPE, ERROR_LEVEL, INJECTION_VALUE, URL_ID, TOOL_NAME, RESPONSE) VALUES('";
@@ -92,7 +105,7 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 	stmt += "'),'";
 	stmt += tool_name;
 	stmt += "','";
-	stmt += response;
+	stmt += escape_str_response.c_str();
 	stmt += "');";
 
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
