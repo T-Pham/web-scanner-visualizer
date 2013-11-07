@@ -3,12 +3,14 @@
 #include "./src/wapiti_parser.hpp"
 #include "./src/arachni_parser.hpp"
 #include "./src/json_creator.hpp"
+#include <iostream>
+#include <string.h>
 
 // Constants
-const char *FILE_FOR_WAPITI_TREE_PARSE = "testphp.vulnweb.com.xml";
-const char *FILE_FOR_WAPITI_PARSE = "vulnerabilities.xml";
-const char *FILE_FOR_SKIPFISH_PARSE = "samples.js";
-const char *FILE_FOR_ARACHNI_PARSE = "my_report.xml";
+char *FILE_FOR_WAPITI_TREE_PARSE = "testphp.vulnweb.com.xml";
+char *FILE_FOR_WAPITI_PARSE = "vulnerabilities.xml";
+char *FILE_FOR_SKIPFISH_PARSE = "samples.js";
+char *FILE_FOR_ARACHNI_PARSE = "my_report.xml";
 
 // Function Prototypes
 void start_database();
@@ -22,8 +24,32 @@ void parse_arachni();
 database_handler* db;
 
 // main
-int main()
+int main(int n, char* args[])
 {
+	// parsing arguments for file paths
+	
+	for(int i = 1; i < n; i++) {
+		if(!strcmp(args[i], "-t")) {
+			FILE_FOR_WAPITI_TREE_PARSE = args[++i];
+		}
+		else {
+			if(!strcmp(args[i], "-w")) {
+				FILE_FOR_WAPITI_PARSE = args[++i];
+			}
+			else {
+				if(!strcmp(args[i], "-s")) {
+					FILE_FOR_SKIPFISH_PARSE = args[++i];
+				}
+				else {
+					if(!strcmp(args[i], "-a")) {
+						FILE_FOR_ARACHNI_PARSE = args[++i];
+					}
+				}
+			}
+		}
+	}
+
+
 	start_database();
 	parse_wapiti();
 	parse_skipfish();
@@ -48,14 +74,23 @@ void finalize_database() {
 
 // Parsers
 void parse_wapiti() {
-	wapiti_tree_parse(FILE_FOR_WAPITI_TREE_PARSE, db);
-	wapiti_parse(FILE_FOR_WAPITI_PARSE, db);
+	if(wapiti_tree_parse(FILE_FOR_WAPITI_TREE_PARSE, db) == -1) {
+		std::cout << "FILE FOR WAPITI TREE PARSE NOT FOUND" << std::endl;
+	}
+
+	if(wapiti_parse(FILE_FOR_WAPITI_PARSE, db) == -1) {
+		std::cout << "FILE FOR WAPITI PARSE NOT FOUND " << std::endl;
+	}
 }
 
 void parse_skipfish() {
-	skipfish_parse(FILE_FOR_SKIPFISH_PARSE, db);
+	if(skipfish_parse(FILE_FOR_SKIPFISH_PARSE, db) == -1) {
+		std::cout << "FILE FOR SKIPFISH PARSE NOT FOUND" << std::endl;
+	}
 }
 
 void parse_arachni() {
-	arachni_parse(FILE_FOR_ARACHNI_PARSE, db);
+	if(arachni_parse(FILE_FOR_ARACHNI_PARSE, db) == -1) {
+		std::cout << "FILE FOR ARACHNI PARSE NOT FOUND" << std::endl;
+	}
 }

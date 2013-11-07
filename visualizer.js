@@ -3,6 +3,9 @@ var mode_count = 0;
 var link_distance = 70;
 var charge = -1000;
 
+var current_index;
+var info_clicked = false;
+
 function colors(i) {
     switch (i) {
         case 0:
@@ -16,23 +19,7 @@ function colors(i) {
     }
 }
 
-function neighbor(i) {
-    var edges = dataset['edges'];
-    var result = [];
-    for (k = 0; k < edges.length; k++) {
-        if (edges[k]['source'].index === i) {
-            result.push(edges[k]['target'].index);
-        }
-        else {
-            if (edges[k]['target'].index === i) {
-                result.push(edges[k]['source'].index);
-            }
-        }
-    }
-    return result;
-}
-
-function create_pie(nodes, error_type) {
+function create_pie(nodes) {
     var pie = d3.layout.pie();
     pie.sort(null);
 
@@ -42,18 +29,18 @@ function create_pie(nodes, error_type) {
         var average;
         var dataset;
 
-        switch (error_type) {
-            case "sqli":
+        switch (mode_count) {
+            case 0:
                 total = d.sqli.total;
                 average = sqli_average;
                 dataset = d.sqli.pie;
                 break;
-            case "xss":
+            case 1:
                 total = d.xss.total;
                 average = xss_average;
                 dataset = d.xss.pie;
                 break;
-            case "both":
+            case 2:
                 total = d.both.total;
                 average = both_average;
                 dataset = d.both.pie;
@@ -63,9 +50,7 @@ function create_pie(nodes, error_type) {
         }
 
         if (total == 0) {
-            arc = d3.svg.arc()
-                    .innerRadius(0)
-                    .outerRadius(8);
+            outerRadius = 8;
         }
         else {
             var outerRadius = total * 15 / average;
@@ -78,11 +63,22 @@ function create_pie(nodes, error_type) {
                     outerRadius = 10;
                 }
             }
-
-            arc = d3.svg.arc()
-                    .innerRadius(0)
-                    .outerRadius(outerRadius);
         }
+
+        arc = d3.svg.arc()
+            .innerRadius(0)
+            .outerRadius(outerRadius);
+
+        d3.select(this)
+        .selectAll("circle")
+        .remove();
+
+        d3.select(this)
+        .append("circle")
+        .attr('r', outerRadius + 1)
+        .style('stroke', 'none')
+        .style('stroke-width', 3)
+        .style('fill-opacity', 0);
 
         d3.select(this)
         .selectAll("g.arc")
@@ -102,17 +98,36 @@ function create_pie(nodes, error_type) {
     });
 }
 
+function clear_selected(node) {
+    d3.selectAll(".node").each(function (d, i){
+        if(i == current_index) {
+            d3.select(this.firstElementChild).style('stroke', 'none');
+            return null;
+        }
+    });
+}
+
+function add_selected(node) {
+    d3.selectAll(".node").each(function (d, i){
+        if(i == current_index) {
+            d3.select(this.firstElementChild).style('stroke', 'grey');
+            return null;
+        }
+    });
+}
+
 function set_info(index) {
     clear_info();
 
     if($("#url-container").text().trim() == "CLICK A NODE") {
         $("#list-container").append("\<ul><li id=\"wapiti-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH <ul> </ul> </li> <hr> <li id=\"arachni-list\" class=\"arachni-text-color\">ARACHNI <ul> </ul> </li> </ul>");
+        info_clicked = true;
     }
 
     header = params.urls[index].url;
 
-    if (header.length > 70) {
-        header = header.substr(0, 70) + "...";
+    if (header.length > 55) {
+        header = header.substr(0, 55) + "...";
     }
 
     $("#url-container").text(header);
@@ -175,19 +190,21 @@ function set_info(index) {
         hScroll: false,
         updateOnWindowResize: true
     })
+
+    current_index = index;
 }
 
 function clear_info() {
     $('#wapiti-list ul').empty();
     $('#skipfish-list ul').empty();
     $('#arachni-list ul').empty();
-    $(".list").customScrollbar("remove")
+    $("#list-container").customScrollbar("remove");
 }
 
 function loader() {
     var w = 1000;
     var h = 600;
-    
+
     var graph = d3.select("svg").select("#graph");
 
     var force = d3.layout.force()
@@ -208,6 +225,7 @@ function loader() {
             .data(dataset.nodes)
             .enter()
             .append("svg:g")
+            .attr("class", "node")
             .call(force.drag);
 
 	var div = d3.select("body")
@@ -229,8 +247,13 @@ function loader() {
 		div.transition()
 			.duration(500)
 			.style("opacity", 0);
-	})
-	.on("click", function (d, i) { set_info(i) });
+	});
+
+    nodes.on("click", function (d, i) { 
+        clear_selected();
+        set_info(i);
+        add_selected();
+    });
 
     force.on("tick", function () {
         edges.attr("x1", function (d) {
@@ -255,20 +278,22 @@ function loader() {
     d3.select('#overlay-rect').on("click", function (d, i) {
         switch (mode_count) {
             case 0:
-                create_pie(nodes, "xss");
                 d3.select('#overlay-title').text("XSS");
                 break;
             case 1:
-                create_pie(nodes, "both");
                 d3.select('#overlay-title').text("BOTH");
                 break;
             case 2:
-                create_pie(nodes, "sqli");
                 d3.select('#overlay-title').text("SQLI");
                 break;
             default:
                 break;
         }
         mode_count = (mode_count + 1) % 3;
+        create_pie(nodes);
+        if(info_clicked) {
+            set_info(current_index);
+            add_selected();
+        }
     });
 }
