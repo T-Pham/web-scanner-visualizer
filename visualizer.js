@@ -9,11 +9,11 @@ var info_clicked = false;
 function colors(i) {
     switch (i) {
         case 0:
-            return "#E15E6E";
+            return "darkblue";
         case 1:
-            return "#E1918E";
+            return "darkgreen";
         case 2:
-            return "#E0C4AE";
+            return "darkorange";
         default:
             return "#B4DEBB"
     }
@@ -110,7 +110,7 @@ function clear_selected(node) {
 function add_selected(node) {
     d3.selectAll(".node").each(function (d, i){
         if(i == current_index) {
-            d3.select(this.firstElementChild).style('stroke', 'grey');
+            d3.select(this.firstElementChild).style('stroke', 'crimson');
             return null;
         }
     });
@@ -120,7 +120,7 @@ function set_info(index) {
     clear_info();
 
     if($("#url-container").text().trim() == "CLICK A NODE") {
-        $("#list-container").append("\<ul><li id=\"wapiti-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH <ul> </ul> </li> <hr> <li id=\"arachni-list\" class=\"arachni-text-color\">ARACHNI <ul> </ul> </li> </ul>");
+        $("#list-container").append("\<ul><li id=\"wapiti-list\" class=\"arachni-text-color\">ARACHNI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH<ul> </ul> </li> <hr> <li id=\"arachni-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> </ul>");
         info_clicked = true;
     }
 
@@ -170,9 +170,9 @@ function set_info(index) {
 
     $("#list-container").customScrollbar();
 
-    $('#wapiti-list ul').append("<li class='inner-list'>ERRORS: " + wapiti_count + "</li>");
-    $('#skipfish-list ul').append("<li class='inner-list'>ERRORS: " + skipfish_count + "</li>");
-    $('#arachni-list ul').append("<li class='inner-list'>ERRORS: " + arachni_count + "</li>");
+    $('#wapiti-list ul').append("<div class='error-field'>" + wapiti_count + " ERROR(S)</div>");
+    $('#skipfish-list ul').append("<div class='error-field'>" + skipfish_count + " ERROR(S)</div>");
+    $('#arachni-list ul').append("<div class='error-field'>" + arachni_count + " ERROR(S)</div>");
 
 
     for (var k = 0; k < wapiti.length; k++) {
@@ -276,22 +276,22 @@ function loader() {
     force.start();
 
     d3.select('#overlay-rect').on("click", function (d, i) {
+		mode_count = (mode_count + 1) % 3;
         switch (mode_count) {
             case 0:
-                d3.select('#overlay-title').text("XSS");
+                d3.select('#overlay-title').text("SQLI");
                 break;
             case 1:
-                d3.select('#overlay-title').text("BOTH");
+                d3.select('#overlay-title').text("XSS");
                 break;
             case 2:
-                d3.select('#overlay-title').text("SQLI");
+                d3.select('#overlay-title').text("BOTH");
                 break;
             default:
                 break;
         }
-        mode_count = (mode_count + 1) % 3;
         create_pie(nodes);
-        if(info_clicked) {
+        if (info_clicked) {
             set_info(current_index);
             add_selected();
         }
