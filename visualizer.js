@@ -170,9 +170,9 @@ function set_info(index) {
 
     $("#list-container").customScrollbar();
 
-    $('#wapiti-list ul').append("<li class='inner-list'>ERRORS: " + wapiti_count + "</li>");
-    $('#skipfish-list ul').append("<li class='inner-list'>ERRORS: " + skipfish_count + "</li>");
-    $('#arachni-list ul').append("<li class='inner-list'>ERRORS: " + arachni_count + "</li>");
+    $('#wapiti-list ul').append("<div class='error-field'>" + wapiti_count + " ERROR(S)</div>");
+    $('#skipfish-list ul').append("<div class='error-field'>" + skipfish_count + " ERROR(S)</div>");
+    $('#arachni-list ul').append("<div class='error-field'>" + arachni_count + " ERROR(S)</div>");
 
 
     for (var k = 0; k < wapiti.length; k++) {

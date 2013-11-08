@@ -63,6 +63,11 @@ ul {
 	padding: 0px;
 }
 
+.error-field {
+	color: black;
+	font-size: 12px;
+}
+
 #wapiti-list, #skipfish-list, #arachni-list {
 	list-style-type: none;
 	margin: 8px 0px 0px 5px;
