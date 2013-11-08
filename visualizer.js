@@ -120,7 +120,7 @@ function set_info(index) {
     clear_info();
 
     if($("#url-container").text().trim() == "CLICK A NODE") {
-        $("#list-container").append("\<ul><li id=\"wapiti-list\" class=\"arachni-text-color\">ARACHNI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH<ul> </ul> </li> <hr> <li id=\"arachni-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> </ul>");
+        $("#list-container").append("\<ul><li id=\"arachni-list\" class=\"arachni-text-color\">ARACHNI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH<ul> </ul> </li> <hr> <li id=\"wapiti-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> </ul>");
         info_clicked = true;
     }
 
