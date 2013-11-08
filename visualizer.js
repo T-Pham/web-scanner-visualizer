@@ -9,11 +9,11 @@ var info_clicked = false;
 function colors(i) {
     switch (i) {
         case 0:
-            return "#E15E6E";
+            return "darkblue";
         case 1:
-            return "#E1918E";
+            return "darkgreen";
         case 2:
-            return "#E0C4AE";
+            return "darkorange";
         default:
             return "#B4DEBB"
     }
@@ -110,7 +110,7 @@ function clear_selected(node) {
 function add_selected(node) {
     d3.selectAll(".node").each(function (d, i){
         if(i == current_index) {
-            d3.select(this.firstElementChild).style('stroke', 'grey');
+            d3.select(this.firstElementChild).style('stroke', 'crimson');
             return null;
         }
     });
@@ -120,7 +120,7 @@ function set_info(index) {
     clear_info();
 
     if($("#url-container").text().trim() == "CLICK A NODE") {
-        $("#list-container").append("\<ul><li id=\"wapiti-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH <ul> </ul> </li> <hr> <li id=\"arachni-list\" class=\"arachni-text-color\">ARACHNI <ul> </ul> </li> </ul>");
+        $("#list-container").append("\<ul><li id=\"wapiti-list\" class=\"arachni-text-color\">ARACHNI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH<ul> </ul> </li> <hr> <li id=\"arachni-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> </ul>");
         info_clicked = true;
     }
 

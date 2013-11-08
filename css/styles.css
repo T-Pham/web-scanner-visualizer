@@ -94,15 +94,15 @@ ul {
 }
 
 .wapiti-text-color {
-	color: #E15E6E;
+	color: darkblue;
 }
 
 .skipfish-text-color {
-	color: #E1918E;
+	color: darkgreen;
 }
 
 .arachni-text-color {
-	color: #E0C4AE;
+	color: darkorange;
 }
 
 .error-free-color  {
@@ -110,15 +110,15 @@ ul {
 }
 
 .wapiti-color {
-	fill: #E15E6E;
+	fill: darkblue;
 }
 
 .skipfish-color {
-	fill: #E1918E;
+	fill: darkgreen;
 }
 
 .arachni-color {
-	fill: #E0C4AE;
+	fill: darkorange;
 }
 
 .legend-text {
