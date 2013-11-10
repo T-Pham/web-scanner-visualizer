@@ -9,7 +9,7 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									 URL TEXT NOT NULL,\
 									 METHOD VARCHAR(255) NOT NULL,\
 									 URL_PARENT_ID INTEGER, \
-									 UNIQUE(URL));\
+									 UNIQUE(URL, METHOD));\
 									 DROP TABLE IF EXISTS PARAMETERS;\
 									 CREATE TABLE PARAMETERS (\
 									 PARAMETER_ID INTEGER PRIMARY KEY,\
