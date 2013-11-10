@@ -279,21 +279,26 @@ function loader() {
 
     force.start();
 
-    d3.select('#overlay-rect').on("click", function (d, i) {
-		mode_count = (mode_count + 1) % 3;
-        switch (mode_count) {
-            case 0:
+    $('#mode-select').on('change', function() {
+        
+        mode = $('#mode-select').val();
+        switch (mode) {
+            case "SQLI":
+                mode_count = 0;
                 d3.select('#overlay-title').text("SQLI");
                 break;
-            case 1:
+            case "XSS":
+                mode_count = 1;
                 d3.select('#overlay-title').text("XSS");
                 break;
-            case 2:
+            case "BOTH":
+                mode_count = 2;
                 d3.select('#overlay-title').text("BOTH");
                 break;
             default:
                 break;
         }
+
         create_pie(nodes);
         if (info_clicked) {
             set_info(current_index);

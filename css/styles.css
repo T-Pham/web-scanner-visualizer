@@ -68,6 +68,10 @@ ul {
 	font-size: 12px;
 }
 
+#control-panel {
+	margin: 10px 0px 0px 10px;
+}
+
 #wapiti-list, #skipfish-list, #arachni-list {
 	list-style-type: none;
 	margin: 8px 0px 0px 5px;
