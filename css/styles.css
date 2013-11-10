@@ -30,14 +30,14 @@ svg {
 }
 
 #url-container {
-	height: 42px;
-	padding: 13px 5px 0px 5px;
+	height: 52px;
+	padding: 15px 5px 0px 5px;
 	text-align: center;
 	background-color: #FCFEF5;
 	font-size: 17px;
 	font-weight: bold;
 	color: #E15E6E;
-	white-space: normal;
+	white-space: pre;
 	word-wrap: break-word;
 	border-bottom: solid 2px #ccc;
 }

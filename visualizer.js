@@ -124,7 +124,7 @@ function set_info(index) {
         info_clicked = true;
     }
 
-    header = params.urls[index].url;
+    header = "[" + params.urls[index].method + "] " + params.urls[index].url;
 
     if (header.length > 55) {
         header = header.substr(0, 55) + "...";
