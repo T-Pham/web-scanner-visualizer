@@ -129,13 +129,13 @@ function go_to_path_with_method(path, query, method) {
 	form.setAttribute("method", method);
 	form.setAttribute("action", path);
 	form.setAttribute("target", "_blank");
-	params = parse_query(query);
-	for (var key in params) {
-		if (params.hasOwnProperty(key)) {
+	var parameters = parse_query(query);
+	for (var key in parameters) {
+		if (parameters.hasOwnProperty(key)) {
 			var hiddenField = document.createElement("input");
 			hiddenField.setAttribute("type", "hidden");
 			hiddenField.setAttribute("name", key);
-			hiddenField.setAttribute("value", params[key]);
+			hiddenField.setAttribute("value", parameters[key]);
 			form.appendChild(hiddenField);
 		}
 	}
@@ -144,18 +144,18 @@ function go_to_path_with_method(path, query, method) {
 }
 
 function parse_query(query) {
-	var params = {};
+	var parameters = {};
 	var vars = query.split('&');
 	for (var i = 0; i < vars.length; i++) {
 		var pair = vars[i].split('=');
 		var key = decodeURIComponent(pair[0]);
 		var value = decodeURIComponent(pair[1]);
-		params[key] = value;
+		parameters[key] = value;
     }
-	return params;
+	return parameters;
 }
 
-function set_info(index) {
+function set_info() {
     clear_info();
 
     if($("#url-container").text().trim() == "CLICK A NODE") {
@@ -163,7 +163,7 @@ function set_info(index) {
         info_clicked = true;
     }
 
-    header = "[" + params.urls[index].method + "] " + params.urls[index].url;
+    header = "[" + params.urls[current_index].method + "] " + params.urls[current_index].url;
 
     if (header.length > 55) {
         header = header.substr(0, 55) + "...";
@@ -180,28 +180,28 @@ function set_info(index) {
 
     switch (mode_count) {
         case 0:
-            wapiti = params.urls[index].wapiti.sqli;
-            skipfish = params.urls[index].skipfish.sqli;
-            arachni = params.urls[index].arachni.sqli;
-            wapiti_count = dataset.nodes[index].sqli.wapiti;
-            skipfish_count = dataset.nodes[index].sqli.skipfish;
-            arachni_count = dataset.nodes[index].sqli.arachni;
+            wapiti = params.urls[current_index].wapiti.sqli;
+            skipfish = params.urls[current_index].skipfish.sqli;
+            arachni = params.urls[current_index].arachni.sqli;
+            wapiti_count = dataset.nodes[current_index].sqli.wapiti;
+            skipfish_count = dataset.nodes[current_index].sqli.skipfish;
+            arachni_count = dataset.nodes[current_index].sqli.arachni;
             break;
         case 1:
-            wapiti = params.urls[index].wapiti.xss;
-            skipfish = params.urls[index].skipfish.xss;
-            arachni = params.urls[index].arachni.xss;
-            wapiti_count = dataset.nodes[index].xss.wapiti;
-            skipfish_count = dataset.nodes[index].xss.skipfish;
-            arachni_count = dataset.nodes[index].xss.arachni;
+            wapiti = params.urls[current_index].wapiti.xss;
+            skipfish = params.urls[current_index].skipfish.xss;
+            arachni = params.urls[current_index].arachni.xss;
+            wapiti_count = dataset.nodes[current_index].xss.wapiti;
+            skipfish_count = dataset.nodes[current_index].xss.skipfish;
+            arachni_count = dataset.nodes[current_index].xss.arachni;
             break;
         case 2:
-            wapiti = params.urls[index].wapiti.sqli.concat(params.urls[index].wapiti.xss);
-            skipfish = params.urls[index].skipfish.sqli.concat(params.urls[index].skipfish.xss);
-            arachni = params.urls[index].arachni.sqli.concat(params.urls[index].arachni.xss);
-            wapiti_count = dataset.nodes[index].both.wapiti;
-            skipfish_count = dataset.nodes[index].both.skipfish;
-            arachni_count = dataset.nodes[index].both.arachni;
+            wapiti = params.urls[current_index].wapiti.sqli.concat(params.urls[current_index].wapiti.xss);
+            skipfish = params.urls[current_index].skipfish.sqli.concat(params.urls[current_index].skipfish.xss);
+            arachni = params.urls[current_index].arachni.sqli.concat(params.urls[current_index].arachni.xss);
+            wapiti_count = dataset.nodes[current_index].both.wapiti;
+            skipfish_count = dataset.nodes[current_index].both.skipfish;
+            arachni_count = dataset.nodes[current_index].both.arachni;
             break;
         default:
             break;
@@ -228,9 +228,7 @@ function set_info(index) {
         skin: "default-skin",
         hScroll: false,
         updateOnWindowResize: true
-    })
-
-    current_index = index;
+    });
 }
 
 function clear_info() {
@@ -290,7 +288,8 @@ function loader() {
 
     nodes.on("click", function (d, i) { 
         clear_selected();
-        set_info(i);
+        current_index = i;
+        set_info();
         add_selected();
     });
 
