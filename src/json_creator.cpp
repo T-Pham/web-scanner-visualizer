@@ -256,12 +256,15 @@ void create_params_json(std::ofstream* file, database_handler* db_handler) {
 		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
 			int current_id = (int)sqlite3_column_int(sqlite_stmt, 0);
 			char* url = (char*)sqlite3_column_text(sqlite_stmt, 1);
+			char* method = (char*)sqlite3_column_text(sqlite_stmt, 2);
 			if(!str.empty()) {
 				str += ", ";
 			}
 
 			str += "{url: \"";
 			str += url;
+			str += "\", method: \"";
+			str += method;
 			str += "\", ";
 
 			set = get_url_info(current_id, WAPITI_APP_NAME, db_handler);
