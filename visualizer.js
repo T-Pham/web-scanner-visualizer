@@ -9,13 +9,13 @@ var info_clicked = false;
 function colors(i) {
     switch (i) {
         case 0:
-            return "darkblue";
+            return "arachni-color";
         case 1:
-            return "darkgreen";
+            return "skipfish-color";
         case 2:
-            return "darkorange";
+            return "wapiti-color";
         default:
-            return "#B4DEBB"
+            return "error-free-color"
     }
 }
 
@@ -91,7 +91,7 @@ function create_pie(nodes) {
         .append("g")
         .attr("class", "arc")
         .append("path")
-        .attr("fill", function (d, i) {
+        .attr("class", function (d, i) {
             return colors(i);
         })
         .attr("d", arc);

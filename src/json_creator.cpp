@@ -267,8 +267,8 @@ void create_params_json(std::ofstream* file, database_handler* db_handler) {
 			str += method;
 			str += "\", ";
 
-			set = get_url_info(current_id, WAPITI_APP_NAME, db_handler);
-			str += "wapiti: ";
+			set = get_url_info(current_id, ARACHNI_APP_NAME, db_handler);
+			str += "arachni: ";
 			result = join_strings(set);
 			str += result->c_str();
 			delete result;
@@ -283,8 +283,8 @@ void create_params_json(std::ofstream* file, database_handler* db_handler) {
 			delete set;
 			str += ", ";
 
-			set = get_url_info(current_id, ARACHNI_APP_NAME, db_handler);
-			str += "arachni: ";
+			set = get_url_info(current_id, WAPITI_APP_NAME, db_handler);
+			str += "wapiti: ";
 			result = join_strings(set);
 			str += result->c_str();
 			delete result;
