@@ -94,15 +94,15 @@ ul {
 }
 
 .wapiti-text-color {
-	color: darkblue;
+	color: #ECE59A;
 }
 
 .skipfish-text-color {
-	color: darkgreen;
+	color: #FD6E8A;
 }
 
 .arachni-text-color {
-	color: darkorange;
+	color: #848D82;
 }
 
 .error-free-color  {
@@ -110,15 +110,15 @@ ul {
 }
 
 .wapiti-color {
-	fill: darkblue;
+	fill: #ECE59A;
 }
 
 .skipfish-color {
-	fill: darkgreen;
+	fill: #FD6E8A;
 }
 
 .arachni-color {
-	fill: darkorange;
+	fill: #848D82;
 }
 
 .legend-text {
@@ -135,7 +135,7 @@ div.tooltip {
   position: absolute;
   padding: 2px;
   font: 12px sans-serif;
-  background: lightsteelblue;
+  background: lightgrey;
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
