@@ -117,8 +117,8 @@ function add_selected(node) {
 }
 
 function link_for_tool_error(tool_error) {
-	path = ""; //TODO: set the path of current node
-	method = ""; //TODO: set http method for current path
+	path = params.urls[current_index].url; //TODO: set the path of current node
+	method = params.urls[current_index].method; //TODO: set http method for current path
 	query = tool_error.injection_value.trim();
 	return Mustache.render("<a href='#' onclick='go_to_path_with_method(\"{{path}}\", \"{{query}}\", \"{{method}}\")'>\"{{query}}\"</a>", {path: path, method: method, query: query});
 }
