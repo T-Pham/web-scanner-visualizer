@@ -116,6 +116,45 @@ function add_selected(node) {
     });
 }
 
+function link_for_tool_error(tool_error) {
+	path = ""; //TODO: set the path of current node
+	method = ""; //TODO: set http method for current path
+	query = tool_error.injection_value.trim();
+	return Mustache.render("<a href='#' onclick='go_to_path_with_method(\"{{path}}\", \"{{query}}\", \"{{method}}\")'>\"{{query}}\"</a>", {path: path, method: method, query: query});
+}
+
+function go_to_path_with_method(path, query, method) {
+	method = method || "get";
+	var form = document.createElement("form");
+	form.setAttribute("method", method);
+	form.setAttribute("action", path);
+	form.setAttribute("target", "_blank");
+	params = parse_query(query);
+	for (var key in params) {
+		if (params.hasOwnProperty(key)) {
+			var hiddenField = document.createElement("input");
+			hiddenField.setAttribute("type", "hidden");
+			hiddenField.setAttribute("name", key);
+			hiddenField.setAttribute("value", params[key]);
+			form.appendChild(hiddenField);
+		}
+	}
+	document.body.appendChild(form);
+	form.submit();
+}
+
+function parse_query(query) {
+	var params = {};
+	var vars = query.split('&');
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split('=');
+		var key = decodeURIComponent(pair[0]);
+		var value = decodeURIComponent(pair[1]);
+		params[key] = value;
+    }
+	return params;
+}
+
 function set_info(index) {
     clear_info();
 
@@ -176,13 +215,13 @@ function set_info(index) {
 
 
     for (var k = 0; k < wapiti.length; k++) {
-        $('#wapiti-list ul').append("<li class='inner-list'><a href='#'>\"" + wapiti[k].injection_value.trim() + "\"</a></li>");
+        $('#wapiti-list ul').append("<li class='inner-list'>" + link_for_tool_error(wapiti[k]) + "</li>");
     }
     for (var k = 0; k < skipfish.length; k++) {
-        $('#skipfish-list ul').append("<li class='inner-list'><a href='#'>\"" + skipfish[k].injection_value.trim() + "\"</a></li>");
+        $('#skipfish-list ul').append("<li class='inner-list'>" + link_for_tool_error(skipfish[k]) + "</li>");
     }
     for (var k = 0; k < arachni.length; k++) {
-        $('#arachni-list ul').append("<li class='inner-list'><a href='#'>\"" + arachni[k].injection_value.trim() + "\"</a></li>");
+        $('#arachni-list ul').append("<li class='inner-list'>" + link_for_tool_error(arachni[k]) + "</li>");
     }
 
     $("#list-container").customScrollbar({
@@ -190,10 +229,6 @@ function set_info(index) {
         hScroll: false,
         updateOnWindowResize: true
     })
-
-    $('a').on("click", function() {
-        console.log("asdasdasd");
-    });
 
     current_index = index;
 }
