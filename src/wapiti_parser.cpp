@@ -1,6 +1,7 @@
 #include "pugixml.hpp"
 #include "database_handler.hpp"
 #include "wapiti_parser.hpp"
+#include "helper.hpp"
 #include <iostream>
 #include <string>
 
@@ -26,6 +27,7 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 				const char* bug_level = bug.attribute("level").value();
 				const char* injection_value = bug.child("parameter").child_value();
 				const char* info = bug.child("info").child_value();
+				char* method;
 
 				bool skip = false;
 				std::string str;
@@ -43,8 +45,16 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 					}
 				}
 
+				str = info;
+				if(str.find("coming from") != std::string::npos) {
+					method = "POST";
+				}
+				else {
+					method = "GET";
+				}
+
 				if(!skip) {
-					insert_error_with_url(bug.child("url").child_value(), bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
+					insert_error_with_url(bug.child("url").child_value(), method, bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
 				}
 
 				bug = bug.next_sibling("bug");

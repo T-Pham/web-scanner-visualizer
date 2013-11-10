@@ -21,6 +21,7 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 		const char* error_type = issue.child("name").child_value();
 		const char* severity = issue.child("severity").child_value();
 		const char* injected_param = issue.child("var").child_value();
+		const char* method = issue.child("method").child_value();
 		const char* injection_value = issue.child("variations").child("variation").child("injected").child_value();
 
 		bool skip = false;
@@ -40,7 +41,7 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 		}
 
 		if(!skip) {
-			insert_error_with_url(url, injected_param, error_type, "1", injection_value, ARACHNI_APP_NAME, "", db_handler);
+			insert_error_with_url(url, method, injected_param, error_type, "1", injection_value, ARACHNI_APP_NAME, "", db_handler);
 		}
 
 		issue = issue.next_sibling("issue");

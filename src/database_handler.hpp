@@ -45,7 +45,7 @@ public:
 
 	int insert_url_relationship(int parent_url_id, int child_url_id);
 
-	int insert_error(const char* error_type, const char* error_level, const char* injection_value, const char* url, const char* tool_name, const char* response);
+	int insert_error(const char* error_type, const char* error_level, const char* injection_value, const char* url, const char* method, const char* tool_name, const char* response);
 
 	int insert_parameter(const char* parameter_name, int url_id);
 

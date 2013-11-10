@@ -46,7 +46,7 @@ int skipfish_parse(const char* filename, database_handler* db_handler) {
 				line.erase(0, 14);
 				int n = line.find_first_of("'");
 
-				insert_error_with_url(line.substr(0, n).c_str(), type.c_str(), severity_level.c_str(), "", SKIPFISH_APP_NAME, "", db_handler);
+				insert_error_with_url(line.substr(0, n).c_str(), "GET", type.c_str(), severity_level.c_str(), "", SKIPFISH_APP_NAME, "", db_handler);
 			}
 			getline(file, line);
 		}

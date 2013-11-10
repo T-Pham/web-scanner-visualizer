@@ -64,7 +64,7 @@ int database_handler::insert_url(const char* url,const char* method) {
 }
 
 // insert and return error's id
-int database_handler::insert_error(const char* error_type, const char* error_level, const char* injection_value, const char* url, const char* tool_name, const char* response) {
+int database_handler::insert_error(const char* error_type, const char* error_level, const char* injection_value, const char* url, const char* method, const char* tool_name, const char* response) {
 	char* error_message = NULL;
 	std::string stmt;
 
@@ -102,6 +102,8 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 	stmt += escape_injection.c_str();
 	stmt += "', (SELECT URL_ID FROM URLS WHERE URL='";
 	stmt += url;
+	stmt += "' AND METHOD='";
+	stmt += method;
 	stmt += "'),'";
 	stmt += tool_name;
 	stmt += "','";
@@ -134,6 +136,7 @@ int database_handler::insert_parameter(const char* parameter_name, int error_id)
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
 	if(error_message){
+		std::cout << error_message << std::endl;
 		sqlite3_free(error_message);
 		return -1;
 	}
