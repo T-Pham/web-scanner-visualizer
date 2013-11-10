@@ -17,8 +17,10 @@ int skipfish_parse(const char* filename, database_handler* db_handler) {
 		return -1;
 	}
 
-	while(strcmp("var issue_samples = [", line.c_str())) {
+	const char* issue_line_prefix = "var issue_samples = [";
+	while(strncmp(line.c_str(), issue_line_prefix, strlen(issue_line_prefix))) {
 		getline(file, line);
+		if (file.eofbit) break;
 	}
 	getline(file, line);
 
