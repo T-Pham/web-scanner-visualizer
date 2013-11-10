@@ -176,13 +176,13 @@ function set_info(index) {
 
 
     for (var k = 0; k < wapiti.length; k++) {
-        $('#wapiti-list ul').append("<li class='inner-list'>\"" + wapiti[k].injection_value.trim() + "\"</li>");
+        $('#wapiti-list ul').append("<li class='inner-list'><a href='#'>\"" + wapiti[k].injection_value.trim() + "\"</a></li>");
     }
     for (var k = 0; k < skipfish.length; k++) {
-        $('#skipfish-list ul').append("<li class='inner-list'>\"" + skipfish[k].injection_value.trim() + "\"</li>");
+        $('#skipfish-list ul').append("<li class='inner-list'><a href='#'>\"" + skipfish[k].injection_value.trim() + "\"</a></li>");
     }
     for (var k = 0; k < arachni.length; k++) {
-        $('#arachni-list ul').append("<li class='inner-list'>\"" + arachni[k].injection_value.trim() + "\"</li>");
+        $('#arachni-list ul').append("<li class='inner-list'><a href='#'>\"" + arachni[k].injection_value.trim() + "\"</a></li>");
     }
 
     $("#list-container").customScrollbar({
@@ -190,6 +190,10 @@ function set_info(index) {
         hScroll: false,
         updateOnWindowResize: true
     })
+
+    $('a').on("click", function() {
+        console.log("asdasdasd");
+    });
 
     current_index = index;
 }
@@ -297,3 +301,4 @@ function loader() {
         }
     });
 }
+
