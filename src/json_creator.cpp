@@ -19,8 +19,8 @@ std::string* get_node_info(int current_id, const char* error_type, database_hand
 	*str += ss.str();
 	ss.str("");
 
-	*str += ", \"wapiti\":";
-	int wapiti = number_of_error_by_tool(current_id, WAPITI_APP_NAME, error_type, db_handler);
+	*str += ", \"arachni\":";
+	int wapiti = number_of_error_by_tool(current_id, ARACHNI_APP_NAME, error_type, db_handler);
 	ss << wapiti;
 	*str += ss.str();
 	ss.str("");
@@ -32,8 +32,8 @@ std::string* get_node_info(int current_id, const char* error_type, database_hand
 	ss.str("");
 
 
-	*str += ", \"arachni\":";
-	int arachni = number_of_error_by_tool(current_id, ARACHNI_APP_NAME, error_type, db_handler);
+	*str += ", \"wapiti\":";
+	int arachni = number_of_error_by_tool(current_id, WAPITI_APP_NAME, error_type, db_handler);
 	ss << arachni;
 	*str += ss.str();
 	ss.str("");
@@ -91,6 +91,7 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 			std::stringstream ss;
 			int current_id = (int)sqlite3_column_int(sqlite_stmt, 0);
 			char* url = (char*)sqlite3_column_text(sqlite_stmt, 1);
+			char* method = (char*)sqlite3_column_text(sqlite_stmt, 2);
 			int parent_id = (int)sqlite3_column_int(sqlite_stmt, 3);
 
 			if(!str1.empty()) {
@@ -98,6 +99,9 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 			}
 			str1 += "{node: \"";
 			str1 += url;
+
+			str1 += "\", method: \"";
+			str1 += method;
 
 			str1 += "\", sqli: {";
 			std::string* p_str = get_node_info(current_id, "SQL Injection", db_handler);
