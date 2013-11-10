@@ -57,7 +57,7 @@ int main(int n, char* args[])
 	finalize_database();
 
 	create_json();
-	return 1;
+	return 0;
 }
 
 // Database functions
