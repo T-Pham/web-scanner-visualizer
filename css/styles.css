@@ -30,7 +30,7 @@ svg {
 }
 
 #url-container {
-	height: 52px;
+	height: 50px;
 	padding: 15px 5px 0px 5px;
 	text-align: center;
 	background-color: #FCFEF5;
@@ -44,7 +44,7 @@ svg {
 
 #list-container {
 	width: 291px;
-	height: 545px;
+	height: 532px;
 }
 
 .inner-list {
