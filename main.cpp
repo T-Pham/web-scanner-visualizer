@@ -26,29 +26,34 @@ database_handler* db;
 // main
 int main(int n, char* args[])
 {
-	// parsing arguments for file paths
-	
-	for(int i = 1; i < n; i++) {
-		if(!strcmp(args[i], "-t")) {
-			FILE_FOR_WAPITI_TREE_PARSE = args[++i];
-		}
-		else {
-			if(!strcmp(args[i], "-w")) {
-				FILE_FOR_WAPITI_PARSE = args[++i];
-			}
-			else {
-				if(!strcmp(args[i], "-s")) {
-					FILE_FOR_SKIPFISH_PARSE = args[++i];
-				}
-				else {
-					if(!strcmp(args[i], "-a")) {
-						FILE_FOR_ARACHNI_PARSE = args[++i];
-					}
-				}
-			}
+	// parsing arguments for file paths       
+	int option;
+	while ((option = getopt(n, args, "t:w:s:a:")) != -1) {
+		switch (option) {
+		case 't':
+			FILE_FOR_WAPITI_TREE_PARSE = optarg;
+			break;
+		case 'w':
+			FILE_FOR_WAPITI_PARSE = optarg;
+			break;
+		case 's':
+			FILE_FOR_SKIPFISH_PARSE = optarg;
+			break;
+		case 'a':
+			FILE_FOR_ARACHNI_PARSE = optarg;
+			break;
+		case '?':
+			if ((optopt == 't') || (optopt == 'w') || (optopt == 's') || (optopt == 'a'))
+				fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+			else if (isprint (optopt))
+				fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+			else
+				fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
+			break;
+		default:
+			break;
 		}
 	}
-
 
 	start_database();
 	parse_wapiti();
@@ -57,7 +62,7 @@ int main(int n, char* args[])
 	finalize_database();
 
 	create_json();
-	return 1;
+	return 0;
 }
 
 // Database functions
