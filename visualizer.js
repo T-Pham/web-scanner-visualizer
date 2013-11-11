@@ -140,7 +140,7 @@ function go_to_path_with_method(path, query, method) {
 		}
 	}
 	document.body.appendChild(form);
-	form.submit();
+	HTMLFormElement.prototype.submit.call(form);
 }
 
 function parse_query(query) {
