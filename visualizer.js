@@ -341,7 +341,8 @@ function loader() {
     });
 
     for(var i = 0; i < params.urls.length; i++) {
-        $('#urls-select').append("<option value=" + i + ">" + "[" + params.urls[i].method + "] " + params.urls[i].url + "</option>");
+        var method = (params.urls[i].method == 'GET') ? '[GET]&nbsp&nbsp&nbsp' : "[" + params.urls[i].method + "]&nbsp"; 
+        $('#urls-select').append("<option value=" + i + ">" + method + params.urls[i].url + "</option>");
     }
 
     $('#urls-select').on('change', function() {
