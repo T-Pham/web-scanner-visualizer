@@ -86,7 +86,7 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 	std::string str2;
 
 	sqlite3_stmt* sqlite_stmt;
-	if(sqlite3_prepare(db_handler->db, "SELECT * FROM URLS ORDER BY URL", -1, &sqlite_stmt, 0) == SQLITE_OK) {
+	if(sqlite3_prepare(db_handler->db, "SELECT * FROM URLS", -1, &sqlite_stmt, 0) == SQLITE_OK) {
 		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
 			std::stringstream ss;
 			int current_id = (int)sqlite3_column_int(sqlite_stmt, 0);
@@ -256,7 +256,7 @@ void create_params_json(std::ofstream* file, database_handler* db_handler) {
 
 	sqlite3_stmt* sqlite_stmt;
 
-	if(sqlite3_prepare(db_handler->db, "SELECT * FROM URLS ORDER BY URL", -1, &sqlite_stmt, 0) == SQLITE_OK) {
+	if(sqlite3_prepare(db_handler->db, "SELECT * FROM URLS", -1, &sqlite_stmt, 0) == SQLITE_OK) {
 		while(sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
 			int current_id = (int)sqlite3_column_int(sqlite_stmt, 0);
 			char* url = (char*)sqlite3_column_text(sqlite_stmt, 1);
