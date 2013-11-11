@@ -339,5 +339,16 @@ function loader() {
             add_selected();
         }
     });
+
+    for(var i = 0; i < params.urls.length; i++) {
+        $('#urls-select').append("<option value=" + i + ">" + "[" + params.urls[i].method + "] " + params.urls[i].url + "</option>");
+    }
+
+    $('#urls-select').on('change', function() {
+        clear_selected();
+        current_index = $('#urls-select').val();
+        set_info();
+        add_selected();
+    });
 }
 
