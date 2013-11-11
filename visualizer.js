@@ -228,6 +228,7 @@ function set_info() {
         skin: "default-skin",
         hScroll: false,
         updateOnWindowResize: true
+	})
 }
 
 function clear_info() {
