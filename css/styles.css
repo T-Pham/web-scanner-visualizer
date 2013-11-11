@@ -73,6 +73,7 @@ ul {
 }
 
 #wapiti-list, #skipfish-list, #arachni-list {
+	width: 278px;
 	list-style-type: none;
 	margin: 8px 0px 0px 5px;
 	font-size: 20px;
