@@ -11,16 +11,20 @@ int skipfish_parse(const char* filename, database_handler* db_handler) {
 	db_handler->begin_transaction();
 
 	file.open(filename);
-	getline(file, line);
 
 	if(!file.is_open()) {
 		return -1;
 	}
 
+	getline(file, line);
+
 	const char* issue_line_prefix = "var issue_samples = [";
 	while(strncmp(line.c_str(), issue_line_prefix, strlen(issue_line_prefix))) {
 		getline(file, line);
-		if (file.eofbit) break;
+		
+		if (file.eof()) {
+			break;
+		}
 	}
 	getline(file, line);
 
@@ -43,6 +47,10 @@ int skipfish_parse(const char* filename, database_handler* db_handler) {
 
 		getline(file, line);
 
+		if (file.eof()) {
+			break;
+		}
+
 		while(strcmp("    { 'url':", line.substr(0, 12).c_str()) == 0) {
 			if(!skip) {
 				line.erase(0, 14);
@@ -51,10 +59,18 @@ int skipfish_parse(const char* filename, database_handler* db_handler) {
 				insert_error_with_url(line.substr(0, n).c_str(), "POST", type.c_str(), severity_level.c_str(), "", SKIPFISH_APP_NAME, "", db_handler);
 			}
 			getline(file, line);
+
+			if (file.eof()) {
+				break;
+			}
 		}
 
 		if(strcmp("},", line.substr(0, 4).c_str())) {
 			getline(file, line);
+
+			if (file.eof()) {
+				break;
+			}
 		}
 	}
 
