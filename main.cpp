@@ -5,6 +5,7 @@
 #include "./src/json_creator.hpp"
 #include <iostream>
 #include <string.h>
+#include <unistd.h>
 
 // Constants
 char *FILE_FOR_WAPITI_TREE_PARSE = "testphp.vulnweb.com.xml";

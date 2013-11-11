@@ -1,38 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
     <root>
         <rootURL>http://testphp.vulnweb.com/</rootURL>
-        <toBrowse>
-            <url>http://testphp.vulnweb.com/search.php?test=query</url>
-            <url>http://testphp.vulnweb.com/login.php</url>
-            <url>http://testphp.vulnweb.com/userinfo.php</url>
-            <url>http://testphp.vulnweb.com/privacy.php</url>
-            <url>http://testphp.vulnweb.com/Mod_Rewrite_Shop/</url>
-            <url>http://testphp.vulnweb.com/hpp/</url>
-            <url>http://testphp.vulnweb.com/index.php</url>
-            <url>http://testphp.vulnweb.com/categories.php</url>
-            <url>http://testphp.vulnweb.com/listproducts.php?cat=1</url>
-            <url>http://testphp.vulnweb.com/listproducts.php?cat=2</url>
-            <url>http://testphp.vulnweb.com/listproducts.php?cat=3</url>
-            <url>http://testphp.vulnweb.com/listproducts.php?cat=4</url>
-            <url>http://testphp.vulnweb.com/artists.php</url>
-            <url>http://testphp.vulnweb.com/artists.php?artist=1</url>
-            <url>http://testphp.vulnweb.com/artists.php?artist=2</url>
-            <url>http://testphp.vulnweb.com/artists.php?artist=3</url>
-            <url>http://testphp.vulnweb.com/disclaimer.php</url>
-            <url>http://testphp.vulnweb.com/cart.php</url>
-            <url>http://testphp.vulnweb.com/guestbook.php</url>
-        </toBrowse>
+        <toBrowse/>
         <browsed>
-            <url_data uri="http://testphp.vulnweb.com/artists.php">
+            <url_data uri="http://testphp.vulnweb.com/AJAX/">
                 <header name="status" value="200"/>
-                <header name="content-length" value="4461"/>
-                <header name="content-location" value="http://testphp.vulnweb.com/artists.php"/>
+                <header name="content-length" value="4236"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/AJAX/"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-1"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:08 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/login.php">
+                <header name="status" value="200"/>
+                <header name="content-length" value="4671"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/login.php"/>
                 <header name="transfer-encoding" value="chunked"/>
                 <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
                 <header name="server" value="nginx/1.4.1"/>
                 <header name="connection" value="keep-alive"/>
                 <header name="link_encoding" value="iso-8859-2"/>
-                <header name="date" value="Fri, 08 Nov 2013 11:49:51 GMT"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:04 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/privacy.php">
+                <header name="status" value="404"/>
+                <header name="content-length" value="16"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:05 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/hpp/?pp=12">
+                <header name="status" value="200"/>
+                <header name="content-length" value="383"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/hpp/?pp=12"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="ascii"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:10 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/showimage.php?file=./pictures/4.jpg">
+                <header name="status" value="200"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/showimage.php?file=./pictures/4.jpg"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:15 GMT"/>
+                <header name="content-type" value="image/jpeg"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/Mod_Rewrite_Shop/Details/color-printer/3/">
+                <header name="status" value="404"/>
+                <header name="content-length" value="168"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="ascii"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:10 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/product.php?pic=2">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5507"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/product.php?pic=2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:13 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/search.php?test=query">
+                <header name="status" value="200"/>
+                <header name="content-length" value="3864"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/search.php?test=query"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:03 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/Mod_Rewrite_Shop/Details/network-attached-storage-dlink/1/">
+                <header name="status" value="404"/>
+                <header name="content-length" value="168"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="ascii"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:09 GMT"/>
                 <header name="content-type" value="text/html"/>
             </url_data>
             <url_data uri="http://testphp.vulnweb.com/guestbook.php">
@@ -44,20 +114,42 @@
                 <header name="server" value="nginx/1.4.1"/>
                 <header name="connection" value="keep-alive"/>
                 <header name="link_encoding" value="iso-8859-2"/>
-                <header name="date" value="Fri, 08 Nov 2013 11:49:52 GMT"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:02 GMT"/>
                 <header name="content-type" value="text/html"/>
             </url_data>
-            <url_data uri="http://testphp.vulnweb.com/categories.php">
+            <url_data uri="http://testphp.vulnweb.com/showimage.php?file=./pictures/3.jpg">
                 <header name="status" value="200"/>
-                <header name="content-length" value="5248"/>
-                <header name="content-location" value="http://testphp.vulnweb.com/categories.php"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/showimage.php?file=./pictures/3.jpg"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:14 GMT"/>
+                <header name="content-type" value="image/jpeg"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/hpp/params.php?p=valid&amp;pp=12">
+                <header name="status" value="200"/>
+                <header name="content-length" value="7"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/hpp/params.php?p=valid&amp;pp=12"/>
                 <header name="transfer-encoding" value="chunked"/>
                 <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
                 <header name="server" value="nginx/1.4.1"/>
                 <header name="connection" value="keep-alive"/>
-                <header name="link_encoding" value="iso-8859-2"/>
-                <header name="date" value="Fri, 08 Nov 2013 11:49:51 GMT"/>
+                <header name="link_encoding" value="ascii"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:21 GMT"/>
                 <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/showimage.php?file=./pictures/5.jpg">
+                <header name="status" value="200"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/showimage.php?file=./pictures/5.jpg"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:16 GMT"/>
+                <header name="content-type" value="image/jpeg"/>
             </url_data>
             <url_data uri="http://testphp.vulnweb.com/cart.php">
                 <header name="status" value="200"/>
@@ -68,19 +160,31 @@
                 <header name="server" value="nginx/1.4.1"/>
                 <header name="connection" value="keep-alive"/>
                 <header name="link_encoding" value="iso-8859-2"/>
-                <header name="date" value="Fri, 08 Nov 2013 11:49:52 GMT"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:02 GMT"/>
                 <header name="content-type" value="text/html"/>
             </url_data>
-            <url_data uri="http://testphp.vulnweb.com/disclaimer.php">
+            <url_data uri="http://testphp.vulnweb.com/product.php?pic=6">
                 <header name="status" value="200"/>
-                <header name="content-length" value="4667"/>
-                <header name="content-location" value="http://testphp.vulnweb.com/disclaimer.php"/>
+                <header name="content-length" value="5593"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/product.php?pic=6"/>
                 <header name="transfer-encoding" value="chunked"/>
                 <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
                 <header name="server" value="nginx/1.4.1"/>
                 <header name="connection" value="keep-alive"/>
                 <header name="link_encoding" value="iso-8859-2"/>
-                <header name="date" value="Fri, 08 Nov 2013 11:49:52 GMT"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:18 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/listproducts.php?artist=1">
+                <header name="status" value="200"/>
+                <header name="content-length" value="7125"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/listproducts.php?artist=1"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:19 GMT"/>
                 <header name="content-type" value="text/html"/>
             </url_data>
             <url_data uri="http://testphp.vulnweb.com/">
@@ -92,7 +196,231 @@
                 <header name="server" value="nginx/1.4.1"/>
                 <header name="connection" value="keep-alive"/>
                 <header name="link_encoding" value=""/>
-                <header name="date" value="Fri, 08 Nov 2013 11:49:50 GMT"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:56:59 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/product.php?pic=7">
+                <header name="status" value="200"/>
+                <header name="content-length" value="4873"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/product.php?pic=7"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:17 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/AJAX/index.php">
+                <header name="status" value="200"/>
+                <header name="content-length" value="4236"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/AJAX/index.php"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:03 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/showimage.php?file=./pictures/6.jpg">
+                <header name="status" value="200"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/showimage.php?file=./pictures/6.jpg"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:18 GMT"/>
+                <header name="content-type" value="image/jpeg"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/secured/newuser.php">
+                <header name="status" value="200"/>
+                <header name="content-length" value="415"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/secured/newuser.php"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:21 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/userinfo.php">
+                <header name="status" value="302"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="location" value="login.php"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:04 GMT"/>
+                <header name="content-type" value="text/html"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/artists.php">
+                <header name="status" value="200"/>
+                <header name="content-length" value="4461"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/artists.php"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:01 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/listproducts.php?artist=2">
+                <header name="status" value="200"/>
+                <header name="content-length" value="4324"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/listproducts.php?artist=2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:20 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/showimage.php?file=./pictures/1.jpg">
+                <header name="status" value="200"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/showimage.php?file=./pictures/1.jpg"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:11 GMT"/>
+                <header name="content-type" value="image/jpeg"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/listproducts.php?cat=1">
+                <header name="status" value="200"/>
+                <header name="content-length" value="7011"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/listproducts.php?cat=1"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:06 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/listproducts.php?cat=2">
+                <header name="status" value="200"/>
+                <header name="content-length" value="4442"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/listproducts.php?cat=2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:06 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/listproducts.php?cat=3">
+                <header name="status" value="200"/>
+                <header name="content-length" value="3830"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/listproducts.php?cat=3"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:06 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/listproducts.php?cat=4">
+                <header name="status" value="200"/>
+                <header name="content-length" value="3830"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/listproducts.php?cat=4"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:07 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/product.php?pic=3">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5540"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/product.php?pic=3"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:14 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/showimage.php?file=./pictures/7.jpg">
+                <header name="status" value="200"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/showimage.php?file=./pictures/7.jpg"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:17 GMT"/>
+                <header name="content-type" value="image/jpeg"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/product.php?pic=1">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5567"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/product.php?pic=1"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:11 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/disclaimer.php">
+                <header name="status" value="200"/>
+                <header name="content-length" value="4667"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/disclaimer.php"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:01 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/artists.php?artist=1">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5384"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/artists.php?artist=1"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:07 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/artists.php?artist=3">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5326"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/artists.php?artist=3"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:08 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/artists.php?artist=2">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5326"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/artists.php?artist=2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:07 GMT"/>
                 <header name="content-type" value="text/html"/>
             </url_data>
             <url_data uri="http://testphp.vulnweb.com/index.php">
@@ -104,7 +432,124 @@
                 <header name="server" value="nginx/1.4.1"/>
                 <header name="connection" value="keep-alive"/>
                 <header name="link_encoding" value="iso-8859-2"/>
-                <header name="date" value="Fri, 08 Nov 2013 11:49:51 GMT"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:00 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/product.php?pic=4">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5592"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/product.php?pic=4"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:15 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/hpp/">
+                <header name="status" value="200"/>
+                <header name="content-length" value="203"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/hpp/"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:05 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/categories.php">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5248"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/categories.php"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:00 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/hpp/params.php?aaaa/=on">
+                <header name="status" value="200"/>
+                <header name="content-length" value="137"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/hpp/params.php?aaaa/=on"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="ascii"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:21 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/signup.php">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5183"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/signup.php"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:09 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/listproducts.php?artist=3">
+                <header name="status" value="200"/>
+                <header name="content-length" value="3830"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/listproducts.php?artist=3"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:20 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/showimage.php?file=./pictures/2.jpg">
+                <header name="status" value="200"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/showimage.php?file=./pictures/2.jpg"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:13 GMT"/>
+                <header name="content-type" value="image/jpeg"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/Mod_Rewrite_Shop/">
+                <header name="status" value="200"/>
+                <header name="content-length" value="975"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/Mod_Rewrite_Shop/"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:05 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/Mod_Rewrite_Shop/Details/web-camera-a4tech/2/">
+                <header name="status" value="404"/>
+                <header name="content-length" value="168"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="ascii"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:10 GMT"/>
+                <header name="content-type" value="text/html"/>
+            </url_data>
+            <url_data uri="http://testphp.vulnweb.com/product.php?pic=5">
+                <header name="status" value="200"/>
+                <header name="content-length" value="5521"/>
+                <header name="content-location" value="http://testphp.vulnweb.com/product.php?pic=5"/>
+                <header name="transfer-encoding" value="chunked"/>
+                <header name="x-powered-by" value="PHP/5.3.10-1~lucid+2uwsgi2"/>
+                <header name="server" value="nginx/1.4.1"/>
+                <header name="connection" value="keep-alive"/>
+                <header name="link_encoding" value="iso-8859-2"/>
+                <header name="date" value="Sat, 28 Sep 2013 10:57:16 GMT"/>
                 <header name="content-type" value="text/html"/>
             </url_data>
         </browsed>
@@ -153,6 +598,187 @@
                 </inputs>
             </form>
             <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/guestbook.php" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/search.php?test=query" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/login.php" url="http://testphp.vulnweb.com/userinfo.php">
+                <inputs>
+                    <input name="uname" value="on"/>
+                    <input name="pass" value="on"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/login.php" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/listproducts.php?cat=1" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/listproducts.php?cat=2" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/listproducts.php?cat=3" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/listproducts.php?cat=4" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/artists.php?artist=1" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/artists.php?artist=2" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/artists.php?artist=3" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/signup.php" url="http://testphp.vulnweb.com/secured/newuser.php">
+                <inputs>
+                    <input name="upass" value="on"/>
+                    <input name="ucc" value="on"/>
+                    <input name="upass2" value="on"/>
+                    <input name="uemail" value="on"/>
+                    <input name="uuname" value="on"/>
+                    <input name="urname" value="on"/>
+                    <input name="uaddress" value="on"/>
+                    <input name="signup" value="signup"/>
+                    <input name="uphone" value="on"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/signup.php" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=1" url="http://testphp.vulnweb.com/cart.php">
+                <inputs>
+                    <input name="addcart" value="1"/>
+                    <input name="price" value="500"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=1" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=2" url="http://testphp.vulnweb.com/cart.php">
+                <inputs>
+                    <input name="addcart" value="2"/>
+                    <input name="price" value="800"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=2" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=3" url="http://testphp.vulnweb.com/cart.php">
+                <inputs>
+                    <input name="addcart" value="3"/>
+                    <input name="price" value="986"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=3" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=4" url="http://testphp.vulnweb.com/cart.php">
+                <inputs>
+                    <input name="addcart" value="4"/>
+                    <input name="price" value="1000"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=4" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=5" url="http://testphp.vulnweb.com/cart.php">
+                <inputs>
+                    <input name="addcart" value="5"/>
+                    <input name="price" value="460"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=5" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=7" url="http://testphp.vulnweb.com/cart.php">
+                <inputs>
+                    <input name="addcart" value="7"/>
+                    <input name="price" value="15000"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=7" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=6" url="http://testphp.vulnweb.com/cart.php">
+                <inputs>
+                    <input name="addcart" value="6"/>
+                    <input name="price" value="10000"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/product.php?pic=6" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/listproducts.php?artist=1" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/listproducts.php?artist=2" url="http://testphp.vulnweb.com/search.php?test=query">
+                <inputs>
+                    <input name="searchFor" value="on"/>
+                    <input name="goButton" value="go"/>
+                </inputs>
+            </form>
+            <form encoding="iso-8859-2" to="http://testphp.vulnweb.com/listproducts.php?artist=3" url="http://testphp.vulnweb.com/search.php?test=query">
                 <inputs>
                     <input name="searchFor" value="on"/>
                     <input name="goButton" value="go"/>

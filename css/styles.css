@@ -30,21 +30,21 @@ svg {
 }
 
 #url-container {
-	height: 42px;
-	padding: 13px 5px 0px 5px;
+	height: 50px;
+	padding: 15px 5px 0px 5px;
 	text-align: center;
 	background-color: #FCFEF5;
 	font-size: 17px;
 	font-weight: bold;
 	color: #E15E6E;
-	white-space: normal;
+	white-space: pre;
 	word-wrap: break-word;
 	border-bottom: solid 2px #ccc;
 }
 
 #list-container {
 	width: 291px;
-	height: 545px;
+	height: 532px;
 }
 
 .inner-list {
@@ -66,6 +66,10 @@ ul {
 .error-field {
 	color: black;
 	font-size: 12px;
+}
+
+#control-panel {
+	margin: 10px 0px 0px 10px;
 }
 
 #wapiti-list, #skipfish-list, #arachni-list {
