@@ -145,3 +145,12 @@ div.tooltip {
   border-radius: 8px;
   pointer-events: none;
 }
+
+.label {
+	width: 130px;
+	display: inline-block;
+	margin-left: 3px;
+	font-size: 15px;
+	font-weight: bold;
+	color: dimgrey;
+}
