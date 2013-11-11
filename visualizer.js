@@ -117,9 +117,9 @@ function add_selected(node) {
 }
 
 function link_for_tool_error(tool_error) {
-	path = params.urls[current_index].url; //TODO: set the path of current node
-	method = params.urls[current_index].method; //TODO: set http method for current path
-	query = tool_error.injection_value.trim();
+	var path = params.urls[current_index].url;
+	var method = params.urls[current_index].method;
+	var query = tool_error.injection_value.trim();
 	return Mustache.render("<a href='#' onclick='go_to_path_with_method(\"{{path}}\", \"{{query}}\", \"{{method}}\")'>\"{{query}}\"</a>", {path: path, method: method, query: query});
 }
 
@@ -228,7 +228,7 @@ function set_info() {
         skin: "default-skin",
         hScroll: false,
         updateOnWindowResize: true
-    });
+	})
 }
 
 function clear_info() {
