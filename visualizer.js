@@ -149,8 +149,24 @@ function parse_query(query) {
 	var vars = query.split('&');
 	for (var i = 0; i < vars.length; i++) {
 		var pair = vars[i].split('=');
-		var key = decodeURIComponent(pair[0]);
-		var value = decodeURIComponent(pair[1]);
+        var key = pair[0];
+        var value = pair[1];
+        var err;
+
+        try {
+            key = decodeURIComponent(pair[0]);
+        }
+        catch(err) {
+            console.log("EXCEPTION IN DECODING KEY");            
+        }
+
+        try {
+            value = decodeURIComponent(pair[1]);
+        }
+        catch(err) {
+            console.log("EXCEPTION IN DECODING VALUE");            
+        }
+
 		parameters[key] = value;
     }
 	return parameters;
