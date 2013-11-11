@@ -154,3 +154,8 @@ div.tooltip {
 	font-weight: bold;
 	color: dimgrey;
 }
+
+a, a:visited {
+	text-decoration: none;
+	color: blue;
+}
