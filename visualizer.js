@@ -108,6 +108,7 @@ function clear_selected(node) {
 }
 
 function add_selected(node) {
+    $('#urls-select').val(current_index);
     d3.selectAll(".node").each(function (d, i){
         if(i == current_index) {
             d3.select(this.firstElementChild).style('stroke', 'crimson');
@@ -342,8 +343,13 @@ function loader() {
 
     for(var i = 0; i < params.urls.length; i++) {
         var method = (params.urls[i].method == 'GET') ? '[GET]&nbsp&nbsp&nbsp' : "[" + params.urls[i].method + "]&nbsp"; 
-        $('#urls-select').append("<option value=" + i + ">" + method + params.urls[i].url + "</option>");
+        var url = params.urls[i].url.length < 80 ? params.urls[i].url : params.urls[i].url.substr(0, 75) + "..."; 
+        $('#urls-select').append("<option value=" + i + ">" + method + url + "</option>");
     }
+
+    $('#urls-select option').sort( function(a, b) {
+        return $(a).text() > $(b).text() ? 1 : -1;
+    }).appendTo('#urls-select');
 
     $('#urls-select').on('change', function() {
         clear_selected();
