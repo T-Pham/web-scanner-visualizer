@@ -3,6 +3,7 @@
 #include "helper.hpp"
 #include "pugixml.hpp"
 #include <string>
+#include <string.h>
 
 int arachni_parse (const char* filename, database_handler* db_handler) {
 	pugi::xml_document doc;
@@ -23,6 +24,7 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 		const char* injected_param = issue.child("var").child_value();
 		const char* method = issue.child("method").child_value();
 		const char* injection_value = issue.child("variations").child("variation").child("injected").child_value();
+		char* bug_level = "3";
 
 		bool skip = false;
 		std::string str;
@@ -40,8 +42,22 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 			}
 		}
 
+		if(!strcmp(severity, "High")) {
+			bug_level = "1";
+		}
+		else {
+			if(!strcmp(severity, "Medium")) {
+				bug_level = "2";
+			}
+			else {
+				if(!strcmp(severity, "Low")) {
+					bug_level = "3";
+				}
+			}
+		}
+
 		if(!skip) {
-			insert_error_with_url(url, method, injected_param, error_type, "1", injection_value, ARACHNI_APP_NAME, "", db_handler);
+			insert_error_with_url(url, method, injected_param, error_type, bug_level, injection_value, ARACHNI_APP_NAME, "", db_handler);
 		}
 
 		issue = issue.next_sibling("issue");
