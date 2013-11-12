@@ -3,7 +3,6 @@
 #include "helper.hpp"
 #include "database_handler.hpp"
 #include "wapiti_parser.hpp"
-#include "skipfish_parser.hpp"
 #include "arachni_parser.hpp"
 #include <fstream>
 #include <sstream>
@@ -25,13 +24,6 @@ std::string* get_node_info(int current_id, const char* error_type, database_hand
 	*str += ss.str();
 	ss.str("");
 
-	*str += ", \"skipfish\":";
-	int skipfish = number_of_error_by_tool(current_id, SKIPFISH_APP_NAME, error_type, db_handler);
-	ss << skipfish;
-	*str += ss.str();
-	ss.str("");
-
-
 	*str += ", \"wapiti\":";
 	int arachni = number_of_error_by_tool(current_id, WAPITI_APP_NAME, error_type, db_handler);
 	ss << arachni;
@@ -42,10 +34,6 @@ std::string* get_node_info(int current_id, const char* error_type, database_hand
 
 	if(total) {
 		ss << wapiti*100/total;
-		*str += ss.str();
-		ss.str("");
-		*str += ", ";
-		ss << skipfish*100/total;
 		*str += ss.str();
 		ss.str("");
 		*str += ", ";
@@ -273,14 +261,6 @@ void create_params_json(std::ofstream* file, database_handler* db_handler) {
 
 			set = get_url_info(current_id, ARACHNI_APP_NAME, db_handler);
 			str += "arachni: ";
-			result = join_strings(set);
-			str += result->c_str();
-			delete result;
-			delete set;
-			str += ", ";
-
-			set = get_url_info(current_id, SKIPFISH_APP_NAME, db_handler);
-			str += "skipfish: ";
 			result = join_strings(set);
 			str += result->c_str();
 			delete result;
