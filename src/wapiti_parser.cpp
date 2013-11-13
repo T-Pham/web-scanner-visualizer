@@ -8,7 +8,7 @@
 int wapiti_parse(const char* filename, database_handler* db_handler) {
 	pugi::xml_document doc;
 
-	if(!doc.load_file(filename)) {
+	if (!doc.load_file(filename)) {
 		return -1;
 	}
 
@@ -18,12 +18,12 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 
 	db_handler->begin_transaction();
 
-	while(bugType) {
+	while (bugType) {
 		const char* bug_type = bugType.first_attribute().value();
 		pugi::xml_node bugList = bugType.child("bugList");
-		while(bugList) {
+		while (bugList) {
 			pugi::xml_node bug = bugList.child("bug");
-			while(bug){
+			while (bug){
 				const char* bug_level = bug.attribute("level").value();
 				const char* injection_value = bug.child("parameter").child_value();
 				const char* info = bug.child("info").child_value();
@@ -33,11 +33,11 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 				std::string str;
 				str += bug_type;
 
-				if(str.find(WAPITI_XSS_PATTERN) != std::string::npos) {
+				if (str.find(WAPITI_XSS_PATTERN) != std::string::npos) {
 					bug_type = "Cross Site Scripting";
 				}
 				else {
-					if(str.find(WAPITI_SQLI_PATTERN) != std::string::npos) {
+					if (str.find(WAPITI_SQLI_PATTERN) != std::string::npos) {
 						bug_type = "SQL Injection";
 					}
 					else {
@@ -46,14 +46,14 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 				}
 
 				str = info;
-				if(str.find("coming from") != std::string::npos) {
+				if (str.find("coming from") != std::string::npos) {
 					method = "POST";
 				}
 				else {
 					method = "GET";
 				}
 
-				if(!skip) {
+				if (!skip) {
 					insert_error_with_url(bug.child("url").child_value(), method, bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
 				}
 
@@ -64,7 +64,7 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 		bugType = bugType.next_sibling("bugType");
 	}
 
-	db_handler-> commit_transaction();
+	db_handler->commit_transaction();
 
 	return 1;
 }
@@ -72,7 +72,7 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 int wapiti_tree_parse(const char* filename, database_handler* db_handler){
 	pugi::xml_document doc;
 
-	if(!doc.load_file(filename)) {
+	if (!doc.load_file(filename)) {
 		return -1;
 	}
 
@@ -81,12 +81,12 @@ int wapiti_tree_parse(const char* filename, database_handler* db_handler){
 	pugi::xml_node URL = browedURLS.child("url_data");
 
 	db_handler->begin_transaction();
-	while(URL) {
+	while (URL) {
 		std::string str;
 		str += URL.first_attribute().value();
 		int n = str.find("?");
 
-		if(n >= 0) {
+		if (n >= 0) {
 			str = str.substr(0, str.find("?"));
 		}
 
@@ -96,17 +96,17 @@ int wapiti_tree_parse(const char* filename, database_handler* db_handler){
 
 	pugi::xml_node form = doc.child("root").child("forms").child("form");
 
-	while(form) {
+	while (form) {
 		std::string str;
 		str += form.attribute("url").value();
 
 		int n = str.find("?");
-		if(n >= 0) {
+		if (n >= 0) {
 			str = str.substr(0, str.find("?"));
 		}
 
 		db_handler->insert_url(str.c_str(), "POST");
-		form =  form.next_sibling("form");
+		form = form.next_sibling("form");
 	}
 	db_handler->commit_transaction();
 

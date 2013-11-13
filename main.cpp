@@ -45,11 +45,11 @@ int main(int n, char* args[])
 			break;
 		case '?':
 			if ((optopt == 't') || (optopt == 'w') || (optopt == 's') || (optopt == 'a'))
-				fprintf (stderr, "Option -%c requires an argument.\n", optopt);
-			else if (isprint (optopt))
-				fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+				fprintf(stderr, "Option -%c requires an argument.\n", optopt);
+			else if (isprint(optopt))
+				fprintf(stderr, "Unknown option `-%c'.\n", optopt);
 			else
-				fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
+				fprintf(stderr, "Unknown option character `\\x%x'.\n", optopt);
 			break;
 		default:
 			break;
@@ -80,11 +80,11 @@ void finalize_database() {
 
 // Parsers
 void parse_wapiti() {
-	if(wapiti_tree_parse(FILE_FOR_WAPITI_TREE_PARSE, db) == -1) {
+	if (wapiti_tree_parse(FILE_FOR_WAPITI_TREE_PARSE, db) == -1) {
 		std::cout << "FILE FOR WAPITI TREE PARSE NOT FOUND" << std::endl;
 	}
 
-	if(wapiti_parse(FILE_FOR_WAPITI_PARSE, db) == -1) {
+	if (wapiti_parse(FILE_FOR_WAPITI_PARSE, db) == -1) {
 		std::cout << "FILE FOR WAPITI PARSE NOT FOUND " << std::endl;
 	}
 }
@@ -96,7 +96,7 @@ void parse_w3af() {
 }
 
 void parse_arachni() {
-	if(arachni_parse(FILE_FOR_ARACHNI_PARSE, db) == -1) {
+	if (arachni_parse(FILE_FOR_ARACHNI_PARSE, db) == -1) {
 		std::cout << "FILE FOR ARACHNI PARSE NOT FOUND" << std::endl;
 	}
 }

@@ -5,10 +5,10 @@
 #include <string>
 #include <string.h>
 
-int arachni_parse (const char* filename, database_handler* db_handler) {
+int arachni_parse(const char* filename, database_handler* db_handler) {
 	pugi::xml_document doc;
 
-	if(!doc.load_file(filename)) {
+	if (!doc.load_file(filename)) {
 		return -1;
 	}
 
@@ -16,8 +16,8 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 	pugi::xml_node issue = issues.child("issue");
 
 	db_handler->begin_transaction();
-	
-	while(issue) {
+
+	while (issue) {
 		const char* url = issue.child("url").child_value();
 		const char* error_type = issue.child("name").child_value();
 		const char* severity = issue.child("severity").child_value();
@@ -30,11 +30,11 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 		std::string str;
 		str += error_type;
 
-		if(str.find(ARACHNI_XSS_PATTERN) != std::string::npos) {
+		if (str.find(ARACHNI_XSS_PATTERN) != std::string::npos) {
 			error_type = "Cross Site Scripting";
 		}
 		else {
-			if(str.find(ARACHNI_SQLI_PATTERN) != std::string::npos) {
+			if (str.find(ARACHNI_SQLI_PATTERN) != std::string::npos) {
 				error_type = "SQL Injection";
 			}
 			else {
@@ -42,21 +42,21 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 			}
 		}
 
-		if(!strcmp(severity, "High")) {
+		if (!strcmp(severity, "High")) {
 			bug_level = "1";
 		}
 		else {
-			if(!strcmp(severity, "Medium")) {
+			if (!strcmp(severity, "Medium")) {
 				bug_level = "2";
 			}
 			else {
-				if(!strcmp(severity, "Low")) {
+				if (!strcmp(severity, "Low")) {
 					bug_level = "3";
 				}
 			}
 		}
 
-		if(!skip) {
+		if (!skip) {
 			insert_error_with_url(url, method, injected_param, error_type, bug_level, injection_value, ARACHNI_APP_NAME, "", db_handler);
 		}
 

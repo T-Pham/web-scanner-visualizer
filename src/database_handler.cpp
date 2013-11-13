@@ -8,7 +8,7 @@ int database_handler::initialize_database(){
 	char* error_message;
 	sqlite3_exec(db, sql_create_stms, NULL, 0, &error_message);
 
-	if(error_message) {
+	if (error_message) {
 		sqlite3_free(error_message);
 		return -1;
 	}
@@ -28,7 +28,7 @@ void database_handler::begin_transaction(){
 	char* error_message;
 	sqlite3_exec(db, "BEGIN TRANSACTION;", NULL, 0, &error_message);
 
-	if(error_message) {
+	if (error_message) {
 		sqlite3_free(error_message);
 	}
 }
@@ -37,25 +37,25 @@ void database_handler::commit_transaction(){
 	char* error_message;
 	sqlite3_exec(db, "COMMIT TRANSACTION;", NULL, 0, &error_message);
 
-	if(error_message) {
+	if (error_message) {
 		sqlite3_free(error_message);
 	}
 }
 
 // insert and return url's id
-int database_handler::insert_url(const char* url,const char* method) {
+int database_handler::insert_url(const char* url, const char* method) {
 	char* error_message = NULL;
 	std::string stmt;
 
 	stmt += "INSERT INTO URLS (URL, METHOD) VALUES('";
-	stmt +=	url; 
-	stmt += "','"; 
+	stmt += url;
+	stmt += "','";
 	stmt += method;
 	stmt += "');";
 
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
-	if(error_message){ 
+	if (error_message){
 		sqlite3_free(error_message);
 		return -1;
 	}
@@ -71,22 +71,22 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 	std::string injection;
 	injection += injection_value;
 	std::string escape_injection;
-	for(int i = 0; i < injection.length(); i++)
+	for (int i = 0; i < injection.length(); i++)
 	{
-		if(injection[i] == '\'') {
+		if (injection[i] == '\'') {
 			escape_injection += "\'\'";
 		}
 		else {
 			escape_injection += injection[i];
 		}
-	}	
-	
+	}
+
 	std::string str_response;
 	str_response += response;
 	std::string escape_str_response;
-	for(int i = 0; i < str_response.length(); i++)
+	for (int i = 0; i < str_response.length(); i++)
 	{
-		if(str_response[i] == '\'') {
+		if (str_response[i] == '\'') {
 			escape_str_response += "\'\'";
 		}
 		else {
@@ -112,7 +112,7 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
-	if(error_message){
+	if (error_message){
 		sqlite3_free(error_message);
 		return -1;
 	}
@@ -135,7 +135,7 @@ int database_handler::insert_parameter(const char* parameter_name, int error_id)
 
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);
 
-	if(error_message){
+	if (error_message){
 		std::cout << error_message << std::endl;
 		sqlite3_free(error_message);
 		return -1;
@@ -147,19 +147,19 @@ void database_handler::update_parent_url() {
 	sqlite3_stmt* sqlite_stmt1;
 	sqlite3_stmt* sqlite_stmt2;
 
-	if(sqlite3_prepare(db, "SELECT * FROM URLS", -1, &sqlite_stmt1, 0) == SQLITE_OK) {
-		while(sqlite3_step(sqlite_stmt1) == SQLITE_ROW) {
+	if (sqlite3_prepare(db, "SELECT * FROM URLS", -1, &sqlite_stmt1, 0) == SQLITE_OK) {
+		while (sqlite3_step(sqlite_stmt1) == SQLITE_ROW) {
 			char* child_id = (char*)sqlite3_column_text(sqlite_stmt1, 0);
 			std::string url = (char*)sqlite3_column_text(sqlite_stmt1, 1);
 			url.erase(0, (url.find("//") + 2));
 
 			int n = url.find_last_of("/");
-			if(n != std::string::npos && n == url.length() - 1){
+			if (n != std::string::npos && n == url.length() - 1){
 				url.erase(n, 1);
 				n = url.find_last_of("/");
 			}
 
-			while(n != std::string::npos) {
+			while (n != std::string::npos) {
 				bool brk = false;
 
 				url.erase(n, std::string::npos);
@@ -170,8 +170,8 @@ void database_handler::update_parent_url() {
 				select_stmt += url;
 				select_stmt += "/';";
 
-				if(sqlite3_prepare(db, select_stmt.c_str(), -1, &sqlite_stmt2, 0) == SQLITE_OK) {
-					if(sqlite3_step(sqlite_stmt2) == SQLITE_ROW){
+				if (sqlite3_prepare(db, select_stmt.c_str(), -1, &sqlite_stmt2, 0) == SQLITE_OK) {
+					if (sqlite3_step(sqlite_stmt2) == SQLITE_ROW){
 						char* parent_id = (char*)sqlite3_column_text(sqlite_stmt2, 0);
 						std::string update_stmt;
 						update_stmt += "UPDATE URLS SET URL_PARENT_ID=";
@@ -183,7 +183,7 @@ void database_handler::update_parent_url() {
 						char* error_message = NULL;
 						sqlite3_exec(db, update_stmt.c_str(), NULL, 0, &error_message);
 
-						if(error_message){
+						if (error_message){
 							sqlite3_free(error_message);
 						}
 						brk = true;
@@ -193,7 +193,7 @@ void database_handler::update_parent_url() {
 				sqlite3_finalize(sqlite_stmt2);
 				n = url.find_last_of("/");
 
-				if(brk) {
+				if (brk) {
 					break;
 				}
 			}
