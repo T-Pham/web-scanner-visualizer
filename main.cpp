@@ -1,6 +1,7 @@
 #include "./src/database_handler.hpp"
 #include "./src/wapiti_parser.hpp"
 #include "./src/arachni_parser.hpp"
+#include "./src/w3af_parser.hpp"
 #include "./src/json_creator.hpp"
 #include <iostream>
 #include <string.h>
@@ -9,6 +10,7 @@
 // Constants
 char *FILE_FOR_WAPITI_TREE_PARSE = "testphp.vulnweb.com.xml";
 char *FILE_FOR_WAPITI_PARSE = "vulnerabilities.xml";
+char *FILE_FOR_W3AF_PARSE = "W3afReport.xml";
 char *FILE_FOR_ARACHNI_PARSE = "my_report.xml";
 
 // Function Prototypes
@@ -16,6 +18,7 @@ void start_database();
 void finalize_database();
 
 void parse_wapiti();
+void parse_w3af();
 void parse_arachni();
 
 // Variables
@@ -33,6 +36,9 @@ int main(int n, char* args[])
 			break;
 		case 'w':
 			FILE_FOR_WAPITI_PARSE = optarg;
+			break;
+		case 'f':
+			FILE_FOR_W3AF_PARSE = optarg;
 			break;
 		case 'a':
 			FILE_FOR_ARACHNI_PARSE = optarg;
@@ -52,6 +58,7 @@ int main(int n, char* args[])
 
 	start_database();
 	parse_wapiti();
+	parse_w3af();
 	parse_arachni();
 	finalize_database();
 
@@ -79,6 +86,12 @@ void parse_wapiti() {
 
 	if(wapiti_parse(FILE_FOR_WAPITI_PARSE, db) == -1) {
 		std::cout << "FILE FOR WAPITI PARSE NOT FOUND " << std::endl;
+	}
+}
+
+void parse_w3af() {
+	if (w3af_parse(FILE_FOR_W3AF_PARSE, db) == -1) {
+		std::cout << "FILE FOR W3AF PARSE NOT FOUND" << std::endl;
 	}
 }
 
