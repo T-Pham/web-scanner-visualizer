@@ -2,9 +2,10 @@
 #include "database_handler.hpp"
 #include <sstream>
 #include <string.h>
+#include <iostream>
 
 // Helper Functions
-void insert_error_with_url(const char * url_with_para, const char* method, const char* bug_type, const char* bug_level, const char* injection_value, const char* tool_name, const char* info, database_handler* db) {
+void insert_error_with_url1(const char * url_with_para, const char* method, const char* bug_type, const char* bug_level, const char* injection_value, const char* tool_name, const char* info, database_handler* db) {
 	std::string url_without_para;
 	url_without_para += url_with_para;
 	int n = url_without_para.find("?");
@@ -28,8 +29,7 @@ void insert_error_with_url(const char * url_with_para, const char* method, const
 	}
 }
 
-// Override
-void insert_error_with_url(const char* url_with_para, const char* method, const char* param, const char* bug_type, const char* bug_level, const char* injection_value, const char* tool_name, const char* info, database_handler* db) {
+void insert_error_with_url2(const char* url_with_para, const char* method, const char* param, const char* bug_type, const char* bug_level, const char* injection_value, const char* tool_name, const char* info, database_handler* db) {
 	std::string url_without_para;
 	url_without_para += url_with_para;
 	int n = url_without_para.find("?");
@@ -37,12 +37,13 @@ void insert_error_with_url(const char* url_with_para, const char* method, const 
 	if(n >= 0) {
 		url_without_para = url_without_para.substr(0, n);
 	}
+	
+	std::cout << injection_value << "   |   ";
+	//int error_id = db->insert_error(bug_type, bug_level, injection_value, url_without_para.c_str(), method, tool_name, info);
 
-	int error_id = db->insert_error(bug_type, bug_level, injection_value, url_without_para.c_str(), method, tool_name, info);
-
-	if(error_id > -1) {
-		db->insert_parameter(param, error_id);
-	}
+	//if(error_id > -1) {
+	//	db->insert_parameter(param, error_id);
+	//}
 }
 
 std::string* get_parameter(std::string* parameters) {

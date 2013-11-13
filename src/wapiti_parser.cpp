@@ -54,7 +54,7 @@ int wapiti_parse(const char* filename, database_handler* db_handler) {
 				}
 
 				if(!skip) {
-					insert_error_with_url(bug.child("url").child_value(), method, bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
+					insert_error_with_url1(bug.child("url").child_value(), method, bug_type, bug_level, injection_value, WAPITI_APP_NAME, info, db_handler);
 				}
 
 				bug = bug.next_sibling("bug");

@@ -57,7 +57,7 @@ int arachni_parse (const char* filename, database_handler* db_handler) {
 		}
 
 		if(!skip) {
-			insert_error_with_url(url, method, injected_param, error_type, bug_level, injection_value, ARACHNI_APP_NAME, "", db_handler);
+			insert_error_with_url2(url, method, injected_param, error_type, bug_level, injection_value, ARACHNI_APP_NAME, "", db_handler);
 		}
 
 		issue = issue.next_sibling("issue");
