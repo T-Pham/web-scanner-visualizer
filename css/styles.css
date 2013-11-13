@@ -72,7 +72,7 @@ ul {
 	margin: 10px 0px 0px 10px;
 }
 
-#wapiti-list, #skipfish-list, #arachni-list {
+#wapiti-list, #w3af-list, #arachni-list {
 	width: 278px;
 	list-style-type: none;
 	margin: 8px 0px 0px 5px;
@@ -102,7 +102,7 @@ ul {
 	color: #ECE59A;
 }
 
-.skipfish-text-color {
+.w3af-text-color {
 	color: #FD6E8A;
 }
 
@@ -118,7 +118,7 @@ ul {
 	fill: #ECE59A;
 }
 
-.skipfish-color {
+.w3af-color {
 	fill: #FD6E8A;
 }
 

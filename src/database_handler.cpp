@@ -71,13 +71,19 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 	std::string injection;
 	injection += injection_value;
 	std::string escape_injection;
-	for (int i = 0; i < injection.length(); i++)
-	{
-		if (injection[i] == '\'') {
+	for (int i = 0; i < injection.length(); i++) {
+		switch (injection[i]) {
+		// escape single quotes for SQLITE 
+		case '\'':
 			escape_injection += "\'\'";
-		}
-		else {
+			break;
+		// escape double quotes for javascript
+		case '"':
+			escape_injection += "\\\"";
+			break;
+		default:
 			escape_injection += injection[i];
+			break;
 		}
 	}
 

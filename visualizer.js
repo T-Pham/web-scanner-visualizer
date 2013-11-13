@@ -11,7 +11,7 @@ function colors(i) {
         case 0:
             return "arachni-color";
         case 1:
-            return "skipfish-color";
+            return "w3af-color";
         case 2:
             return "wapiti-color";
         default:
@@ -176,7 +176,7 @@ function set_info() {
     clear_info();
 
     if($("#url-container").text().trim() == "CLICK A NODE") {
-        $("#list-container").append("\<ul><li id=\"arachni-list\" class=\"arachni-text-color\">ARACHNI<ul> </ul> </li> <hr> <li id=\"skipfish-list\" class=\"skipfish-text-color\">SKIPFISH<ul> </ul> </li> <hr> <li id=\"wapiti-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> </ul>");
+        $("#list-container").append("\<ul><li id=\"arachni-list\" class=\"arachni-text-color\">ARACHNI<ul> </ul> </li> <hr> <li id=\"w3af-list\" class=\"w3af-text-color\">W3AF<ul> </ul> </li> <hr> <li id=\"wapiti-list\" class=\"wapiti-text-color\">WAPITI<ul> </ul> </li> </ul>");
         info_clicked = true;
     }
 
@@ -188,36 +188,36 @@ function set_info() {
 
     $("#url-container").text(header);
     var wapiti;
-    var skipfish;
+    var w3af;
     var arachni;
 
     var wapiti_count;
-    var skipfish_count;
+    var w3af_count;
     var arachni_count;
 
     switch (mode_count) {
         case 0:
             wapiti = params.urls[current_index].wapiti.sqli;
-            skipfish = params.urls[current_index].skipfish.sqli;
+            w3af = params.urls[current_index].w3af.sqli;
             arachni = params.urls[current_index].arachni.sqli;
             wapiti_count = dataset.nodes[current_index].sqli.wapiti;
-            skipfish_count = dataset.nodes[current_index].sqli.skipfish;
+            w3af_count = dataset.nodes[current_index].sqli.w3af;
             arachni_count = dataset.nodes[current_index].sqli.arachni;
             break;
         case 1:
             wapiti = params.urls[current_index].wapiti.xss;
-            skipfish = params.urls[current_index].skipfish.xss;
+            w3af = params.urls[current_index].w3af.xss;
             arachni = params.urls[current_index].arachni.xss;
             wapiti_count = dataset.nodes[current_index].xss.wapiti;
-            skipfish_count = dataset.nodes[current_index].xss.skipfish;
+            w3af_count = dataset.nodes[current_index].xss.w3af;
             arachni_count = dataset.nodes[current_index].xss.arachni;
             break;
         case 2:
             wapiti = params.urls[current_index].wapiti.sqli.concat(params.urls[current_index].wapiti.xss);
-            skipfish = params.urls[current_index].skipfish.sqli.concat(params.urls[current_index].skipfish.xss);
+            w3af = params.urls[current_index].w3af.sqli.concat(params.urls[current_index].w3af.xss);
             arachni = params.urls[current_index].arachni.sqli.concat(params.urls[current_index].arachni.xss);
             wapiti_count = dataset.nodes[current_index].both.wapiti;
-            skipfish_count = dataset.nodes[current_index].both.skipfish;
+            w3af_count = dataset.nodes[current_index].both.w3af;
             arachni_count = dataset.nodes[current_index].both.arachni;
             break;
         default:
@@ -227,15 +227,15 @@ function set_info() {
     $("#list-container").customScrollbar();
 
     $('#wapiti-list ul').append("<div class='error-field'>" + wapiti_count + " ERROR(S)</div>");
-    $('#skipfish-list ul').append("<div class='error-field'>" + skipfish_count + " ERROR(S)</div>");
+    $('#w3af-list ul').append("<div class='error-field'>" + w3af_count + " ERROR(S)</div>");
     $('#arachni-list ul').append("<div class='error-field'>" + arachni_count + " ERROR(S)</div>");
 
 
     for (var k = 0; k < wapiti.length; k++) {
         $('#wapiti-list ul').append("<li class='inner-list'>" + link_for_tool_error(wapiti[k]) + "</li>");
     }
-    for (var k = 0; k < skipfish.length; k++) {
-        $('#skipfish-list ul').append("<li class='inner-list'>" + link_for_tool_error(skipfish[k]) + "</li>");
+    for (var k = 0; k < w3af.length; k++) {
+        $('#w3af-list ul').append("<li class='inner-list'>" + link_for_tool_error(w3af[k]) + "</li>");
     }
     for (var k = 0; k < arachni.length; k++) {
         $('#arachni-list ul').append("<li class='inner-list'>" + link_for_tool_error(arachni[k]) + "</li>");
@@ -250,7 +250,7 @@ function set_info() {
 
 function clear_info() {
     $('#wapiti-list ul').empty();
-    $('#skipfish-list ul').empty();
+    $('#w3af-list ul').empty();
     $('#arachni-list ul').empty();
     $("#list-container").customScrollbar("remove");
 }
