@@ -119,9 +119,9 @@ function add_selected(node) {
 
 function link_for_tool_error(tool_error) {
 	var path = params.urls[current_index].url;
-	var method = params.urls[current_index].method;
+	var method = tool_error.method;
 	var query = tool_error.injection_value.trim();
-	return Mustache.render("<a href='#' onclick='go_to_path_with_method(\"{{path}}\", \"{{query}}\", \"{{method}}\")'>\"{{query}}\"</a>", {path: path, method: method, query: query});
+	return Mustache.render("<a href='#' onclick='go_to_path_with_method(\"{{path}}\", \"{{query}}\", \"{{method}}\")'>[" + method + "] \"{{query}}\"</a>", {path: path, method: method, query: query});
 }
 
 function go_to_path_with_method(path, query, method) {
@@ -180,7 +180,7 @@ function set_info() {
         info_clicked = true;
     }
 
-    header = "[" + params.urls[current_index].method + "] " + params.urls[current_index].url;
+    header = params.urls[current_index].url;
 
     if (header.length > 55) {
         header = header.substr(0, 55) + "...";
@@ -358,9 +358,8 @@ function loader() {
     });
 
     for(var i = 0; i < params.urls.length; i++) {
-        var method = (params.urls[i].method == 'GET') ? '[GET]&nbsp&nbsp&nbsp' : "[" + params.urls[i].method + "]&nbsp"; 
         var url = params.urls[i].url.length < 80 ? params.urls[i].url : params.urls[i].url.substr(0, 75) + "..."; 
-        $('#urls-select').append("<option value=" + i + ">" + method + url + "</option>");
+        $('#urls-select').append("<option value=" + i + ">" + url + "</option>");
     }
 
     $('#urls-select option').sort( function(a, b) {
