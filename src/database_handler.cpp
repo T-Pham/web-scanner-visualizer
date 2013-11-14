@@ -47,7 +47,7 @@ int database_handler::insert_url(const char* url) {
 	char* error_message = NULL;
 	std::string stmt;
 
-	stmt += "INSERT INTO URLS (URL, METHOD) VALUES('";
+	stmt += "INSERT INTO URLS (URL) VALUES('";
 	stmt += url;
 	stmt += "');";
 
@@ -98,7 +98,7 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 		}
 	}
 
-	stmt += "INSERT INTO ERRORS (ERROR_TYPE, ERROR_LEVEL, INJECTION_VALUE, URL_ID, TOOL_NAME, RESPONSE) VALUES('";
+	stmt += "INSERT INTO ERRORS (ERROR_TYPE, ERROR_LEVEL, INJECTION_VALUE, URL_ID, METHOD, TOOL_NAME, RESPONSE) VALUES('";
 	stmt += error_type;
 	stmt += "',";
 	stmt += error_level;
@@ -106,9 +106,9 @@ int database_handler::insert_error(const char* error_type, const char* error_lev
 	stmt += escape_injection.c_str();
 	stmt += "', (SELECT URL_ID FROM URLS WHERE URL='";
 	stmt += url;
-	stmt += "' AND METHOD='";
-	stmt += method;
 	stmt += "'),'";
+	stmt += method;
+	stmt += "','";
 	stmt += tool_name;
 	stmt += "','";
 	stmt += escape_str_response.c_str();

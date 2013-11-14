@@ -22,6 +22,7 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									 ERROR_LEVEL INTEGER,\
 									 INJECTION_VALUE TEXT,\
 									 URL_ID INTEGER,\
+								     METHOD VARCHAR(255) NOT NULL,\
 									 TOOL_NAME VARCHAR(255) NOT NULL,\
 									 RESPONSE TEXT\
 									 );";
