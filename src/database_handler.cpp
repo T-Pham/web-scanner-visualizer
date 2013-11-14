@@ -43,14 +43,12 @@ void database_handler::commit_transaction(){
 }
 
 // insert and return url's id
-int database_handler::insert_url(const char* url, const char* method) {
+int database_handler::insert_url(const char* url) {
 	char* error_message = NULL;
 	std::string stmt;
 
 	stmt += "INSERT INTO URLS (URL, METHOD) VALUES('";
 	stmt += url;
-	stmt += "','";
-	stmt += method;
 	stmt += "');";
 
 	sqlite3_exec(db, stmt.c_str(), NULL, 0, &error_message);

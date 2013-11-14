@@ -7,9 +7,8 @@ static const char* sql_create_stms = "DROP TABLE IF EXISTS URLS;\
 									 CREATE TABLE URLS (\
 									 URL_ID INTEGER PRIMARY KEY,\
 									 URL TEXT NOT NULL,\
-									 METHOD VARCHAR(255) NOT NULL,\
 									 URL_PARENT_ID INTEGER, \
-									 UNIQUE(URL, METHOD));\
+									 UNIQUE(URL));\
 									 DROP TABLE IF EXISTS PARAMETERS;\
 									 CREATE TABLE PARAMETERS (\
 									 PARAMETER_ID INTEGER PRIMARY KEY,\
@@ -41,7 +40,7 @@ public:
 
 	void commit_transaction();
 
-	int insert_url(const char* url, const char* method);
+	int insert_url(const char* url);
 
 	int insert_url_relationship(int parent_url_id, int child_url_id);
 
