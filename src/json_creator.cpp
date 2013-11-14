@@ -92,17 +92,13 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 			std::stringstream ss;
 			int current_id = (int)sqlite3_column_int(sqlite_stmt, 0);
 			char* url = (char*)sqlite3_column_text(sqlite_stmt, 1);
-			char* method = (char*)sqlite3_column_text(sqlite_stmt, 2);
-			int parent_id = (int)sqlite3_column_int(sqlite_stmt, 3);
+			int parent_id = (int)sqlite3_column_int(sqlite_stmt, 2);
 
 			if (!str1.empty()) {
 				str1 += ",";
 			}
 			str1 += "{node: \"";
 			str1 += url;
-
-			str1 += "\", method: \"";
-			str1 += method;
 
 			str1 += "\", sqli: {";
 			std::string* p_str = get_node_info(current_id, "SQL Injection", db_handler);
@@ -175,7 +171,7 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 	std::stringstream ss;
 	ss << current_id;
 
-	select_error_stmt += "SELECT ERROR_ID, ERROR_TYPE, INJECTION_VALUE FROM ERRORS WHERE URL_ID==";
+	select_error_stmt += "SELECT ERROR_ID, ERROR_TYPE, INJECTION_VALUE, METHOD FROM ERRORS WHERE URL_ID==";
 	select_error_stmt += ss.str();
 	select_error_stmt += " AND TOOL_NAME='";
 	select_error_stmt += tool_name;
@@ -190,6 +186,7 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 			const char* error_id = (const char*)sqlite3_column_text(sqlite_stmt, 0);
 			const char* error_type = (const char*)sqlite3_column_text(sqlite_stmt, 1);
 			const char* injection_value = (const char*)sqlite3_column_text(sqlite_stmt, 2);
+			const char* method = (const char*)sqlite3_column_text(sqlite_stmt, 3);
 
 			if (strcmp(error_type, "SQL Injection") == 0) {
 				if (!sqli_injection_value->empty()){
@@ -197,6 +194,8 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 				}
 				*sqli_injection_value += "{injection_value: \"";
 				*sqli_injection_value += injection_value;
+				*sqli_injection_value += "\", method: \"";
+				*sqli_injection_value += method;
 				*sqli_injection_value += "\", params: [";
 
 				std::string* params = get_params(error_id, db_handler);
@@ -212,6 +211,8 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 					}
 					*xss_injection_value += "{injection_value: \"";
 					*xss_injection_value += injection_value;
+					*xss_injection_value += "\", method: \"";
+					*xss_injection_value += method;
 					*xss_injection_value += "\", params: [";
 
 					std::string* params = get_params(error_id, db_handler);
@@ -261,15 +262,12 @@ void create_params_json(std::ofstream* file, database_handler* db_handler) {
 		while (sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
 			int current_id = (int)sqlite3_column_int(sqlite_stmt, 0);
 			char* url = (char*)sqlite3_column_text(sqlite_stmt, 1);
-			char* method = (char*)sqlite3_column_text(sqlite_stmt, 2);
 			if (!str.empty()) {
 				str += ", ";
 			}
 
 			str += "{url: \"";
 			str += url;
-			str += "\", method: \"";
-			str += method;
 			str += "\", ";
 
 			set = get_url_info(current_id, ARACHNI_APP_NAME, db_handler);
