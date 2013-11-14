@@ -141,30 +141,6 @@ void create_graph_json(std::ofstream* file, database_handler* db_handler) {
 	*file << "var both_average = " << get_average("BOTH", db_handler) << ";" << std::endl;
 }
 
-std::string* get_params(const char* error_id, database_handler* db_handler) {
-	sqlite3_stmt* sqlite_stmt;
-	std::string select_param_stmt("SELECT PARAMETER_NAME FROM PARAMETERS WHERE ERROR_ID==");
-	select_param_stmt += error_id;
-	select_param_stmt += ";";
-	std::string* params = new std::string();
-
-	if (sqlite3_prepare(db_handler->db, select_param_stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
-		while (sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
-			const char* param = (const char*)sqlite3_column_text(sqlite_stmt, 0);
-
-			if (!params->empty()) {
-				*params += ", ";
-			}
-			*params += "\"";
-			*params += param;
-			*params += "\"";
-		}
-	}
-	sqlite3_finalize(sqlite_stmt);
-
-	return params;
-}
-
 string_set* get_url_info(const int current_id, const char* tool_name, database_handler* db_handler) {
 	sqlite3_stmt* sqlite_stmt;
 	std::string select_error_stmt;
@@ -196,13 +172,7 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 				*sqli_injection_value += injection_value;
 				*sqli_injection_value += "\", method: \"";
 				*sqli_injection_value += method;
-				*sqli_injection_value += "\", params: [";
-
-				std::string* params = get_params(error_id, db_handler);
-				*sqli_injection_value += params->c_str();
-				delete params;
-
-				*sqli_injection_value += "]}";
+				*sqli_injection_value += "\"}";
 			}
 			else {
 				if (strcmp(error_type, "Cross Site Scripting") == 0) {
@@ -213,13 +183,7 @@ string_set* get_url_info(const int current_id, const char* tool_name, database_h
 					*xss_injection_value += injection_value;
 					*xss_injection_value += "\", method: \"";
 					*xss_injection_value += method;
-					*xss_injection_value += "\", params: [";
-
-					std::string* params = get_params(error_id, db_handler);
-					*xss_injection_value += params->c_str();
-					delete params;
-
-					*xss_injection_value += "]}";
+					*xss_injection_value += "\"}";
 				}
 			}
 		}
@@ -300,4 +264,3 @@ void create_params_json(std::ofstream* file, database_handler* db_handler) {
 
 	*file << "var params = {urls: [" << str << "]};";
 }
-
