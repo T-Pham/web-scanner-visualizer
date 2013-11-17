@@ -256,8 +256,8 @@ function clear_info() {
 }
 
 function loader() {
-    var w = 1000;
-    var h = 600;
+    var w = $(window).width() - 300;
+    var h = $(window).height() - 100;
 
     d3.select("#visualization")
       .attr("width", w)
@@ -330,6 +330,8 @@ function loader() {
     .attr("y", function(d, i) {
         return (h + 15 - 25*(i+1));
     });
+
+    d3.select("#list-container").style("height", (h-68) + "px");
 
     force.on("tick", function () {
         edges.attr("x1", function (d) {
