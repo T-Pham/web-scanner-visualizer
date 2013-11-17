@@ -1,7 +1,7 @@
 var mode_count = 0;
 
-var link_distance = 70;
-var charge = -1000;
+var link_distance = 20;
+var charge = -900;
 
 var current_index;
 var info_clicked = false;
@@ -259,6 +259,14 @@ function loader() {
     var w = 1000;
     var h = 600;
 
+    d3.select("#visualization")
+      .attr("width", w)
+      .attr("height", h);
+
+    d3.select("svg")
+      .attr("width", w)
+      .attr("height", h);
+
     var graph = d3.select("svg").select("#graph");
 
     var force = d3.layout.force()
@@ -308,6 +316,19 @@ function loader() {
         current_index = i;
         set_info();
         add_selected();
+    });
+
+
+    d3.selectAll(".legend-rect")
+    .attr("x", 15)
+    .attr("y", function(d, i) {
+        return (h - 25*(i+1));
+    });
+
+    d3.selectAll(".legend-text")
+    .attr("x", 75)
+    .attr("y", function(d, i) {
+        return (h + 15 - 25*(i+1));
     });
 
     force.on("tick", function () {
