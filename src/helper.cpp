@@ -2,6 +2,7 @@
 #include "database_handler.hpp"
 #include <sstream>
 #include <string.h>
+#include <math.h>
 
 // Helper Functions
 void insert_error_with_url(const char * url_with_para, const char* method, const char* bug_type, const char* bug_level, const char* injection_value, const char* tool_name, const char* info, database_handler* db) {
@@ -113,6 +114,37 @@ int number_of_error_by_tool(int url_id, const char* tool, const char* type, data
 	if (sqlite3_prepare(db_handler->db, sql_stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
 		while (sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
 			result = (int)sqlite3_column_int(sqlite_stmt, 0);
+		}
+	}
+	sqlite3_finalize(sqlite_stmt);
+
+	return result;
+}
+
+int severity_of_error_by_tool(int url_id, const char* tool, const char* type, database_handler* db_handler) {
+	sqlite3_stmt* sqlite_stmt;
+	std::string sql_stmt;
+	std::stringstream ss;
+	ss << url_id;
+
+	sql_stmt += "SELECT AVG(ERROR_LEVEL) FROM ERRORS WHERE URL_ID=";
+	sql_stmt += ss.str();
+	sql_stmt += " AND TOOL_NAME='";
+	sql_stmt += tool;
+
+	if (strcmp(type, "BOTH") != 0) {
+		sql_stmt += "' AND ERROR_TYPE='";
+		sql_stmt += type;
+
+	}
+	sql_stmt += "';";
+
+	int result = -1;
+	if (sqlite3_prepare(db_handler->db, sql_stmt.c_str(), -1, &sqlite_stmt, 0) == SQLITE_OK) {
+		while (sqlite3_step(sqlite_stmt) == SQLITE_ROW) {
+			
+			float float_result = (float)sqlite3_column_int(sqlite_stmt, 0);
+			result = float_result >= ceil(float_result) + 0.5 ? floor(float_result) : ceil(float_result);
 		}
 	}
 	sqlite3_finalize(sqlite_stmt);

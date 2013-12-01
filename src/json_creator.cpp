@@ -55,7 +55,23 @@ std::string* get_node_info(int current_id, const char* error_type, database_hand
 	*str += ss.str();
 	ss.str("");
 
-	*str += ", pie: [";
+	*str += ", severity: [";
+	
+	ss << severity_of_error_by_tool(current_id, ARACHNI_APP_NAME, error_type, db_handler);
+	*str += ss.str();
+	ss.str("");
+	*str += ", ";
+
+	ss << severity_of_error_by_tool(current_id, W3AF_APP_NAME, error_type, db_handler);
+	*str += ss.str();
+	ss.str("");
+	*str += ", ";
+
+	ss << severity_of_error_by_tool(current_id, WAPITI_APP_NAME, error_type, db_handler);
+	*str += ss.str();
+	ss.str("");
+	
+	*str += "], pie: [";
 
 	if (total) {
 		ss << wapiti * 100 / total;
