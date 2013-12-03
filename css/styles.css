@@ -39,6 +39,14 @@ body {
 	width: 291px;
 }
 
+#urls-select {
+	width: 400px;
+}
+
+#url_filter_field {
+	width: 250px;
+}
+
 .inner-list {
 	width: 263px;
 	white-space: normal;
