@@ -256,13 +256,28 @@ function clear_info() {
 }
 
 function populate_url_selects() {
-	$('#urls-select').html("");
+	$('#urls-select').html('');
 	var url_filter_term = $('#url_filter_field').val();
 	for(var i = 0; i < params.urls.length; i++) {
 		if ((url_filter_term.length > 0) && (params.urls[i].url.indexOf(url_filter_term) == -1)) continue;
 		var url = params.urls[i].url.length < 80 ? params.urls[i].url : params.urls[i].url.substr(0, 75) + "..."; 
 		$('#urls-select').append("<option value=" + i + ">" + url + "</option>");
 	}
+}
+
+function apply_url_filtering_effect() {
+	d3.selectAll(".node").each(function (d, i) {
+		d3.select(this).style('fill-opacity', '1');
+		return null;
+	});
+	var url_filter_term = $('#url_filter_field').val();
+	if (url_filter_term.length == 0) return;	
+	d3.selectAll(".node").each(function (d, i) {
+		if(d.node.indexOf(url_filter_term) == -1) {
+			d3.select(this).style('fill-opacity', '0.2');
+			return null;
+		}
+	});
 }
 
 function loader() {
@@ -405,5 +420,6 @@ function loader() {
 	
 	$('#url_filter_field').on('change', function() {
 		populate_url_selects();
+		apply_url_filtering_effect();
     });
 }
