@@ -263,6 +263,9 @@ function populate_url_selects() {
 		var url = params.urls[i].url.length < 80 ? params.urls[i].url : params.urls[i].url.substr(0, 75) + "..."; 
 		$('#urls-select').append("<option value=" + i + ">" + url + "</option>");
 	}
+	$('#urls-select option').sort( function(a, b) {
+        return $(a).text() > $(b).text() ? 1 : -1;
+    }).appendTo('#urls-select');
 }
 
 function apply_url_filtering_effect() {
@@ -406,10 +409,6 @@ function loader() {
     });
 
     populate_url_selects();
-
-    $('#urls-select option').sort( function(a, b) {
-        return $(a).text() > $(b).text() ? 1 : -1;
-    }).appendTo('#urls-select');
 
     $('#urls-select').on('change', function() {
         clear_selected();
