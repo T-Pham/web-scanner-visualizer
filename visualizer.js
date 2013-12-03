@@ -417,7 +417,7 @@ function loader() {
         add_selected();
     });
 	
-	$('#url_filter_field').on('change', function() {
+	$('#url_filter_field').on('keyup', function() {
 		populate_url_selects();
 		apply_url_filtering_effect();
     });
