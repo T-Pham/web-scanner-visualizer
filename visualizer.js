@@ -255,6 +255,16 @@ function clear_info() {
     $("#list-container").customScrollbar("remove");
 }
 
+function populate_url_selects() {
+	$('#urls-select').html("");
+	var url_filter_term = $('#url_filter_field').val();
+	for(var i = 0; i < params.urls.length; i++) {
+		if ((url_filter_term.length > 0) && (params.urls[i].url.indexOf(url_filter_term) == -1)) continue;
+		var url = params.urls[i].url.length < 80 ? params.urls[i].url : params.urls[i].url.substr(0, 75) + "..."; 
+		$('#urls-select').append("<option value=" + i + ">" + url + "</option>");
+	}
+}
+
 function loader() {
     var w = $(window).width() - 300;
     var h = $(window).height() - 100;
@@ -380,10 +390,7 @@ function loader() {
         }
     });
 
-    for(var i = 0; i < params.urls.length; i++) {
-        var url = params.urls[i].url.length < 80 ? params.urls[i].url : params.urls[i].url.substr(0, 75) + "..."; 
-        $('#urls-select').append("<option value=" + i + ">" + url + "</option>");
-    }
+    populate_url_selects();
 
     $('#urls-select option').sort( function(a, b) {
         return $(a).text() > $(b).text() ? 1 : -1;
@@ -395,5 +402,8 @@ function loader() {
         set_info();
         add_selected();
     });
+	
+	$('#url_filter_field').on('change', function() {
+		populate_url_selects();
+    });
 }
-
