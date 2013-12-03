@@ -267,14 +267,14 @@ function populate_url_selects() {
 
 function apply_url_filtering_effect() {
 	d3.selectAll(".node").each(function (d, i) {
-		d3.select(this).style('fill-opacity', '1');
+		d3.select(this).transition().style('fill-opacity', '1');
 		return null;
 	});
 	var url_filter_term = $('#url_filter_field').val();
 	if (url_filter_term.length == 0) return;	
 	d3.selectAll(".node").each(function (d, i) {
 		if(d.node.indexOf(url_filter_term) == -1) {
-			d3.select(this).style('fill-opacity', '0.2');
+			d3.select(this).transition().style('fill-opacity', '0.2');
 			return null;
 		}
 	});
