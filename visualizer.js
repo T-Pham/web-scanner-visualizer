@@ -19,6 +19,14 @@ function colors(i) {
     }
 }
 
+function level_of_node_with_url(url) {
+	for (var i = 0; i < dataset.edges.length; i++) {
+		var edge = dataset.edges[i];
+		if (url == edge.target.node) return 1 + level_of_node_with_url(edge.source.node);
+	}
+	return 0;
+}
+
 function create_pie(nodes) {
     var pie = d3.layout.pie();
     pie.sort(null);
@@ -283,6 +291,10 @@ function apply_url_filtering_effect() {
 	});
 }
 
+function tooltip_html_for_node(node) {
+	return Mustache.render("URL: <b>{{url}}</b><br>Level: <b>{{level}}</b>", {url: node.node, level: level_of_node_with_url(node.node)});
+}
+
 function loader() {
     var w = $(window).width() - 300;
     var h = $(window).height() - 100;
@@ -329,7 +341,7 @@ function loader() {
 		div.transition()
 			.duration(200)
 			.style("opacity", .9);
-		div.html(d.node)
+		div.html(tooltip_html_for_node(d))
 			.style("left", (d3.event.pageX) + "px")
 			.style("top", (d3.event.pageY - 28) + "px");
 	})
