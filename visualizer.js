@@ -295,6 +295,22 @@ function tooltip_html_for_node(node) {
 	return Mustache.render("URL: <b>{{url}}</b><br>Level: <b>{{level}}</b>", {url: node.node, level: level_of_node_with_url(node.node)});
 }
 
+function highlight_path_to_node_with_url(url) {
+    d3.selectAll("line").each(function (d, i) {
+		if (d.target.node == url) {
+			d3.select(this).style('stroke', 'crimson');
+			highlight_path_to_node_with_url(d.source.node);
+		}
+    });
+}
+
+function unhighlight_paths() {
+    d3.selectAll("line").each(function (d, i) {
+		d3.select(this).style('stroke', '#ccc');
+		return null;
+    });
+}
+
 function loader() {
     var w = $(window).width() - 300;
     var h = $(window).height() - 100;
@@ -344,11 +360,13 @@ function loader() {
 		div.html(tooltip_html_for_node(d))
 			.style("left", (d3.event.pageX) + "px")
 			.style("top", (d3.event.pageY - 28) + "px");
+		highlight_path_to_node_with_url(d.node);
 	})
 	.on("mouseout", function(d) {
 		div.transition()
 			.duration(500)
 			.style("opacity", 0);
+		unhighlight_paths();
 	});
 
     nodes.on("click", function (d, i) { 
