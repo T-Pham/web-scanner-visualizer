@@ -29,7 +29,7 @@ int main(int n, char* args[])
 {
 	// parsing arguments for file paths       
 	int option;
-	while ((option = getopt(n, args, "t:w:s:a:")) != -1) {
+	while ((option = getopt(n, args, "t:w:f:a:")) != -1) {
 		switch (option) {
 		case 't':
 			FILE_FOR_WAPITI_TREE_PARSE = optarg;
@@ -44,7 +44,7 @@ int main(int n, char* args[])
 			FILE_FOR_ARACHNI_PARSE = optarg;
 			break;
 		case '?':
-			if ((optopt == 't') || (optopt == 'w') || (optopt == 's') || (optopt == 'a'))
+			if ((optopt == 't') || (optopt == 'w') || (optopt == 'f') || (optopt == 'a'))
 				fprintf(stderr, "Option -%c requires an argument.\n", optopt);
 			else if (isprint(optopt))
 				fprintf(stderr, "Unknown option `-%c'.\n", optopt);
